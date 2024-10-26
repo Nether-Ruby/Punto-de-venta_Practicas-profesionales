@@ -19,4 +19,10 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Lógica\" />
+    <Folder Include="Datos\" />
+    <Folder Include="Presentación\" />
+  </ItemGroup>
+
 </Project>
