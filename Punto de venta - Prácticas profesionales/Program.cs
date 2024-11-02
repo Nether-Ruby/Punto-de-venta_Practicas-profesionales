@@ -1,3 +1,4 @@
+using FontAwesome.Sharp;
 namespace Punto_de_venta___Prácticas_profesionales
 {
     internal static class Program
