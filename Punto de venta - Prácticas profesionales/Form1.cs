@@ -40,7 +40,7 @@ namespace Punto_de_venta___Prácticas_profesionales
                 currentBtn = (IconButton)senderBtn;
                 currentBtn.BackColor = Color.FromArgb(37, 36, 81);
                 currentBtn.ForeColor = color;
-               // currentBtn.IconColor = Color.Orange; //esto es para q al dar click cambe el color del icono pero no mg
+                // currentBtn.IconColor = Color.Orange; //esto es para q al dar click cambe el color del icono pero no mg
 
                 iconoActual.IconChar = currentBtn.IconChar;
                 iconoActual.IconColor = color;
@@ -53,7 +53,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             {
                 currentBtn.BackColor = Color.FromArgb(21, 9, 49);
                 currentBtn.ForeColor = Color.White;
-                
+
             }
         }
 
@@ -102,7 +102,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             leftBorderBtn.Visible = false;
 
             iconoActual.IconChar = IconChar.HomeLg;
-            iconoActual.IconColor = Color.FromArgb(172, 126, 241); 
+            iconoActual.IconColor = Color.FromArgb(172, 126, 241);
             labelEtiqueta.Text = "Home";
 
 
@@ -122,7 +122,7 @@ namespace Punto_de_venta___Prácticas_profesionales
         private void iconButton3_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBcolors.color1);
-            openChildForm(new Presentación.FormCompras());
+            openChildForm(new Presentación.FormCaja());
         }
 
         private void iconButton4_Click(object sender, EventArgs e)
@@ -147,6 +147,17 @@ namespace Punto_de_venta___Prácticas_profesionales
         {
             ActivateButton(sender, RGBcolors.color1);
             openChildForm(new Presentación.FormEmpleados());
+        }
+
+        private void classBtnPersonalizado1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void iconButton8_Click(object sender, EventArgs e)
+        {
+            ActivateButton(sender, RGBcolors.color1);
+            openChildForm(new controlesPersonalizados.Botones());
         }
     }
 }
