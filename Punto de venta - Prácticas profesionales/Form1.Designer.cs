@@ -385,6 +385,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelEscritorio.Name = "panelEscritorio";
             panelEscritorio.Size = new Size(705, 506);
             panelEscritorio.TabIndex = 2;
+           // panelEscritorio.Paint += panelEscritorio_Paint;
             // 
             // iconSplitButton1
             // 
