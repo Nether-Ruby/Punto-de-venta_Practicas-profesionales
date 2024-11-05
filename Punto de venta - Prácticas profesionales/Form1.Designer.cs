@@ -40,6 +40,10 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelLogo = new Panel();
             btnInicio = new PictureBox();
             panelTitulo = new Panel();
+            iconButton11 = new IconButton();
+            iconButton10 = new IconButton();
+            iconButton8 = new IconButton();
+            iconButton9 = new IconButton();
             menuStrip2 = new MenuStrip();
             toolStripMenuItem1 = new ToolStripMenuItem();
             toolStripMenuItem2 = new ToolStripMenuItem();
@@ -268,6 +272,10 @@ namespace Punto_de_venta___Prácticas_profesionales
             // panelTitulo
             // 
             panelTitulo.BackColor = Color.FromArgb(21, 9, 49);
+            panelTitulo.Controls.Add(iconButton11);
+            panelTitulo.Controls.Add(iconButton10);
+            panelTitulo.Controls.Add(iconButton8);
+            panelTitulo.Controls.Add(iconButton9);
             panelTitulo.Controls.Add(menuStrip2);
             panelTitulo.Controls.Add(labelEtiqueta);
             panelTitulo.Controls.Add(iconoActual);
@@ -276,6 +284,68 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelTitulo.Name = "panelTitulo";
             panelTitulo.Size = new Size(705, 36);
             panelTitulo.TabIndex = 1;
+            // 
+            // iconButton11
+            // 
+            iconButton11.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            iconButton11.BackColor = Color.FromArgb(21, 9, 49);
+            iconButton11.FlatStyle = FlatStyle.Flat;
+            iconButton11.IconChar = IconChar.WindowMinimize;
+            iconButton11.IconColor = Color.White;
+            iconButton11.IconFont = IconFont.Auto;
+            iconButton11.IconSize = 25;
+            iconButton11.Location = new Point(607, 0);
+            iconButton11.Name = "iconButton11";
+            iconButton11.Size = new Size(35, 24);
+            iconButton11.TabIndex = 4;
+            iconButton11.UseVisualStyleBackColor = false;
+            iconButton11.Click += iconButton11_Click;
+            // 
+            // iconButton10
+            // 
+            iconButton10.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            iconButton10.BackColor = Color.FromArgb(21, 9, 49);
+            iconButton10.FlatStyle = FlatStyle.Flat;
+            iconButton10.IconChar = IconChar.WindowMaximize;
+            iconButton10.IconColor = Color.White;
+            iconButton10.IconFont = IconFont.Auto;
+            iconButton10.IconSize = 25;
+            iconButton10.Location = new Point(638, 0);
+            iconButton10.Name = "iconButton10";
+            iconButton10.Size = new Size(35, 24);
+            iconButton10.TabIndex = 5;
+            iconButton10.UseVisualStyleBackColor = false;
+            iconButton10.Click += iconButton10_Click;
+            // 
+            // iconButton8
+            // 
+            iconButton8.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            iconButton8.BackColor = Color.FromArgb(21, 9, 49);
+            iconButton8.FlatStyle = FlatStyle.Flat;
+            iconButton8.IconChar = IconChar.Close;
+            iconButton8.IconColor = Color.White;
+            iconButton8.IconFont = IconFont.Auto;
+            iconButton8.IconSize = 25;
+            iconButton8.Location = new Point(670, 0);
+            iconButton8.Name = "iconButton8";
+            iconButton8.Size = new Size(35, 24);
+            iconButton8.TabIndex = 3;
+            iconButton8.UseVisualStyleBackColor = false;
+            iconButton8.Click += iconButton8_Click_1;
+            // 
+            // iconButton9
+            // 
+            iconButton9.BackColor = Color.FromArgb(21, 9, 49);
+            iconButton9.FlatStyle = FlatStyle.Flat;
+            iconButton9.IconChar = IconChar.Cancel;
+            iconButton9.IconColor = Color.White;
+            iconButton9.IconFont = IconFont.Auto;
+            iconButton9.IconSize = 25;
+            iconButton9.Location = new Point(647, 82);
+            iconButton9.Name = "iconButton9";
+            iconButton9.Size = new Size(35, 24);
+            iconButton9.TabIndex = 4;
+            iconButton9.UseVisualStyleBackColor = false;
             // 
             // menuStrip2
             // 
@@ -307,7 +377,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // 
             toolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem3, toolStripMenuItem4, toolStripMenuItem5 });
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(180, 22);
+            toolStripMenuItem2.Size = new Size(153, 22);
             toolStripMenuItem2.Text = "Tarjetas";
             // 
             // toolStripMenuItem3
@@ -332,7 +402,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // 
             toolStripMenuItem6.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem7, toolStripMenuItem8 });
             toolStripMenuItem6.Name = "toolStripMenuItem6";
-            toolStripMenuItem6.Size = new Size(180, 22);
+            toolStripMenuItem6.Size = new Size(153, 22);
             toolStripMenuItem6.Text = "Configuracion";
             // 
             // toolStripMenuItem7
@@ -350,7 +420,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // toolStripMenuItem9
             // 
             toolStripMenuItem9.Name = "toolStripMenuItem9";
-            toolStripMenuItem9.Size = new Size(180, 22);
+            toolStripMenuItem9.Size = new Size(153, 22);
             toolStripMenuItem9.Text = "algo";
             // 
             // labelEtiqueta
@@ -385,7 +455,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelEscritorio.Name = "panelEscritorio";
             panelEscritorio.Size = new Size(705, 506);
             panelEscritorio.TabIndex = 2;
-           // panelEscritorio.Paint += panelEscritorio_Paint;
+            panelEscritorio.Paint += panelEscritorio_Paint;
             // 
             // iconSplitButton1
             // 
@@ -482,5 +552,9 @@ namespace Punto_de_venta___Prácticas_profesionales
         private IconMenuItem iconMenuItem3;
         private IconSplitButton iconSplitButton2;
         private IconToolStripButton iconToolStripButton1;
+        private IconButton iconButton8;
+        private IconButton iconButton11;
+        private IconButton iconButton10;
+        private IconButton iconButton9;
     }
 }

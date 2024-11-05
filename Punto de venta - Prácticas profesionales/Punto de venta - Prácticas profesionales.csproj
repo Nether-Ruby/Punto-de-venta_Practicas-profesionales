@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <Folder Include="Datos\" />
+    <Folder Include="Lógica\" />
   </ItemGroup>
 
   <ItemGroup>
