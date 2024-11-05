@@ -144,7 +144,8 @@
             // 
             // button2
             // 
-            button2.Location = new Point(311, 121);
+            button2.Anchor = AnchorStyles.None;
+            button2.Location = new Point(311, 112);
             button2.Name = "button2";
             button2.Size = new Size(106, 50);
             button2.TabIndex = 8;
@@ -153,7 +154,7 @@
             // 
             // label4
             // 
-            label4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label4.Anchor = AnchorStyles.None;
             label4.AutoSize = true;
             label4.Location = new Point(557, 19);
             label4.Name = "label4";
@@ -163,7 +164,7 @@
             // 
             // label3
             // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label3.Anchor = AnchorStyles.None;
             label3.AutoSize = true;
             label3.Location = new Point(381, 19);
             label3.Name = "label3";
@@ -173,7 +174,7 @@
             // 
             // label2
             // 
-            label2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label2.Anchor = AnchorStyles.None;
             label2.AutoSize = true;
             label2.Location = new Point(202, 19);
             label2.Name = "label2";
@@ -183,7 +184,7 @@
             // 
             // label1
             // 
-            label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
             label1.Location = new Point(23, 20);
             label1.Name = "label1";
