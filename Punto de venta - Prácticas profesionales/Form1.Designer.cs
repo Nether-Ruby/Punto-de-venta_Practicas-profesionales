@@ -40,13 +40,28 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelLogo = new Panel();
             btnInicio = new PictureBox();
             panelTitulo = new Panel();
+            menuStrip2 = new MenuStrip();
+            toolStripMenuItem1 = new ToolStripMenuItem();
+            toolStripMenuItem2 = new ToolStripMenuItem();
+            toolStripMenuItem3 = new ToolStripMenuItem();
+            toolStripMenuItem4 = new ToolStripMenuItem();
+            toolStripMenuItem5 = new ToolStripMenuItem();
+            toolStripMenuItem6 = new ToolStripMenuItem();
+            toolStripMenuItem7 = new ToolStripMenuItem();
+            toolStripMenuItem8 = new ToolStripMenuItem();
+            toolStripMenuItem9 = new ToolStripMenuItem();
             labelEtiqueta = new Label();
             iconoActual = new IconPictureBox();
             panelEscritorio = new Panel();
+            iconSplitButton1 = new IconSplitButton();
+            iconMenuItem3 = new IconMenuItem();
+            iconSplitButton2 = new IconSplitButton();
+            iconToolStripButton1 = new IconToolStripButton();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnInicio).BeginInit();
             panelTitulo.SuspendLayout();
+            menuStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)iconoActual).BeginInit();
             SuspendLayout();
             // 
@@ -253,6 +268,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // panelTitulo
             // 
             panelTitulo.BackColor = Color.FromArgb(21, 9, 49);
+            panelTitulo.Controls.Add(menuStrip2);
             panelTitulo.Controls.Add(labelEtiqueta);
             panelTitulo.Controls.Add(iconoActual);
             panelTitulo.Dock = DockStyle.Top;
@@ -260,6 +276,82 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelTitulo.Name = "panelTitulo";
             panelTitulo.Size = new Size(705, 36);
             panelTitulo.TabIndex = 1;
+            // 
+            // menuStrip2
+            // 
+            menuStrip2.BackColor = Color.FromArgb(21, 9, 49);
+            menuStrip2.Dock = DockStyle.None;
+            menuStrip2.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            menuStrip2.GripMargin = new Padding(1, 2, 0, 2);
+            menuStrip2.GripStyle = ToolStripGripStyle.Visible;
+            menuStrip2.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1 });
+            menuStrip2.Location = new Point(44, 9);
+            menuStrip2.Name = "menuStrip2";
+            menuStrip2.Padding = new Padding(2, 2, 0, 0);
+            menuStrip2.Size = new Size(81, 24);
+            menuStrip2.TabIndex = 1;
+            menuStrip2.Text = "menuStrip2";
+            // 
+            // toolStripMenuItem1
+            // 
+            toolStripMenuItem1.Checked = true;
+            toolStripMenuItem1.CheckState = CheckState.Checked;
+            toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem2, toolStripMenuItem6, toolStripMenuItem9 });
+            toolStripMenuItem1.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            toolStripMenuItem1.ForeColor = SystemColors.ButtonFace;
+            toolStripMenuItem1.Name = "toolStripMenuItem1";
+            toolStripMenuItem1.Size = new Size(71, 22);
+            toolStripMenuItem1.Text = "Reportes";
+            // 
+            // toolStripMenuItem2
+            // 
+            toolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem3, toolStripMenuItem4, toolStripMenuItem5 });
+            toolStripMenuItem2.Name = "toolStripMenuItem2";
+            toolStripMenuItem2.Size = new Size(180, 22);
+            toolStripMenuItem2.Text = "Tarjetas";
+            // 
+            // toolStripMenuItem3
+            // 
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            toolStripMenuItem3.Size = new Size(123, 22);
+            toolStripMenuItem3.Text = "Tarjeta 1";
+            // 
+            // toolStripMenuItem4
+            // 
+            toolStripMenuItem4.Name = "toolStripMenuItem4";
+            toolStripMenuItem4.Size = new Size(123, 22);
+            toolStripMenuItem4.Text = "Tarjeta 2";
+            // 
+            // toolStripMenuItem5
+            // 
+            toolStripMenuItem5.Name = "toolStripMenuItem5";
+            toolStripMenuItem5.Size = new Size(123, 22);
+            toolStripMenuItem5.Text = "Tarjeta 3";
+            // 
+            // toolStripMenuItem6
+            // 
+            toolStripMenuItem6.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem7, toolStripMenuItem8 });
+            toolStripMenuItem6.Name = "toolStripMenuItem6";
+            toolStripMenuItem6.Size = new Size(180, 22);
+            toolStripMenuItem6.Text = "Configuracion";
+            // 
+            // toolStripMenuItem7
+            // 
+            toolStripMenuItem7.Name = "toolStripMenuItem7";
+            toolStripMenuItem7.Size = new Size(265, 22);
+            toolStripMenuItem7.Text = "Agregar tarjeta";
+            // 
+            // toolStripMenuItem8
+            // 
+            toolStripMenuItem8.Name = "toolStripMenuItem8";
+            toolStripMenuItem8.Size = new Size(265, 22);
+            toolStripMenuItem8.Text = "Ver reporte de ventas por tarjetas";
+            // 
+            // toolStripMenuItem9
+            // 
+            toolStripMenuItem9.Name = "toolStripMenuItem9";
+            toolStripMenuItem9.Size = new Size(180, 22);
+            toolStripMenuItem9.Text = "algo";
             // 
             // labelEtiqueta
             // 
@@ -293,7 +385,48 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelEscritorio.Name = "panelEscritorio";
             panelEscritorio.Size = new Size(705, 506);
             panelEscritorio.TabIndex = 2;
-            panelEscritorio.Paint += panelEscritorio_Paint;
+            // 
+            // iconSplitButton1
+            // 
+            iconSplitButton1.Flip = FlipOrientation.Normal;
+            iconSplitButton1.IconChar = IconChar.None;
+            iconSplitButton1.IconColor = Color.Black;
+            iconSplitButton1.IconFont = IconFont.Auto;
+            iconSplitButton1.IconSize = 48;
+            iconSplitButton1.Name = "iconSplitButton1";
+            iconSplitButton1.Rotation = 0D;
+            iconSplitButton1.Size = new Size(23, 23);
+            iconSplitButton1.Text = "iconSplitButton1";
+            // 
+            // iconMenuItem3
+            // 
+            iconMenuItem3.IconChar = IconChar.None;
+            iconMenuItem3.IconColor = Color.Black;
+            iconMenuItem3.IconFont = IconFont.Auto;
+            iconMenuItem3.Name = "iconMenuItem3";
+            iconMenuItem3.Size = new Size(32, 19);
+            iconMenuItem3.Text = "iconMenuItem3";
+            // 
+            // iconSplitButton2
+            // 
+            iconSplitButton2.Flip = FlipOrientation.Normal;
+            iconSplitButton2.IconChar = IconChar.None;
+            iconSplitButton2.IconColor = Color.Black;
+            iconSplitButton2.IconFont = IconFont.Auto;
+            iconSplitButton2.IconSize = 48;
+            iconSplitButton2.Name = "iconSplitButton2";
+            iconSplitButton2.Rotation = 0D;
+            iconSplitButton2.Size = new Size(23, 23);
+            iconSplitButton2.Text = "iconSplitButton2";
+            // 
+            // iconToolStripButton1
+            // 
+            iconToolStripButton1.IconChar = IconChar.None;
+            iconToolStripButton1.IconColor = Color.Black;
+            iconToolStripButton1.IconFont = IconFont.Auto;
+            iconToolStripButton1.Name = "iconToolStripButton1";
+            iconToolStripButton1.Size = new Size(23, 23);
+            iconToolStripButton1.Text = "iconToolStripButton1";
             // 
             // Form1
             // 
@@ -312,6 +445,8 @@ namespace Punto_de_venta___Prácticas_profesionales
             ((System.ComponentModel.ISupportInitialize)btnInicio).EndInit();
             panelTitulo.ResumeLayout(false);
             panelTitulo.PerformLayout();
+            menuStrip2.ResumeLayout(false);
+            menuStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)iconoActual).EndInit();
             ResumeLayout(false);
         }
@@ -332,5 +467,19 @@ namespace Punto_de_venta___Prácticas_profesionales
         private IconPictureBox iconoActual;
         private Label labelEtiqueta;
         private Panel panelEscritorio;
+        private MenuStrip menuStrip2;
+        private ToolStripMenuItem toolStripMenuItem1;
+        private ToolStripMenuItem toolStripMenuItem2;
+        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem toolStripMenuItem4;
+        private ToolStripMenuItem toolStripMenuItem5;
+        private ToolStripMenuItem toolStripMenuItem6;
+        private ToolStripMenuItem toolStripMenuItem7;
+        private ToolStripMenuItem toolStripMenuItem8;
+        private ToolStripMenuItem toolStripMenuItem9;
+        private IconSplitButton iconSplitButton1;
+        private IconMenuItem iconMenuItem3;
+        private IconSplitButton iconSplitButton2;
+        private IconToolStripButton iconToolStripButton1;
     }
 }

@@ -53,6 +53,15 @@
             classBtnPersonalizado23 = new ClassBtnPersonalizado();
             classBtnPersonalizado24 = new ClassBtnPersonalizado();
             classBtnPersonalizado25 = new ClassBtnPersonalizado();
+            classBtnPersonalizado26 = new ClassBtnPersonalizado();
+            classBtnPersonalizado28 = new ClassBtnPersonalizado();
+            classBtnPersonalizado29 = new ClassBtnPersonalizado();
+            classBtnPersonalizado30 = new ClassBtnPersonalizado();
+            classBtnPersonalizado27 = new ClassBtnPersonalizado();
+            classBtnPersonalizado31 = new ClassBtnPersonalizado();
+            classBtnPersonalizado32 = new ClassBtnPersonalizado();
+            classBtnPersonalizado33 = new ClassBtnPersonalizado();
+            classBtnPersonalizado34 = new ClassBtnPersonalizado();
             SuspendLayout();
             // 
             // classBtnPersonalizado1
@@ -358,7 +367,7 @@
             classBtnPersonalizado12.IconColor = Color.Black;
             classBtnPersonalizado12.IconPadding = 4;
             classBtnPersonalizado12.IconSize = 24;
-            classBtnPersonalizado12.Location = new Point(358, 257);
+            classBtnPersonalizado12.Location = new Point(368, 255);
             classBtnPersonalizado12.Name = "classBtnPersonalizado12";
             classBtnPersonalizado12.Size = new Size(101, 40);
             classBtnPersonalizado12.TabIndex = 20;
@@ -656,12 +665,237 @@
             classBtnPersonalizado25.TextColor = Color.Black;
             classBtnPersonalizado25.UseVisualStyleBackColor = false;
             // 
+            // classBtnPersonalizado26
+            // 
+            classBtnPersonalizado26.BackColor = Color.White;
+            classBtnPersonalizado26.BackgroundColor = Color.White;
+            classBtnPersonalizado26.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado26.BorderRadius = 25;
+            classBtnPersonalizado26.BorderSize = 0;
+            classBtnPersonalizado26.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado26.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado26.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado26.ForeColor = Color.Black;
+            classBtnPersonalizado26.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado26.IconChar = FontAwesome.Sharp.IconChar.Search;
+            classBtnPersonalizado26.IconColor = Color.Black;
+            classBtnPersonalizado26.IconPadding = 4;
+            classBtnPersonalizado26.IconSize = 24;
+            classBtnPersonalizado26.Location = new Point(641, 209);
+            classBtnPersonalizado26.Name = "classBtnPersonalizado26";
+            classBtnPersonalizado26.Size = new Size(111, 40);
+            classBtnPersonalizado26.TabIndex = 33;
+            classBtnPersonalizado26.Text = "Buscar";
+            classBtnPersonalizado26.TextColor = Color.Black;
+            classBtnPersonalizado26.UseVisualStyleBackColor = false;
+            // 
+            // classBtnPersonalizado28
+            // 
+            classBtnPersonalizado28.BackColor = Color.White;
+            classBtnPersonalizado28.BackgroundColor = Color.White;
+            classBtnPersonalizado28.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado28.BorderRadius = 30;
+            classBtnPersonalizado28.BorderSize = 0;
+            classBtnPersonalizado28.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado28.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado28.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado28.ForeColor = Color.Black;
+            classBtnPersonalizado28.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado28.IconChar = FontAwesome.Sharp.IconChar.CcVisa;
+            classBtnPersonalizado28.IconColor = Color.Black;
+            classBtnPersonalizado28.IconPadding = 4;
+            classBtnPersonalizado28.IconSize = 30;
+            classBtnPersonalizado28.Location = new Point(516, 301);
+            classBtnPersonalizado28.Name = "classBtnPersonalizado28";
+            classBtnPersonalizado28.Size = new Size(111, 40);
+            classBtnPersonalizado28.TabIndex = 35;
+            classBtnPersonalizado28.Text = "Tarjeta";
+            classBtnPersonalizado28.TextColor = Color.Black;
+            classBtnPersonalizado28.UseVisualStyleBackColor = false;
+            // 
+            // classBtnPersonalizado29
+            // 
+            classBtnPersonalizado29.BackColor = Color.White;
+            classBtnPersonalizado29.BackgroundColor = Color.White;
+            classBtnPersonalizado29.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado29.BorderRadius = 25;
+            classBtnPersonalizado29.BorderSize = 0;
+            classBtnPersonalizado29.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado29.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado29.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado29.ForeColor = Color.Black;
+            classBtnPersonalizado29.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado29.IconChar = FontAwesome.Sharp.IconChar.Calendar;
+            classBtnPersonalizado29.IconColor = Color.IndianRed;
+            classBtnPersonalizado29.IconPadding = 8;
+            classBtnPersonalizado29.IconSize = 24;
+            classBtnPersonalizado29.Location = new Point(516, 258);
+            classBtnPersonalizado29.Name = "classBtnPersonalizado29";
+            classBtnPersonalizado29.Size = new Size(111, 40);
+            classBtnPersonalizado29.TabIndex = 36;
+            classBtnPersonalizado29.Text = "Fecha";
+            classBtnPersonalizado29.TextColor = Color.Black;
+            classBtnPersonalizado29.UseVisualStyleBackColor = false;
+            // 
+            // classBtnPersonalizado30
+            // 
+            classBtnPersonalizado30.BackColor = Color.White;
+            classBtnPersonalizado30.BackgroundColor = Color.White;
+            classBtnPersonalizado30.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado30.BorderRadius = 30;
+            classBtnPersonalizado30.BorderSize = 0;
+            classBtnPersonalizado30.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado30.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado30.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado30.ForeColor = Color.Black;
+            classBtnPersonalizado30.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado30.IconChar = FontAwesome.Sharp.IconChar.CcVisa;
+            classBtnPersonalizado30.IconColor = Color.Navy;
+            classBtnPersonalizado30.IconPadding = 4;
+            classBtnPersonalizado30.IconSize = 30;
+            classBtnPersonalizado30.Location = new Point(641, 297);
+            classBtnPersonalizado30.Name = "classBtnPersonalizado30";
+            classBtnPersonalizado30.Size = new Size(111, 40);
+            classBtnPersonalizado30.TabIndex = 37;
+            classBtnPersonalizado30.Text = "Tarjeta";
+            classBtnPersonalizado30.TextColor = Color.Black;
+            classBtnPersonalizado30.UseVisualStyleBackColor = false;
+            // 
+            // classBtnPersonalizado27
+            // 
+            classBtnPersonalizado27.BackColor = Color.White;
+            classBtnPersonalizado27.BackgroundColor = Color.White;
+            classBtnPersonalizado27.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado27.BorderRadius = 25;
+            classBtnPersonalizado27.BorderSize = 0;
+            classBtnPersonalizado27.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado27.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado27.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado27.ForeColor = Color.Black;
+            classBtnPersonalizado27.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado27.IconChar = FontAwesome.Sharp.IconChar.Search;
+            classBtnPersonalizado27.IconColor = Color.FromArgb(0, 0, 192);
+            classBtnPersonalizado27.IconPadding = 4;
+            classBtnPersonalizado27.IconSize = 24;
+            classBtnPersonalizado27.Location = new Point(641, 251);
+            classBtnPersonalizado27.Name = "classBtnPersonalizado27";
+            classBtnPersonalizado27.Size = new Size(111, 40);
+            classBtnPersonalizado27.TabIndex = 38;
+            classBtnPersonalizado27.Text = "Buscar";
+            classBtnPersonalizado27.TextColor = Color.Black;
+            classBtnPersonalizado27.UseVisualStyleBackColor = false;
+            // 
+            // classBtnPersonalizado31
+            // 
+            classBtnPersonalizado31.BackColor = Color.FromArgb(0, 0, 192);
+            classBtnPersonalizado31.BackgroundColor = Color.FromArgb(0, 0, 192);
+            classBtnPersonalizado31.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado31.BorderRadius = 25;
+            classBtnPersonalizado31.BorderSize = 0;
+            classBtnPersonalizado31.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado31.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado31.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado31.ForeColor = Color.White;
+            classBtnPersonalizado31.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado31.IconChar = FontAwesome.Sharp.IconChar.Search;
+            classBtnPersonalizado31.IconColor = Color.White;
+            classBtnPersonalizado31.IconPadding = 4;
+            classBtnPersonalizado31.IconSize = 24;
+            classBtnPersonalizado31.Location = new Point(651, 343);
+            classBtnPersonalizado31.Name = "classBtnPersonalizado31";
+            classBtnPersonalizado31.Size = new Size(111, 40);
+            classBtnPersonalizado31.TabIndex = 39;
+            classBtnPersonalizado31.Text = "Buscar";
+            classBtnPersonalizado31.TextColor = Color.White;
+            classBtnPersonalizado31.UseVisualStyleBackColor = false;
+            // 
+            // classBtnPersonalizado32
+            // 
+            classBtnPersonalizado32.BackColor = Color.White;
+            classBtnPersonalizado32.BackgroundColor = Color.White;
+            classBtnPersonalizado32.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado32.BorderRadius = 30;
+            classBtnPersonalizado32.BorderSize = 0;
+            classBtnPersonalizado32.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado32.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado32.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado32.ForeColor = Color.Black;
+            classBtnPersonalizado32.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado32.IconChar = FontAwesome.Sharp.IconChar.ContactBook;
+            classBtnPersonalizado32.IconColor = Color.Black;
+            classBtnPersonalizado32.IconPadding = 4;
+            classBtnPersonalizado32.IconSize = 30;
+            classBtnPersonalizado32.Location = new Point(368, 343);
+            classBtnPersonalizado32.Name = "classBtnPersonalizado32";
+            classBtnPersonalizado32.Size = new Size(123, 40);
+            classBtnPersonalizado32.TabIndex = 40;
+            classBtnPersonalizado32.Text = "Cliente";
+            classBtnPersonalizado32.TextColor = Color.Black;
+            classBtnPersonalizado32.UseVisualStyleBackColor = false;
+            // 
+            // classBtnPersonalizado33
+            // 
+            classBtnPersonalizado33.BackColor = Color.White;
+            classBtnPersonalizado33.BackgroundColor = Color.White;
+            classBtnPersonalizado33.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado33.BorderRadius = 30;
+            classBtnPersonalizado33.BorderSize = 0;
+            classBtnPersonalizado33.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado33.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado33.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado33.ForeColor = Color.Black;
+            classBtnPersonalizado33.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado33.IconChar = FontAwesome.Sharp.IconChar.Vcard;
+            classBtnPersonalizado33.IconColor = Color.Black;
+            classBtnPersonalizado33.IconPadding = 4;
+            classBtnPersonalizado33.IconSize = 30;
+            classBtnPersonalizado33.Location = new Point(504, 347);
+            classBtnPersonalizado33.Name = "classBtnPersonalizado33";
+            classBtnPersonalizado33.Size = new Size(123, 40);
+            classBtnPersonalizado33.TabIndex = 41;
+            classBtnPersonalizado33.Text = "Empleado";
+            classBtnPersonalizado33.TextColor = Color.Black;
+            classBtnPersonalizado33.UseVisualStyleBackColor = false;
+            // 
+            // classBtnPersonalizado34
+            // 
+            classBtnPersonalizado34.BackColor = Color.White;
+            classBtnPersonalizado34.BackgroundColor = Color.White;
+            classBtnPersonalizado34.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado34.BorderRadius = 25;
+            classBtnPersonalizado34.BorderSize = 0;
+            classBtnPersonalizado34.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado34.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado34.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado34.ForeColor = Color.Black;
+            classBtnPersonalizado34.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado34.IconChar = FontAwesome.Sharp.IconChar.Calendar;
+            classBtnPersonalizado34.IconColor = Color.Brown;
+            classBtnPersonalizado34.IconPadding = 8;
+            classBtnPersonalizado34.IconSize = 24;
+            classBtnPersonalizado34.Location = new Point(368, 297);
+            classBtnPersonalizado34.Name = "classBtnPersonalizado34";
+            classBtnPersonalizado34.Size = new Size(111, 40);
+            classBtnPersonalizado34.TabIndex = 42;
+            classBtnPersonalizado34.Text = "Fecha";
+            classBtnPersonalizado34.TextColor = Color.Black;
+            classBtnPersonalizado34.UseVisualStyleBackColor = false;
+            // 
             // Botones
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Gainsboro;
             ClientSize = new Size(800, 450);
+            Controls.Add(classBtnPersonalizado34);
+            Controls.Add(classBtnPersonalizado33);
+            Controls.Add(classBtnPersonalizado32);
+            Controls.Add(classBtnPersonalizado31);
+            Controls.Add(classBtnPersonalizado27);
+            Controls.Add(classBtnPersonalizado30);
+            Controls.Add(classBtnPersonalizado29);
+            Controls.Add(classBtnPersonalizado28);
+            Controls.Add(classBtnPersonalizado26);
             Controls.Add(classBtnPersonalizado25);
             Controls.Add(classBtnPersonalizado24);
             Controls.Add(classBtnPersonalizado23);
@@ -721,5 +955,14 @@
         private ClassBtnPersonalizado classBtnPersonalizado23;
         private ClassBtnPersonalizado classBtnPersonalizado24;
         private ClassBtnPersonalizado classBtnPersonalizado25;
+        private ClassBtnPersonalizado classBtnPersonalizado26;
+        private ClassBtnPersonalizado classBtnPersonalizado28;
+        private ClassBtnPersonalizado classBtnPersonalizado29;
+        private ClassBtnPersonalizado classBtnPersonalizado30;
+        private ClassBtnPersonalizado classBtnPersonalizado27;
+        private ClassBtnPersonalizado classBtnPersonalizado31;
+        private ClassBtnPersonalizado classBtnPersonalizado32;
+        private ClassBtnPersonalizado classBtnPersonalizado33;
+        private ClassBtnPersonalizado classBtnPersonalizado34;
     }
 }
