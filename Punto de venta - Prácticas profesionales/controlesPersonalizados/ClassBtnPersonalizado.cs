@@ -186,7 +186,7 @@ namespace Punto_de_venta___Prácticas_profesionales.controlesPersonalizados
             }
         }
 
-        private void Container_BackColorChanged(object sender, EventArgs e)
+        private void Container_BackColorChanged(object? sender, EventArgs e)
         {
             if (this.DesignMode)
                 this.Invalidate();

@@ -63,6 +63,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             {
                 currentChildForm.Close();
             }
+
             currentChildForm = childForm;
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
@@ -71,10 +72,21 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelEscritorio.Tag = childForm;
             childForm.BringToFront();
             childForm.Show();
-            labelEtiqueta.Text = childForm.Text;
 
+            // esta condicion la podes usar en el caso que quieras que reportes solo se muestre en caja 
+            //(o en cualquier formuario q necesites git add "Punto de venta - Prácticas profesionales/controlesPersonalizados/Botones.Designer.cs")
+            //if (childForm is Presentación.FormCaja)
+            //{
+            //    menuStrip2.Visible = true;  // Mostrar el MenuStrip si es FormCaja
+            //}
+            //else
+            //{
+            //    menuStrip2.Visible = false; // Ocultar el MenuStrip para otros formularios
+            //}
 
+            // labelEtiqueta.Text = childForm.Text;
         }
+
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
@@ -108,10 +120,7 @@ namespace Punto_de_venta___Prácticas_profesionales
 
         }
 
-        private void panelEscritorio_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
 
         private void iconButton2_Click(object sender, EventArgs e)
         {
@@ -158,6 +167,29 @@ namespace Punto_de_venta___Prácticas_profesionales
         {
             ActivateButton(sender, RGBcolors.color1);
             openChildForm(new controlesPersonalizados.Botones());
+        }
+
+        private void panelEscritorio_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void iconButton8_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void iconButton10_Click(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Normal)
+                WindowState = FormWindowState.Maximized;
+            else
+                WindowState = FormWindowState.Normal;
+        }
+
+        private void iconButton11_Click(object sender, EventArgs e)
+        {
+            WindowState=FormWindowState.Minimized;
         }
     }
 }

@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Lógica\" />
     <Folder Include="Datos\" />
+    <Folder Include="Lógica\" />
   </ItemGroup>
 
   <ItemGroup>
