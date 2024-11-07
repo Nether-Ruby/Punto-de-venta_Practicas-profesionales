@@ -18,6 +18,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         {
             InitializeComponent();
             actualizar();
+            dataGridView1.Columns[0].ReadOnly = true;
         }
         private void actualizar()
         {
@@ -65,37 +66,60 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         }
 
         private void textBox5_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
-            {
-                e.Handled = true;
-            }
-        }
+        { // Permitir dígitos, caracteres de control y un único punto decimal
+          if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != '.') 
+            { 
+                e.Handled = true; 
+            } // Asegurarse de que solo haya un punto decimal
+          if (e.KeyChar == '.' && (sender as TextBox).Text.IndexOf('.') > -1) { e.Handled = true; } }
 
-        private void button2_Click(object sender, EventArgs e)
+            private void button2_Click(object sender, EventArgs e)
         {
             string nombre = textBox2.Text;
+            string email = textBox4.Text; // Asegúrate de que se toma el valor correcto del TextBox
+
+            // Manejo de teléfono
             string telefono = textBox3.Text;
-            string email = textBox4.Text;
-            if (!int.TryParse(textBox5.Text, out int deuda))
+            int? telefonoInt = null;
+            if (!string.IsNullOrWhiteSpace(telefono) && int.TryParse(telefono, out int parsedTelefono))
+            {
+                telefonoInt = parsedTelefono;
+            }
+
+            // Manejo de deuda
+            string deudaTexto = textBox5.Text;
+            if (!double.TryParse(deudaTexto, out double deuda))
             {
                 MessageBox.Show("Error en la deuda: Debe ser un número válido.");
                 return;
             }
-            proveedoresLogica NuevoProveedor = new proveedoresLogica();
-            NuevoProveedor.Nombre = nombre;
-            NuevoProveedor.Telefono = telefono;
-            NuevoProveedor.Email = email;
-            NuevoProveedor.Deuda = deuda;
+
+            proveedoresLogica NuevoProveedor = new proveedoresLogica
+            {
+                Nombre = nombre,
+                Telefono = telefonoInt?.ToString(),
+                Email = email, // Asignar el email correctamente
+                Deuda = deuda
+            };
+
             if (!proveedoresLogica.ValidarProveedor(NuevoProveedor, out string errorMessage))
             {
                 MessageBox.Show(errorMessage);
                 return;
             }
-            NuevoProveedor.agregarProveedor(NuevoProveedor);
-            MessageBox.Show("Proveedor agregado con éxito.");
-            actualizar();
+
+            try
+            {
+                NuevoProveedor.agregarProveedor(NuevoProveedor);
+                MessageBox.Show("Proveedor agregado con éxito.");
+                actualizar(); // Asumimos que este método está definido y actualiza la UI o los datos
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al agregar el proveedor: " + ex.Message);
+            }
         }
+
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -106,66 +130,67 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         {
             try
             {
-                // Obtener los valores de la celda editada
-                int rowIndex = e.RowIndex;
-                int columnIndex = e.ColumnIndex;
-                var newValue = dataGridView1.Rows[rowIndex].Cells[columnIndex].Value?.ToString(); // Convertir a string
-
-                // Obtener el nombre del proveedor, que es la clave primaria
-                var primaryKey = dataGridView1.Rows[rowIndex].Cells["nombre"].Value?.ToString();
-
-                // Obtener el nombre de la columna editada
-                string columnName = dataGridView1.Columns[columnIndex].Name;
-
-                // Inicializar variables para los valores actuales
-                string currentTelefono = dataGridView1.Rows[rowIndex].Cells["telefono"].Value?.ToString();
-                string currentEmail = dataGridView1.Rows[rowIndex].Cells["email"].Value?.ToString();
-                int currentDeuda = Convert.ToInt32(dataGridView1.Rows[rowIndex].Cells["deuda"].Value ?? 0);
-
-                // Verificar el valor de la deuda si se edita
-                int? deuda = null;
-                if (columnName == "deuda")
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
                 {
-                    if (int.TryParse(newValue, out int parsedDeuda))
+                    // Obtener el ID del proveedor
+                    int proveedorId = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["proveedor_id"].Value);
+
+                    // Obtener los valores de las celdas editadas
+                    string currentNombre = dataGridView1.Rows[e.RowIndex].Cells["nombre"].Value?.ToString();
+                    string currentTelefono = dataGridView1.Rows[e.RowIndex].Cells["telefono"].Value?.ToString();
+                    string currentEmail = dataGridView1.Rows[e.RowIndex].Cells["email"].Value?.ToString();
+                    double currentDeuda = Convert.ToDouble(dataGridView1.Rows[e.RowIndex].Cells["deuda"].Value ?? 0.0);
+
+                    // Obtener el nombre de la columna editada
+                    string columnName = dataGridView1.Columns[e.ColumnIndex].Name;
+                    var newValue = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString();
+
+                    // Verificar el valor de la deuda si se edita
+                    double? deuda = null;
+                    if (columnName == "deuda")
                     {
-                        deuda = parsedDeuda;
+                        if (double.TryParse(newValue, out double parsedDeuda))
+                        {
+                            deuda = parsedDeuda;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error en la deuda: Debe ser un número válido.");
+                            return;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Error en la deuda: Debe ser un número válido.");
-                        return;
+                        deuda = currentDeuda;
                     }
-                }
-                else
-                {
-                    deuda = currentDeuda;
-                }
 
-                // Crear una instancia del proveedor con la información actualizada
-                proveedoresLogica proveedor = new proveedoresLogica
-                {
-                    Nombre = primaryKey, // Clave primaria
-                    Telefono = columnName == "telefono" ? newValue : currentTelefono,
-                    Email = columnName == "email" ? newValue : currentEmail,
-                    Deuda = deuda.HasValue ? deuda.Value : currentDeuda
-                };
+                    // Crear una instancia del proveedor con la información actualizada
+                    proveedoresLogica proveedor = new proveedoresLogica
+                    {
+                        Id = proveedorId, // Usar proveedor_id como clave primaria
+                        Nombre = columnName == "nombre" ? newValue : currentNombre,
+                        Telefono = columnName == "telefono" ? newValue : currentTelefono,
+                        Email = columnName == "email" ? newValue : currentEmail,
+                        Deuda = deuda.HasValue ? deuda.Value : currentDeuda
+                    };
 
-                // Validar y actualizar la base de datos
-                if (proveedoresLogica.ValidarProveedor(proveedor, out string errorMessage))
-                {
-                    try
+                    // Validar y actualizar la base de datos
+                    if (proveedoresLogica.ValidarProveedor(proveedor, out string errorMessage))
                     {
-                        proveedor.modificarProveedor(proveedor);
-                        MessageBox.Show("Proveedor actualizado con éxito.");
+                        try
+                        {
+                            proveedor.modificarProveedor(proveedor);
+                            MessageBox.Show("Proveedor actualizado con éxito.");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error al actualizar el proveedor: " + ex.Message);
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show("Error al actualizar el proveedor: " + ex.Message);
+                        MessageBox.Show(errorMessage);
                     }
-                }
-                else
-                {
-                    MessageBox.Show(errorMessage);
                 }
             }
             catch (Exception ex)
@@ -174,6 +199,10 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             }
         }
 
+
+        /*
+         * 
+         */
 
 
 

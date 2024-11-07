@@ -74,7 +74,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
         {
             string connectionString = @"URI=file:" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database.db");
             using var conn = new SQLiteConnection( connectionString);
-            string query = " UPDATE proveedores SET nombre = @nombre, telefono = @telefono, email = @correo, deuda = @deuda WHERE IdColumn = @id";
+            string query = " UPDATE proveedores SET nombre = @nombre, telefono = @telefono, email = @correo, deuda = @deuda WHERE proveedor_id = @id";
             using var cmd = new SQLiteCommand(query, conn);
             cmd.Parameters.AddWithValue("@nombre", modificado.Nombre);
             cmd.Parameters.AddWithValue("@telefono", modificado.Telefono);

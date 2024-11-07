@@ -16,13 +16,13 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
         private string nombre;
         private string telefono;
         private string email;
-        private int deuda;
+        private double deuda;
 
         public string Nombre { get => nombre; set => nombre = value; }
         public string Telefono { get => telefono; set => telefono = value; }
         public string Email { get => email; set => email = value; }
-        public int Deuda { get => deuda; set => deuda = value; }
-        public int Id { get => id; }
+        public double Deuda { get => deuda; set => deuda = value; }
+        public int Id { get => id; set => id = value; }
 
         public DataTable mostrarProveedores()
         {
