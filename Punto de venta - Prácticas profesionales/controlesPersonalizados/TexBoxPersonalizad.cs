@@ -21,5 +21,10 @@ namespace Punto_de_venta___Prácticas_profesionales.controlesPersonalizados
         {
 
         }
+
+        private void texboxs4__TextChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("porfa");
+        }
     }
 }

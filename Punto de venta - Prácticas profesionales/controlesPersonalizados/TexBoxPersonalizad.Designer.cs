@@ -233,6 +233,7 @@
             texboxs4.TabIndex = 13;
             texboxs4.Texts = "";
             texboxs4.UnderlinedStyle1 = false;
+            texboxs4._TextChanged += texboxs4__TextChanged;
             // 
             // TexBoxPersonalizad
             // 
