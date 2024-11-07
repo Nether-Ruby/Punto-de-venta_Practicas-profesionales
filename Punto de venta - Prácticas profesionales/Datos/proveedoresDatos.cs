@@ -8,6 +8,7 @@ using System.IO;
 using System.Data;
 using Punto_de_venta___Prácticas_profesionales.Lógica;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 
 namespace Punto_de_venta___Prácticas_profesionales.Datos
 {
@@ -31,29 +32,43 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
         public DataTable buscarProveedores(string param)
         {
             string connectionString = @"URI=file:" + databasePath;
-            using var conn = new SQLiteConnection(connectionString);
             DataTable tabla = new DataTable();
-            string query = " SELECT * FROM proveedores WHERE nombre LIKE @param OR telefono LIKE @param OR email LIKE @param OR deuda LIKE @param";
-            conn.Open();
-            using var cmd = new SQLiteCommand(query, conn);
-            cmd.Parameters.AddWithValue("@param", "%" + param + "%");
-            using var reader = cmd.ExecuteReader();
-            tabla.Load(reader);
+            try
+            {
+                using var conn = new SQLiteConnection(connectionString);
+                string query = " SELECT * FROM proveedores WHERE nombre LIKE @param OR telefono LIKE @param OR email LIKE @param OR deuda LIKE @param";
+                conn.Open();
+                using var cmd = new SQLiteCommand(query, conn);
+                cmd.Parameters.AddWithValue("@param", "%" + param + "%");
+                using var reader = cmd.ExecuteReader();
+                tabla.Load(reader);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Error al buscar proveedores en la base de datos.", ex);
+            }
             return tabla;
         }
         public void agregarProveedor(proveedoresLogica proveedor)
         {
             string connectionString = @"URI=file:" + databasePath;
-            using var conn = new SQLiteConnection(connectionString);
-            string query = "INSERT into proveedores(nombre, telefono, email, deuda) VALUES (@nombre, @telefono, @email, @deuda)";
-            using var cmd = new SQLiteCommand(query, conn);
-            cmd.Parameters.AddWithValue("@nombre", proveedor.Nombre);
-            cmd.Parameters.AddWithValue("@telefono", proveedor.Telefono);
-            cmd.Parameters.AddWithValue("@email", proveedor.Email);
-            cmd.Parameters.AddWithValue("@deuda", proveedor.Deuda);
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+            try
+            {
+                using var conn = new SQLiteConnection(connectionString);
+                string query = "INSERT into proveedores(nombre, telefono, email, deuda) VALUES (@nombre, @telefono, @email, @deuda)";
+                using var cmd = new SQLiteCommand(query, conn);
+                cmd.Parameters.AddWithValue("@nombre", proveedor.Nombre);
+                cmd.Parameters.AddWithValue("@telefono", proveedor.Telefono);
+                cmd.Parameters.AddWithValue("@email", proveedor.Email);
+                cmd.Parameters.AddWithValue("@deuda", proveedor.Deuda);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se ha podido agregar el proveedor. Problema con la base de datos");
+            }
+            
         }
         public void modificarProveedor(proveedoresLogica modificado)
         {

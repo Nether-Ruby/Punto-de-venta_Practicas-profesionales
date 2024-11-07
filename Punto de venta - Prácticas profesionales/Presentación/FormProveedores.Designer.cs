@@ -31,10 +31,11 @@
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
             groupBox1 = new GroupBox();
-            button1 = new Button();
+            button3 = new controlesPersonalizados.ClassBtnPersonalizado();
+            button1 = new controlesPersonalizados.ClassBtnPersonalizado();
             textBox1 = new TextBox();
             groupBox2 = new GroupBox();
-            button2 = new Button();
+            button2 = new controlesPersonalizados.ClassBtnPersonalizado();
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
@@ -94,6 +95,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(button3);
             groupBox1.Controls.Add(button1);
             groupBox1.Controls.Add(textBox1);
             groupBox1.Dock = DockStyle.Fill;
@@ -104,15 +106,55 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Búsqueda";
             // 
+            // button3
+            // 
+            button3.Anchor = AnchorStyles.None;
+            button3.BackColor = Color.MediumSlateBlue;
+            button3.BackgroundColor = Color.MediumSlateBlue;
+            button3.BorderColor = Color.PaleVioletRed;
+            button3.BorderRadius = 40;
+            button3.BorderSize = 0;
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.ForeColor = Color.White;
+            button3.IconAlignment = ContentAlignment.MiddleRight;
+            button3.IconChar = FontAwesome.Sharp.IconChar.Database;
+            button3.IconColor = Color.White;
+            button3.IconPadding = 5;
+            button3.IconSize = 24;
+            button3.Location = new Point(21, 177);
+            button3.Name = "button3";
+            button3.Size = new Size(150, 40);
+            button3.TabIndex = 3;
+            button3.Text = "Mostrar todo";
+            button3.TextColor = Color.White;
+            button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
+            // 
             // button1
             // 
-            button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            button1.Location = new Point(43, 121);
+            button1.Anchor = AnchorStyles.None;
+            button1.BackColor = Color.MediumSlateBlue;
+            button1.BackgroundColor = Color.MediumSlateBlue;
+            button1.BorderColor = Color.PaleVioletRed;
+            button1.BorderRadius = 40;
+            button1.BorderSize = 0;
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.ForeColor = Color.White;
+            button1.IconAlignment = ContentAlignment.MiddleRight;
+            button1.IconChar = FontAwesome.Sharp.IconChar.MagnifyingGlassChart;
+            button1.IconColor = Color.White;
+            button1.IconPadding = 5;
+            button1.IconSize = 24;
+            button1.Location = new Point(21, 122);
             button1.Name = "button1";
-            button1.Size = new Size(105, 41);
-            button1.TabIndex = 1;
+            button1.Size = new Size(150, 40);
+            button1.TabIndex = 2;
             button1.Text = "Buscar";
-            button1.UseVisualStyleBackColor = true;
+            button1.TextColor = Color.White;
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // textBox1
             // 
@@ -120,6 +162,7 @@
             textBox1.Font = new Font("Segoe UI", 12F);
             textBox1.Location = new Point(6, 38);
             textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Inserte término a buscar";
             textBox1.Size = new Size(176, 29);
             textBox1.TabIndex = 0;
             // 
@@ -145,12 +188,27 @@
             // button2
             // 
             button2.Anchor = AnchorStyles.None;
-            button2.Location = new Point(311, 112);
+            button2.BackColor = Color.MediumSlateBlue;
+            button2.BackgroundColor = Color.MediumSlateBlue;
+            button2.BorderColor = Color.PaleVioletRed;
+            button2.BorderRadius = 40;
+            button2.BorderSize = 0;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.ForeColor = Color.White;
+            button2.IconAlignment = ContentAlignment.MiddleLeft;
+            button2.IconChar = FontAwesome.Sharp.IconChar.None;
+            button2.IconColor = Color.White;
+            button2.IconPadding = 5;
+            button2.IconSize = 24;
+            button2.Location = new Point(290, 122);
             button2.Name = "button2";
-            button2.Size = new Size(106, 50);
+            button2.Size = new Size(150, 40);
             button2.TabIndex = 8;
-            button2.Text = "Cargar proveedor";
-            button2.UseVisualStyleBackColor = true;
+            button2.Text = "Agregar proveedor";
+            button2.TextColor = Color.White;
+            button2.UseVisualStyleBackColor = false;
+            button2.Click += button2_Click;
             // 
             // label4
             // 
@@ -200,6 +258,7 @@
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(150, 29);
             textBox5.TabIndex = 3;
+            textBox5.KeyPress += textBox5_KeyPress;
             // 
             // textBox4
             // 
@@ -218,6 +277,7 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(150, 29);
             textBox3.TabIndex = 1;
+            textBox3.KeyPress += textBox3_KeyPress;
             // 
             // textBox2
             // 
@@ -236,6 +296,8 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(942, 344);
             dataGridView1.TabIndex = 0;
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+
             // 
             // FormProveedores
             // 
@@ -268,7 +330,6 @@
         private SplitContainer splitContainer2;
         private GroupBox groupBox1;
         private TextBox textBox1;
-        private Button button1;
         private GroupBox groupBox2;
         private TextBox textBox2;
         private DataGridView dataGridView1;
@@ -278,7 +339,9 @@
         private TextBox textBox5;
         private TextBox textBox4;
         private TextBox textBox3;
-        private Button button2;
         private Label label4;
+        private controlesPersonalizados.ClassBtnPersonalizado button1;
+        private controlesPersonalizados.ClassBtnPersonalizado button2;
+        private controlesPersonalizados.ClassBtnPersonalizado button3;
     }
 }
