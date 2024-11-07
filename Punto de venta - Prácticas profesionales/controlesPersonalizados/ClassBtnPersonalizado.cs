@@ -67,7 +67,7 @@ namespace Punto_de_venta___Prácticas_profesionales.controlesPersonalizados
             set { iconColor = value; this.Invalidate(); }
         }
 
-        [Category("Icono")]
+        [Category("Icono")] 
         public int IconSize
         {
             get => iconSize;
