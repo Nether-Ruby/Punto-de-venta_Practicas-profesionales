@@ -1,4 +1,4 @@
-﻿namespace Punto_de_venta___Prácticas_profesionales.Presentación
+﻿namespace Punto_de_venta___Prácticas_profesionales
 {
     partial class FormArticulos
     {
@@ -28,137 +28,320 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dgvArticulos = new DataGridView();
-            nombre = new DataGridViewTextBoxColumn();
-            marca = new DataGridViewTextBoxColumn();
-            rubro = new DataGridViewTextBoxColumn();
-            precio = new DataGridViewTextBoxColumn();
-            stock = new DataGridViewTextBoxColumn();
-            button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
-            button6 = new Button();
-            button8 = new Button();
-            ((System.ComponentModel.ISupportInitialize)dgvArticulos).BeginInit();
+            btnAgregar = new Button();
+            txtCodigo = new TextBox();
+            txtNombre = new TextBox();
+            txtMarca = new TextBox();
+            txtRubro = new TextBox();
+            txtPrecio = new TextBox();
+            txtStock = new TextBox();
+            btnActualizar = new Button();
+            btnEliminar = new Button();
+            btnLimpiar = new Button();
+            dataGridView1 = new DataGridView();
+            texboxs1 = new controlesPersonalizados.Texboxs();
+            texboxs2 = new controlesPersonalizados.Texboxs();
+            texboxs3 = new controlesPersonalizados.Texboxs();
+            texboxs4 = new controlesPersonalizados.Texboxs();
+            texboxs5 = new controlesPersonalizados.Texboxs();
+            texboxs6 = new controlesPersonalizados.Texboxs();
+            label1 = new Label();
+            texboxs7 = new controlesPersonalizados.Texboxs();
+            label2 = new Label();
+            dataGridViewInactivos = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewInactivos).BeginInit();
             SuspendLayout();
             // 
-            // dgvArticulos
+            // btnAgregar
             // 
-            dgvArticulos.BackgroundColor = SystemColors.ButtonFace;
-            dgvArticulos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvArticulos.Columns.AddRange(new DataGridViewColumn[] { nombre, marca, rubro, precio, stock });
-            dgvArticulos.GridColor = SystemColors.MenuText;
-            dgvArticulos.Location = new Point(12, 12);
-            dgvArticulos.Name = "dgvArticulos";
-            dgvArticulos.Size = new Size(541, 298);
-            dgvArticulos.TabIndex = 1;
+            btnAgregar.Location = new Point(28, 219);
+            btnAgregar.Name = "btnAgregar";
+            btnAgregar.Size = new Size(75, 23);
+            btnAgregar.TabIndex = 0;
+            btnAgregar.Text = "agregar";
+            btnAgregar.UseVisualStyleBackColor = true;
+            btnAgregar.Click += button1_Click;
             // 
-            // nombre
+            // txtCodigo
             // 
-            nombre.HeaderText = "Nombre";
-            nombre.Name = "nombre";
+            txtCodigo.Location = new Point(12, 12);
+            txtCodigo.Name = "txtCodigo";
+            txtCodigo.Size = new Size(100, 23);
+            txtCodigo.TabIndex = 1;
+            txtCodigo.TextChanged += txtCodigo_TextChanged;
             // 
-            // marca
+            // txtNombre
             // 
-            marca.HeaderText = "marca";
-            marca.Name = "marca";
+            txtNombre.Location = new Point(12, 51);
+            txtNombre.Name = "txtNombre";
+            txtNombre.Size = new Size(100, 23);
+            txtNombre.TabIndex = 2;
             // 
-            // rubro
+            // txtMarca
             // 
-            rubro.HeaderText = "rubro";
-            rubro.Name = "rubro";
+            txtMarca.Location = new Point(12, 90);
+            txtMarca.Name = "txtMarca";
+            txtMarca.Size = new Size(100, 23);
+            txtMarca.TabIndex = 3;
             // 
-            // precio
+            // txtRubro
             // 
-            precio.HeaderText = "Precio";
-            precio.Name = "precio";
+            txtRubro.Location = new Point(12, 119);
+            txtRubro.Name = "txtRubro";
+            txtRubro.Size = new Size(100, 23);
+            txtRubro.TabIndex = 4;
             // 
-            // stock
+            // txtPrecio
             // 
-            stock.HeaderText = "stock";
-            stock.Name = "stock";
+            txtPrecio.Location = new Point(12, 148);
+            txtPrecio.Name = "txtPrecio";
+            txtPrecio.Size = new Size(100, 23);
+            txtPrecio.TabIndex = 5;
             // 
-            // button3
+            // txtStock
             // 
-            button3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button3.Location = new Point(568, 12);
-            button3.Name = "button3";
-            button3.Size = new Size(134, 38);
-            button3.TabIndex = 3;
-            button3.Text = "Agregar";
-            button3.UseVisualStyleBackColor = true;
+            txtStock.Location = new Point(12, 190);
+            txtStock.Name = "txtStock";
+            txtStock.Size = new Size(100, 23);
+            txtStock.TabIndex = 6;
             // 
-            // button4
+            // btnActualizar
             // 
-            button4.BackColor = Color.White;
-            button4.Font = new Font("Mongolian Baiti", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button4.ForeColor = Color.MidnightBlue;
-            button4.Location = new Point(175, 328);
-            button4.Name = "button4";
-            button4.Size = new Size(75, 23);
-            button4.TabIndex = 4;
-            button4.Text = "button4";
-            button4.UseVisualStyleBackColor = false;
+            btnActualizar.Location = new Point(109, 219);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(75, 23);
+            btnActualizar.TabIndex = 7;
+            btnActualizar.Text = "actualizar";
+            btnActualizar.UseVisualStyleBackColor = true;
+            btnActualizar.Click += btnActualizar_Click;
             // 
-            // button5
+            // btnEliminar
             // 
-            button5.Location = new Point(568, 56);
-            button5.Name = "button5";
-            button5.Size = new Size(134, 38);
-            button5.TabIndex = 5;
-            button5.Text = "Editar";
-            button5.UseVisualStyleBackColor = true;
+            btnEliminar.Location = new Point(28, 248);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(75, 23);
+            btnEliminar.TabIndex = 8;
+            btnEliminar.Text = "eliminar";
+            btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
             // 
-            // button6
+            // btnLimpiar
             // 
-            button6.Location = new Point(568, 100);
-            button6.Name = "button6";
-            button6.Size = new Size(134, 38);
-            button6.TabIndex = 6;
-            button6.Text = "Eliminar";
-            button6.UseVisualStyleBackColor = true;
+            btnLimpiar.Location = new Point(109, 248);
+            btnLimpiar.Name = "btnLimpiar";
+            btnLimpiar.Size = new Size(75, 23);
+            btnLimpiar.TabIndex = 9;
+            btnLimpiar.Text = "limpiar";
+            btnLimpiar.UseVisualStyleBackColor = true;
             // 
-            // button8
+            // dataGridView1
             // 
-            button8.BackColor = Color.LavenderBlush;
-            button8.FlatStyle = FlatStyle.Flat;
-            button8.ForeColor = SystemColors.ActiveCaptionText;
-            button8.Location = new Point(275, 328);
-            button8.Name = "button8";
-            button8.Size = new Size(75, 23);
-            button8.TabIndex = 8;
-            button8.Text = "button8";
-            button8.UseVisualStyleBackColor = false;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(127, 21);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(240, 150);
+            dataGridView1.TabIndex = 10;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // FormArticulos
+            // texboxs1
+            // 
+            texboxs1.BackColor = SystemColors.Window;
+            texboxs1.BorderColor = Color.DarkSlateGray;
+            texboxs1.BorderFocusColor = Color.DarkGray;
+            texboxs1.BorderSize = 2;
+            texboxs1.Font = new Font("Segoe UI", 9.5F);
+            texboxs1.ForeColor = Color.DimGray;
+            texboxs1.Location = new Point(418, 81);
+            texboxs1.Name = "texboxs1";
+            texboxs1.Padding = new Padding(7);
+            texboxs1.Size = new Size(147, 32);
+            texboxs1.TabIndex = 11;
+            texboxs1.Texts = "";
+            texboxs1.UnderlinedStyle1 = false;
+            // 
+            // texboxs2
+            // 
+            texboxs2.BackColor = SystemColors.Window;
+            texboxs2.BorderColor = Color.Teal;
+            texboxs2.BorderFocusColor = Color.DarkGray;
+            texboxs2.BorderSize = 2;
+            texboxs2.Font = new Font("Segoe UI", 9.5F);
+            texboxs2.ForeColor = Color.DimGray;
+            texboxs2.Location = new Point(588, 123);
+            texboxs2.Name = "texboxs2";
+            texboxs2.Padding = new Padding(7);
+            texboxs2.Size = new Size(178, 32);
+            texboxs2.TabIndex = 12;
+            texboxs2.Texts = "";
+            texboxs2.UnderlinedStyle1 = true;
+            // 
+            // texboxs3
+            // 
+            texboxs3.BackColor = SystemColors.Window;
+            texboxs3.BorderColor = Color.Teal;
+            texboxs3.BorderFocusColor = Color.DarkGray;
+            texboxs3.BorderSize = 2;
+            texboxs3.Font = new Font("Segoe UI", 9.5F);
+            texboxs3.ForeColor = Color.DimGray;
+            texboxs3.Location = new Point(418, 123);
+            texboxs3.Name = "texboxs3";
+            texboxs3.Padding = new Padding(7);
+            texboxs3.Size = new Size(147, 32);
+            texboxs3.TabIndex = 13;
+            texboxs3.Texts = "";
+            texboxs3.UnderlinedStyle1 = false;
+            // 
+            // texboxs4
+            // 
+            texboxs4.BackColor = SystemColors.Window;
+            texboxs4.BorderColor = Color.DarkSlateGray;
+            texboxs4.BorderFocusColor = Color.DarkGray;
+            texboxs4.BorderSize = 2;
+            texboxs4.Font = new Font("Segoe UI", 9.5F);
+            texboxs4.ForeColor = Color.DimGray;
+            texboxs4.Location = new Point(588, 81);
+            texboxs4.Name = "texboxs4";
+            texboxs4.Padding = new Padding(7);
+            texboxs4.Size = new Size(178, 32);
+            texboxs4.TabIndex = 14;
+            texboxs4.Texts = "";
+            texboxs4.UnderlinedStyle1 = true;
+            // 
+            // texboxs5
+            // 
+            texboxs5.BackColor = SystemColors.Window;
+            texboxs5.BorderColor = Color.SteelBlue;
+            texboxs5.BorderFocusColor = Color.DarkGray;
+            texboxs5.BorderSize = 2;
+            texboxs5.Font = new Font("Segoe UI", 9.5F);
+            texboxs5.ForeColor = Color.DimGray;
+            texboxs5.Location = new Point(418, 161);
+            texboxs5.Name = "texboxs5";
+            texboxs5.Padding = new Padding(7);
+            texboxs5.Size = new Size(147, 32);
+            texboxs5.TabIndex = 15;
+            texboxs5.Texts = "";
+            texboxs5.UnderlinedStyle1 = false;
+            // 
+            // texboxs6
+            // 
+            texboxs6.BackColor = SystemColors.Window;
+            texboxs6.BorderColor = Color.FromArgb(0, 0, 64);
+            texboxs6.BorderFocusColor = Color.DarkGray;
+            texboxs6.BorderSize = 2;
+            texboxs6.Font = new Font("Segoe UI", 9.5F);
+            texboxs6.ForeColor = Color.DimGray;
+            texboxs6.Location = new Point(736, 42);
+            texboxs6.Name = "texboxs6";
+            texboxs6.Padding = new Padding(7);
+            texboxs6.Size = new Size(148, 32);
+            texboxs6.TabIndex = 16;
+            texboxs6.Texts = "";
+            texboxs6.UnderlinedStyle1 = true;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(521, 42);
+            label1.Name = "label1";
+            label1.Size = new Size(66, 17);
+            label1.TabIndex = 17;
+            label1.Text = "Nombre: ";
+            // 
+            // texboxs7
+            // 
+            texboxs7.BackColor = SystemColors.Window;
+            texboxs7.BorderColor = Color.Teal;
+            texboxs7.BorderFocusColor = Color.DarkGray;
+            texboxs7.BorderSize = 2;
+            texboxs7.Font = new Font("Segoe UI", 9.5F);
+            texboxs7.ForeColor = Color.DimGray;
+            texboxs7.Location = new Point(736, 90);
+            texboxs7.Name = "texboxs7";
+            texboxs7.Padding = new Padding(7);
+            texboxs7.Size = new Size(157, 32);
+            texboxs7.TabIndex = 18;
+            texboxs7.Texts = "";
+            texboxs7.UnderlinedStyle1 = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(621, 42);
+            label2.Name = "label2";
+            label2.Size = new Size(53, 17);
+            label2.TabIndex = 19;
+            label2.Text = "Marca: ";
+            // 
+            // dataGridViewInactivos
+            // 
+            dataGridViewInactivos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewInactivos.Location = new Point(579, 219);
+            dataGridViewInactivos.Name = "dataGridViewInactivos";
+            dataGridViewInactivos.ReadOnly = true;
+            dataGridViewInactivos.Size = new Size(240, 150);
+            dataGridViewInactivos.TabIndex = 20;
+            // 
+            // FormArtic
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ButtonHighlight;
-            ClientSize = new Size(942, 581);
-            Controls.Add(button8);
-            Controls.Add(button6);
-            Controls.Add(button5);
-            Controls.Add(button4);
-            Controls.Add(button3);
-            Controls.Add(dgvArticulos);
-            Name = "FormArticulos";
-            Text = "FormArticulos";
-            ((System.ComponentModel.ISupportInitialize)dgvArticulos).EndInit();
+            ClientSize = new Size(927, 450);
+            Controls.Add(dataGridViewInactivos);
+            Controls.Add(label2);
+            Controls.Add(texboxs7);
+            Controls.Add(label1);
+            Controls.Add(texboxs6);
+            Controls.Add(texboxs5);
+            Controls.Add(texboxs4);
+            Controls.Add(texboxs3);
+            Controls.Add(texboxs2);
+            Controls.Add(texboxs1);
+            Controls.Add(dataGridView1);
+            Controls.Add(btnLimpiar);
+            Controls.Add(btnEliminar);
+            Controls.Add(btnActualizar);
+            Controls.Add(txtStock);
+            Controls.Add(txtPrecio);
+            Controls.Add(txtRubro);
+            Controls.Add(txtMarca);
+            Controls.Add(txtNombre);
+            Controls.Add(txtCodigo);
+            Controls.Add(btnAgregar);
+            Name = "FormArtic";
+            Text = "FormArtic";
+            Load += FormArtic_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewInactivos).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
-        private DataGridView dgvArticulos;
-        private DataGridViewTextBoxColumn nombre;
-        private DataGridViewTextBoxColumn marca;
-        private DataGridViewTextBoxColumn rubro;
-        private DataGridViewTextBoxColumn precio;
-        private DataGridViewTextBoxColumn stock;
-        private Button button3;
-        private Button button4;
-        private Button button5;
-        private Button button6;
-        private Button button8;
+
+        private Button btnAgregar;
+        private TextBox txtCodigo;
+        private TextBox txtNombre;
+        private TextBox txtMarca;
+        private TextBox txtRubro;
+        private TextBox txtPrecio;
+        private TextBox txtStock;
+        private Button btnActualizar;
+        private Button btnEliminar;
+        private Button btnLimpiar;
+        private DataGridView dataGridView1;
+        private controlesPersonalizados.Texboxs texboxs1;
+        private controlesPersonalizados.Texboxs texboxs2;
+        private controlesPersonalizados.Texboxs texboxs3;
+        private controlesPersonalizados.Texboxs texboxs4;
+        private controlesPersonalizados.Texboxs texboxs5;
+        private controlesPersonalizados.Texboxs texboxs6;
+        private Label label1;
+        private controlesPersonalizados.Texboxs texboxs7;
+        private Label label2;
+        private DataGridView dataGridViewInactivos;
     }
 }
