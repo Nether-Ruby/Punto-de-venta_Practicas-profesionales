@@ -18,13 +18,13 @@ namespace Punto_de_venta___Prácticas_profesionales
 {
     public partial class FormArticulos : Form
     {
-        private ArticuloService articuloService;
+        private ArticulosLogica articuloService;
 
         public FormArticulos()
         {
             InitializeComponent();
-            DatabaseHelper.InitializeDatabase(); // Asegúrate de inicializar la base de datos
-            articuloService = new ArticuloService();
+            ArticulosDatos.InitializeDatabase(); 
+            articuloService = new ArticulosLogica();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -45,23 +45,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             }
         }
 
-        private void btnActualizar_Click(object sender, EventArgs e)
-        {
-            if (double.TryParse(txtPrecio.Texts, out double precio) &&
-                int.TryParse(txtStock.Texts, out int stock))
-            {
-                if (articuloService.ActualizarArticulo(txtCodigo.Texts, txtNombre.Texts, txtMarca.Texts, txtRubro.Texts, precio, stock))
-                {
-                    MessageBox.Show("Artículo actualizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarArticulos();
-                    LimpiarCampos();
-                }
-            }
-            else
-            {
-                MessageBox.Show("Los datos son invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+  
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
@@ -158,10 +142,9 @@ namespace Punto_de_venta___Prácticas_profesionales
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
-            // Obtener el texto de búsqueda del usuario
+           
             string criterioBusqueda = txtBuscar.Texts.Trim();
 
-            // Verificar si el usuario ingresó un criterio de búsqueda
             if (string.IsNullOrEmpty(criterioBusqueda))
             {
                 MessageBox.Show("Por favor, ingrese un criterio de búsqueda.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -197,20 +180,19 @@ namespace Punto_de_venta___Prácticas_profesionales
 
         private void btnArticulosActivos_Click(object sender, EventArgs e)
         {
-            // Cargar artículos activos en el DataGridView
+          
             dataGridView1.DataSource = articuloService.CargarArticulos(true);
 
-            // Mostrar el botón de deshabilitar y ocultar el botón de habilitar
+         
             btnDeshabilitar.Visible = true;
             btnHabilitar.Visible = false;
         }
 
         private void btnArticulosDeshabilitados_Click(object sender, EventArgs e)
         {
-            // Cargar artículos deshabilitados en el DataGridView
+          
             dataGridView1.DataSource = articuloService.CargarArticulos(false);
 
-            // Ocultar el botón de deshabilitar y mostrar el botón de habilitar
             btnDeshabilitar.Visible = false;
             btnHabilitar.Visible = true;
         }
@@ -226,13 +208,13 @@ namespace Punto_de_venta___Prácticas_profesionales
                 return;
             }
 
-            // Llamar al método de habilitar en ArticuloService
+           
             if (articuloService.HabilitarArticulo(codigo))
             {
                 MessageBox.Show("Artículo habilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 // Recargar la grilla con los artículos deshabilitados
                 dataGridView1.DataSource = articuloService.CargarArticulos(false);
-                LimpiarCampos(); // Limpiar los campos después de habilitar
+                LimpiarCampos(); 
             }
             else
             {
@@ -271,7 +253,7 @@ namespace Punto_de_venta___Prácticas_profesionales
                 return;
             }
 
-            // Llamar al método para actualizar el artículo
+           
             if (articuloService.ActualizarArticulo(codigo, nombre, marca, rubro, precio, stock))
             {
                 MessageBox.Show("Artículo actualizado correctamente desde la grilla.",

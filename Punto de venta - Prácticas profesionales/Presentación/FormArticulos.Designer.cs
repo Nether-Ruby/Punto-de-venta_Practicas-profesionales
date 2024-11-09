@@ -28,11 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            btnActualizar = new Button();
             btnDeshabilitar = new Button();
-            btnLimpiar = new Button();
             dataGridView1 = new DataGridView();
-            texboxs1 = new controlesPersonalizados.Texboxs();
             label1 = new Label();
             dataGridViewInactivos = new DataGridView();
             txtCodigo = new controlesPersonalizados.Texboxs();
@@ -45,9 +42,10 @@
             btnBuscar = new controlesPersonalizados.ClassBtnPersonalizado();
             cmbCriterio = new ComboBox();
             panelOpciones = new Panel();
-            btnHabilitar = new Button();
+            panel1 = new Panel();
             btnArticulosDeshabilitados = new controlesPersonalizados.ClassBtnPersonalizado();
             btnArticulosActivos = new controlesPersonalizados.ClassBtnPersonalizado();
+            btnHabilitar = new Button();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
@@ -57,17 +55,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewInactivos).BeginInit();
             panelOpciones.SuspendLayout();
+            panel1.SuspendLayout();
             SuspendLayout();
-            // 
-            // btnActualizar
-            // 
-            btnActualizar.Location = new Point(206, 12);
-            btnActualizar.Name = "btnActualizar";
-            btnActualizar.Size = new Size(75, 23);
-            btnActualizar.TabIndex = 7;
-            btnActualizar.Text = "actualizar";
-            btnActualizar.UseVisualStyleBackColor = true;
-            btnActualizar.Click += btnActualizar_Click;
             // 
             // btnDeshabilitar
             // 
@@ -75,19 +64,9 @@
             btnDeshabilitar.Name = "btnDeshabilitar";
             btnDeshabilitar.Size = new Size(126, 25);
             btnDeshabilitar.TabIndex = 8;
-            btnDeshabilitar.Text = "eliminar";
+            btnDeshabilitar.Text = "Desactivar";
             btnDeshabilitar.UseVisualStyleBackColor = true;
             btnDeshabilitar.Click += btnEliminar_Click;
-            // 
-            // btnLimpiar
-            // 
-            btnLimpiar.Location = new Point(12, 341);
-            btnLimpiar.Name = "btnLimpiar";
-            btnLimpiar.Size = new Size(75, 23);
-            btnLimpiar.TabIndex = 9;
-            btnLimpiar.Text = "limpiar";
-            btnLimpiar.UseVisualStyleBackColor = true;
-            btnLimpiar.Click += btnLimpiar_Click;
             // 
             // dataGridView1
             // 
@@ -99,27 +78,11 @@
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
             // 
-            // texboxs1
-            // 
-            texboxs1.BackColor = SystemColors.Window;
-            texboxs1.BorderColor = Color.DarkSlateGray;
-            texboxs1.BorderFocusColor = Color.DarkGray;
-            texboxs1.BorderSize = 2;
-            texboxs1.Font = new Font("Segoe UI", 9.5F);
-            texboxs1.ForeColor = Color.DimGray;
-            texboxs1.Location = new Point(205, 416);
-            texboxs1.Name = "texboxs1";
-            texboxs1.Padding = new Padding(7);
-            texboxs1.Size = new Size(147, 32);
-            texboxs1.TabIndex = 11;
-            texboxs1.Texts = "";
-            texboxs1.UnderlinedStyle1 = false;
-            // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(247, 88);
+            label1.Location = new Point(6, 165);
             label1.Name = "label1";
             label1.Size = new Size(66, 17);
             label1.TabIndex = 17;
@@ -142,7 +105,7 @@
             txtCodigo.BorderSize = 2;
             txtCodigo.Font = new Font("Segoe UI", 9.5F);
             txtCodigo.ForeColor = Color.DimGray;
-            txtCodigo.Location = new Point(314, 35);
+            txtCodigo.Location = new Point(73, 112);
             txtCodigo.Name = "txtCodigo";
             txtCodigo.Padding = new Padding(7);
             txtCodigo.Size = new Size(115, 32);
@@ -158,7 +121,7 @@
             txtNombre.BorderSize = 2;
             txtNombre.Font = new Font("Segoe UI", 9.5F);
             txtNombre.ForeColor = Color.DimGray;
-            txtNombre.Location = new Point(314, 73);
+            txtNombre.Location = new Point(73, 150);
             txtNombre.Name = "txtNombre";
             txtNombre.Padding = new Padding(7);
             txtNombre.Size = new Size(115, 32);
@@ -174,7 +137,7 @@
             txtMarca.BorderSize = 2;
             txtMarca.Font = new Font("Segoe UI", 9.5F);
             txtMarca.ForeColor = Color.DimGray;
-            txtMarca.Location = new Point(314, 111);
+            txtMarca.Location = new Point(73, 188);
             txtMarca.Name = "txtMarca";
             txtMarca.Padding = new Padding(7);
             txtMarca.Size = new Size(115, 32);
@@ -190,7 +153,7 @@
             txtRubro.BorderSize = 2;
             txtRubro.Font = new Font("Segoe UI", 9.5F);
             txtRubro.ForeColor = Color.DimGray;
-            txtRubro.Location = new Point(314, 152);
+            txtRubro.Location = new Point(73, 229);
             txtRubro.Name = "txtRubro";
             txtRubro.Padding = new Padding(7);
             txtRubro.Size = new Size(115, 32);
@@ -206,7 +169,7 @@
             txtPrecio.BorderSize = 2;
             txtPrecio.Font = new Font("Segoe UI", 9.5F);
             txtPrecio.ForeColor = Color.DimGray;
-            txtPrecio.Location = new Point(314, 190);
+            txtPrecio.Location = new Point(73, 267);
             txtPrecio.Name = "txtPrecio";
             txtPrecio.Padding = new Padding(7);
             txtPrecio.Size = new Size(115, 32);
@@ -222,7 +185,7 @@
             txtStock.BorderSize = 2;
             txtStock.Font = new Font("Segoe UI", 9.5F);
             txtStock.ForeColor = Color.DimGray;
-            txtStock.Location = new Point(314, 226);
+            txtStock.Location = new Point(73, 303);
             txtStock.Name = "txtStock";
             txtStock.Padding = new Padding(7);
             txtStock.Size = new Size(115, 32);
@@ -239,7 +202,7 @@
             txtBuscar.Cursor = Cursors.IBeam;
             txtBuscar.Font = new Font("Segoe UI", 9.5F);
             txtBuscar.ForeColor = Color.DimGray;
-            txtBuscar.Location = new Point(12, 9);
+            txtBuscar.Location = new Point(7, 7);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.Padding = new Padding(7);
             txtBuscar.Size = new Size(147, 32);
@@ -264,7 +227,7 @@
             btnBuscar.IconColor = Color.Blue;
             btnBuscar.IconPadding = 5;
             btnBuscar.IconSize = 30;
-            btnBuscar.Location = new Point(165, 9);
+            btnBuscar.Location = new Point(157, 9);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(44, 32);
             btnBuscar.TabIndex = 28;
@@ -276,34 +239,33 @@
             // 
             cmbCriterio.FormattingEnabled = true;
             cmbCriterio.Items.AddRange(new object[] { "Codigo", "Nombre", "Marca", "Rubro" });
-            cmbCriterio.Location = new Point(12, 44);
+            cmbCriterio.Location = new Point(7, 45);
             cmbCriterio.Name = "cmbCriterio";
             cmbCriterio.Size = new Size(121, 23);
             cmbCriterio.TabIndex = 29;
             // 
             // panelOpciones
             // 
+            panelOpciones.Controls.Add(panel1);
             panelOpciones.Controls.Add(dataGridView1);
             panelOpciones.Controls.Add(btnHabilitar);
-            panelOpciones.Controls.Add(btnArticulosDeshabilitados);
-            panelOpciones.Controls.Add(btnArticulosActivos);
             panelOpciones.Controls.Add(btnDeshabilitar);
             panelOpciones.Controls.Add(dataGridViewInactivos);
-            panelOpciones.Controls.Add(btnActualizar);
-            panelOpciones.Location = new Point(446, 9);
+            panelOpciones.Location = new Point(207, 4);
             panelOpciones.Name = "panelOpciones";
             panelOpciones.Size = new Size(627, 465);
             panelOpciones.TabIndex = 30;
             // 
-            // btnHabilitar
+            // panel1
             // 
-            btnHabilitar.Location = new Point(458, 414);
-            btnHabilitar.Name = "btnHabilitar";
-            btnHabilitar.Size = new Size(126, 25);
-            btnHabilitar.TabIndex = 33;
-            btnHabilitar.Text = "Activar";
-            btnHabilitar.UseVisualStyleBackColor = true;
-            btnHabilitar.Visible = false;
+            panel1.BackColor = Color.Azure;
+            panel1.Controls.Add(btnArticulosDeshabilitados);
+            panel1.Controls.Add(btnArticulosActivos);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(627, 40);
+            panel1.TabIndex = 39;
             // 
             // btnArticulosDeshabilitados
             // 
@@ -321,11 +283,11 @@
             btnArticulosDeshabilitados.IconColor = Color.White;
             btnArticulosDeshabilitados.IconPadding = 5;
             btnArticulosDeshabilitados.IconSize = 24;
-            btnArticulosDeshabilitados.Location = new Point(327, 3);
+            btnArticulosDeshabilitados.Location = new Point(400, 3);
             btnArticulosDeshabilitados.Name = "btnArticulosDeshabilitados";
-            btnArticulosDeshabilitados.Size = new Size(150, 40);
+            btnArticulosDeshabilitados.Size = new Size(153, 34);
             btnArticulosDeshabilitados.TabIndex = 31;
-            btnArticulosDeshabilitados.Text = "Articulos Desactivado";
+            btnArticulosDeshabilitados.Text = "Articulos Desactivados";
             btnArticulosDeshabilitados.TextColor = Color.Black;
             btnArticulosDeshabilitados.UseVisualStyleBackColor = false;
             btnArticulosDeshabilitados.Click += btnArticulosDeshabilitados_Click;
@@ -346,20 +308,30 @@
             btnArticulosActivos.IconColor = Color.White;
             btnArticulosActivos.IconPadding = 5;
             btnArticulosActivos.IconSize = 24;
-            btnArticulosActivos.Location = new Point(16, 3);
+            btnArticulosActivos.Location = new Point(59, 3);
             btnArticulosActivos.Name = "btnArticulosActivos";
-            btnArticulosActivos.Size = new Size(150, 40);
+            btnArticulosActivos.Size = new Size(150, 34);
             btnArticulosActivos.TabIndex = 32;
             btnArticulosActivos.Text = "Articulos Activos";
             btnArticulosActivos.TextColor = Color.Black;
             btnArticulosActivos.UseVisualStyleBackColor = false;
             btnArticulosActivos.Click += btnArticulosActivos_Click;
             // 
+            // btnHabilitar
+            // 
+            btnHabilitar.Location = new Point(458, 414);
+            btnHabilitar.Name = "btnHabilitar";
+            btnHabilitar.Size = new Size(126, 25);
+            btnHabilitar.TabIndex = 33;
+            btnHabilitar.Text = "Activar";
+            btnHabilitar.UseVisualStyleBackColor = true;
+            btnHabilitar.Visible = false;
+            // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(248, 50);
+            label3.Location = new Point(7, 127);
             label3.Name = "label3";
             label3.Size = new Size(60, 17);
             label3.TabIndex = 31;
@@ -369,7 +341,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(247, 126);
+            label4.Location = new Point(6, 203);
             label4.Name = "label4";
             label4.Size = new Size(53, 17);
             label4.TabIndex = 32;
@@ -379,7 +351,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(248, 167);
+            label5.Location = new Point(7, 244);
             label5.Name = "label5";
             label5.Size = new Size(53, 17);
             label5.TabIndex = 33;
@@ -389,7 +361,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label6.Location = new Point(248, 205);
+            label6.Location = new Point(7, 282);
             label6.Name = "label6";
             label6.Size = new Size(54, 17);
             label6.TabIndex = 34;
@@ -399,7 +371,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(248, 241);
+            label7.Location = new Point(7, 318);
             label7.Name = "label7";
             label7.Size = new Size(50, 17);
             label7.TabIndex = 35;
@@ -421,7 +393,7 @@
             btnAgregar.IconColor = Color.White;
             btnAgregar.IconPadding = 4;
             btnAgregar.IconSize = 24;
-            btnAgregar.Location = new Point(300, 277);
+            btnAgregar.Location = new Point(6, 353);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(140, 40);
             btnAgregar.TabIndex = 38;
@@ -452,23 +424,19 @@
             Controls.Add(txtNombre);
             Controls.Add(txtCodigo);
             Controls.Add(label1);
-            Controls.Add(texboxs1);
-            Controls.Add(btnLimpiar);
             Name = "FormArticulos";
             Text = "FormArticulos";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewInactivos).EndInit();
             panelOpciones.ResumeLayout(false);
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-        private Button btnActualizar;
         private Button btnDeshabilitar;
-        private Button btnLimpiar;
         private DataGridView dataGridView1;
-        private controlesPersonalizados.Texboxs texboxs1;
         private Label label1;
         private DataGridView dataGridViewInactivos;
         private controlesPersonalizados.Texboxs txtCodigo;
@@ -490,5 +458,6 @@
         private Label label7;
         private Button btnHabilitar;
         private controlesPersonalizados.ClassBtnPersonalizado btnAgregar;
+        private Panel panel1;
     }
 }
