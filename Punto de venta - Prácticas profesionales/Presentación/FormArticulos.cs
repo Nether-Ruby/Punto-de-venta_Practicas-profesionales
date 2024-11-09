@@ -1,8 +1,4 @@
-﻿
-
-
-/////
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,227 +9,79 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using System.IO;
-using Punto_de_venta___Prácticas_profesionales.Lógica;
-//using CrudArticulosApp;
+using Punto_de_venta___Prácticas_profesionales.Datos;
+////using CrudArticulosApp;
+
+using Punto_de_venta___Prácticas_profesionales.Logica;
 
 namespace Punto_de_venta___Prácticas_profesionales
-//namespace Punto_de_venta.Presentacion
 {
     public partial class FormArticulos : Form
     {
+        private ArticuloService articuloService;
+
         public FormArticulos()
         {
             InitializeComponent();
+            DatabaseHelper.InitializeDatabase(); // Asegúrate de inicializar la base de datos
+            articuloService = new ArticuloService();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (!double.TryParse(txtPrecio.Text, out double precio))
+            if (double.TryParse(txtPrecio.Texts, out double precio) &&
+                int.TryParse(txtStock.Texts, out int stock))
             {
-                MessageBox.Show("Por favor ingrese un número válido para el Precio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (string.IsNullOrEmpty(txtStock.Text) || !int.TryParse(txtStock.Text, out int stock))
-            {
-                MessageBox.Show("Por favor ingrese un número válido para el Stock.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Verificar si el artículo ya existe pero está inactivo
-            string checkQuery = "SELECT COUNT(*) FROM Articulos WHERE Codigo = @Codigo AND Activo = 0";
-            using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
-            {
-                connection.Open();
-                using (var checkCommand = new SQLiteCommand(checkQuery, connection))
+                if (articuloService.AgregarArticulo(txtCodigo.Texts, txtNombre.Texts, txtMarca.Texts, txtRubro.Texts, precio, stock))
                 {
-                    checkCommand.Parameters.AddWithValue("@Codigo", txtCodigo.Text);
-                    int count = Convert.ToInt32(checkCommand.ExecuteScalar());
-
-                    if (count > 0)
-                    {
-                        // Si existe como inactivo, se reactiva
-                        string reactivateQuery = "UPDATE Articulos SET Activo = 1, Nombre = @Nombre, Marca = @Marca, Rubro = @Rubro, Precio = @Precio, Stock = @Stock WHERE Codigo = @Codigo";
-                        using (var reactivateCommand = new SQLiteCommand(reactivateQuery, connection))
-                        {
-                            reactivateCommand.Parameters.AddWithValue("@Codigo", txtCodigo.Text);
-                            reactivateCommand.Parameters.AddWithValue("@Nombre", txtNombre.Text);
-                            reactivateCommand.Parameters.AddWithValue("@Marca", txtMarca.Text);
-                            reactivateCommand.Parameters.AddWithValue("@Rubro", txtRubro.Text);
-                            reactivateCommand.Parameters.AddWithValue("@Precio", precio);
-                            reactivateCommand.Parameters.AddWithValue("@Stock", stock);
-                            reactivateCommand.ExecuteNonQuery();
-                            MessageBox.Show("Artículo reactivado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    else
-                    {
-                        // Si no existe, se inserta como nuevo
-                        string insertQuery = "INSERT INTO Articulos (Codigo, Nombre, Marca, Rubro, Precio, Stock, Activo) VALUES (@Codigo, @Nombre, @Marca, @Rubro, @Precio, @Stock, 1)";
-                        using (var insertCommand = new SQLiteCommand(insertQuery, connection))
-                        {
-                            insertCommand.Parameters.AddWithValue("@Codigo", txtCodigo.Text);
-                            insertCommand.Parameters.AddWithValue("@Nombre", txtNombre.Text);
-                            insertCommand.Parameters.AddWithValue("@Marca", txtMarca.Text);
-                            insertCommand.Parameters.AddWithValue("@Rubro", txtRubro.Text);
-                            insertCommand.Parameters.AddWithValue("@Precio", precio);
-                            insertCommand.Parameters.AddWithValue("@Stock", stock);
-                            insertCommand.ExecuteNonQuery();
-                            MessageBox.Show("Artículo agregado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
+                    MessageBox.Show("Artículo procesado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarArticulos();
+                    LimpiarCampos();
                 }
             }
-
-            CargarArticulos(); // Recargar la grilla con los artículos activos
-            LimpiarCampos();
-        }
-
-
-
-
-
-
-        //
-        private void CargarArticulos()
-        {
-            string query = "SELECT * FROM Articulos WHERE Activo = 1";
-            try
+            else
             {
-                using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
-                {
-                    var dataAdapter = new SQLiteDataAdapter(query, connection);
-                    var dataTable = new DataTable();
-                    dataAdapter.Fill(dataTable);
-                    dataGridView1.DataSource = dataTable;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al cargar artículos activos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Datos inválidos en precio o stock.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        private void CargarArticulosInactivos()
-        {
-            string query = "SELECT * FROM Articulos WHERE Activo = 0";
-            try
-            {
-                using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
-                {
-                    var dataAdapter = new SQLiteDataAdapter(query, connection);
-                    var dataTable = new DataTable();
-                    dataAdapter.Fill(dataTable);
-                    dataGridViewInactivos.DataSource = dataTable;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al cargar artículos inactivos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-
-
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
-            // Validaciones para los campos de precio y stock
-            if (!double.TryParse(txtPrecio.Text, out double precio))
+            if (double.TryParse(txtPrecio.Texts, out double precio) &&
+                int.TryParse(txtStock.Texts, out int stock))
             {
-                MessageBox.Show("Por favor ingrese un número válido para el Precio.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (!int.TryParse(txtStock.Text, out int stock))
-            {
-                MessageBox.Show("Por favor ingrese un número válido para el Stock.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Verificar que el campo de Codigo no esté vacío
-            if (string.IsNullOrWhiteSpace(txtCodigo.Text))
-            {
-                MessageBox.Show("Por favor ingrese un código de producto para actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string query = "UPDATE Articulos SET Nombre=@Nombre, Marca=@Marca, Rubro=@Rubro, Precio=@Precio, Stock=@Stock WHERE Codigo=@Codigo";
-
-            try
-            {
-                using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
+                if (articuloService.ActualizarArticulo(txtCodigo.Texts, txtNombre.Texts, txtMarca.Texts, txtRubro.Texts, precio, stock))
                 {
-                    connection.Open();
-                    using (var command = new SQLiteCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@Codigo", txtCodigo.Text);
-                        command.Parameters.AddWithValue("@Nombre", txtNombre.Text);
-                        command.Parameters.AddWithValue("@Marca", txtMarca.Text);
-                        command.Parameters.AddWithValue("@Rubro", txtRubro.Text);
-                        command.Parameters.AddWithValue("@Precio", precio);
-                        command.Parameters.AddWithValue("@Stock", stock);
-
-                        // Ejecutar y verificar si se afectó alguna fila
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected == 0)
-                        {
-                            MessageBox.Show("No se encontró el artículo con el código especificado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Artículo actualizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
+                    MessageBox.Show("Artículo actualizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarArticulos();
+                    LimpiarCampos();
                 }
-                CargarArticulos(); // Recargar los artículos en la grilla
-                LimpiarCampos();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error al actualizar el artículo: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Los datos son invalidos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtCodigo.Text))
+            if (articuloService.DeshabilitarArticulo(txtCodigo.Texts))
             {
-                MessageBox.Show("Por favor ingrese un código de producto para deshabilitar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string query = "UPDATE Articulos SET Activo = 0 WHERE Codigo = @Codigo";
-            try
-            {
-                using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
-                {
-                    connection.Open();
-                    using (var command = new SQLiteCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@Codigo", txtCodigo.Text);
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected == 0)
-                        {
-                            MessageBox.Show("No se encontró el artículo para deshabilitar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Artículo deshabilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                }
-                CargarArticulos();          // Recargar los artículos activos en el DataGridView principal
-                CargarArticulosInactivos();  // Recargar los artículos inactivos en el DataGridView secundario
+                MessageBox.Show("Artículo deshabilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarArticulos();
                 LimpiarCampos();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error al deshabilitar el artículo: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se encontró el artículo para deshabilitar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-
+        private void CargarArticulos()
+        {
+            dataGridView1.DataSource = articuloService.CargarArticulos(true);
+            dataGridViewInactivos.DataSource = articuloService.CargarArticulos(false);
+        }
 
         private void LimpiarCampos()
         {
@@ -245,74 +93,154 @@ namespace Punto_de_venta___Prácticas_profesionales
             txtStock.Clear();
         }
 
-        //private void FormArtic_Load(object sender, EventArgs e)
-        //{
-        //    DatabaseHelper.InitializeDatabase();
-        //    CargarArticulos();
-
-        //    // Suscribirse al evento CellEndEdit para detectar cambios en las celdas
-        //    dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
-        //}
-
-        private void FormArtic_Load(object sender, EventArgs e)
+        private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            DatabaseHelper.InitializeDatabase();
-            CargarArticulos();         // Cargar los artículos activos
-            CargarArticulosInactivos(); // Cargar los artículos inactivos
-
-            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            txtCodigo.Clear();
+            txtNombre.Clear();
+            txtMarca.Clear();
+            txtRubro.Clear();
+            txtPrecio.Clear();
+            txtStock.Clear();
         }
 
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+
+        //private void btnBuscar_Click(object sender, EventArgs e)
+        //{
+        //    // Obtener el texto de búsqueda del usuario
+        //    string criterioBusqueda = txtBuscar.Texts.Trim();
+
+        //    if (string.IsNullOrEmpty(criterioBusqueda))
+        //    {
+        //        MessageBox.Show("Por favor, ingrese un criterio de búsqueda.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        return;
+        //    }
+
+        //    // Llamar al método de búsqueda en ArticuloService
+        //    DataTable resultados = articuloService.BuscarArticulos(criterioBusqueda);
+
+        //    // Mostrar los resultados en el DataGridView
+        //    if (resultados.Rows.Count > 0)
+        //    {
+        //        dataGridView1.DataSource = resultados;
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("No se encontraron artículos con ese criterio.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //}
+
+        //private void btnBuscar_Click(object sender, EventArgs e)
+        //{
+        //    // Obtener el texto de búsqueda y el criterio seleccionado
+        //    string criterioBusqueda = txtBuscar.Texts.Trim();
+        //    string campoSeleccionado = cmbCriterio.SelectedItem?.ToString();
+
+        //    if (string.IsNullOrEmpty(criterioBusqueda) || string.IsNullOrEmpty(campoSeleccionado))
+        //    {
+        //        MessageBox.Show("Por favor, ingrese un criterio de búsqueda y seleccione un campo.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //        return;
+        //    }
+
+        //    // Llamar al método de búsqueda en ArticuloService con el campo seleccionado
+        //    DataTable resultados = articuloService.BuscarArticulosPorCampo(criterioBusqueda, campoSeleccionado);
+
+        //    // Mostrar los resultados en el DataGridView
+        //    if (resultados.Rows.Count > 0)
+        //    {
+        //        dataGridView1.DataSource = resultados;
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("No se encontraron artículos con ese criterio.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //}
+        //
+
+        private void btnBuscar_Click(object sender, EventArgs e)
         {
-            // Obtener el nombre de la columna y el valor editado
-            string columnName = dataGridView1.Columns[e.ColumnIndex].Name;
-            object newValue = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+            // Obtener el texto de búsqueda del usuario
+            string criterioBusqueda = txtBuscar.Texts.Trim();
 
-            // Obtener el valor de "Codigo" de la fila seleccionada
-            string codigo = dataGridView1.Rows[e.RowIndex].Cells["Codigo"].Value?.ToString();
-
-            if (string.IsNullOrEmpty(codigo))
+            // Verificar si el usuario ingresó un criterio de búsqueda
+            if (string.IsNullOrEmpty(criterioBusqueda))
             {
-                MessageBox.Show("No se puede actualizar porque el código es inválido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por favor, ingrese un criterio de búsqueda.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // Armar la consulta SQL dinámica para actualizar solo la columna editada
-            string query = $"UPDATE Articulos SET {columnName} = @newValue WHERE Codigo = @Codigo";
+            // Verificar si se ha seleccionado un campo en el ComboBox
+            string campoSeleccionado = cmbCriterio.SelectedItem?.ToString();
 
-            try
+            DataTable resultados;
+
+            if (string.IsNullOrEmpty(campoSeleccionado))
             {
-                using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
-                {
-                    connection.Open();
-                    using (var command = new SQLiteCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@newValue", newValue);
-                        command.Parameters.AddWithValue("@Codigo", codigo);
-                        int rowsAffected = command.ExecuteNonQuery();
-
-                        if (rowsAffected == 0)
-                        {
-                            MessageBox.Show("No se encontró el artículo para actualizar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Artículo actualizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                }
+                // Si no se seleccionó un campo, buscar en todos los campos (Código, Nombre, Marca)
+                resultados = articuloService.BuscarArticulosEnTodosLosCampos(criterioBusqueda);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error al actualizar el artículo: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Si se seleccionó un campo, buscar en el campo específico
+                resultados = articuloService.BuscarArticulosPorCampo(criterioBusqueda, campoSeleccionado);
             }
 
-            // Recargar la grilla para reflejar los cambios en la base de datos
-            CargarArticulos();
+            // Mostrar los resultados en el DataGridView
+            if (resultados.Rows.Count > 0)
+            {
+                dataGridView1.DataSource = resultados;
+            }
+            else
+            {
+                MessageBox.Show("No se encontraron artículos con ese criterio.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
-        private void txtCodigo_TextChanged(object sender, EventArgs e)
+        private void btnArticulosActivos_Click(object sender, EventArgs e)
+        {
+            // Cargar artículos activos en el DataGridView
+            dataGridView1.DataSource = articuloService.CargarArticulos(true);
+
+            // Mostrar el botón de deshabilitar y ocultar el botón de habilitar
+            btnDeshabilitar.Visible = true;
+            btnHabilitar.Visible = false;
+        }
+
+        private void btnArticulosDeshabilitados_Click(object sender, EventArgs e)
+        {
+            // Cargar artículos deshabilitados en el DataGridView
+            dataGridView1.DataSource = articuloService.CargarArticulos(false);
+
+            // Ocultar el botón de deshabilitar y mostrar el botón de habilitar
+            btnDeshabilitar.Visible = false;
+            btnHabilitar.Visible = true;
+        }
+
+        private void btnHabilitar_Click(object sender, EventArgs e)
+        {
+            // Obtener el código del artículo que se quiere habilitar
+            string codigo = txtCodigo.Texts.Trim();
+
+            if (string.IsNullOrEmpty(codigo))
+            {
+                MessageBox.Show("Por favor, ingrese el código del artículo a habilitar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Llamar al método de habilitar en ArticuloService
+            if (articuloService.HabilitarArticulo(codigo))
+            {
+                MessageBox.Show("Artículo habilitado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Recargar la grilla con los artículos deshabilitados
+                dataGridView1.DataSource = articuloService.CargarArticulos(false);
+                LimpiarCampos(); // Limpiar los campos después de habilitar
+            }
+            else
+            {
+                MessageBox.Show("No se encontró el artículo para habilitar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
         {
 
         }
@@ -322,5 +250,69 @@ namespace Punto_de_venta___Prácticas_profesionales
 
         }
 
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+
+            // Obtener la fila editada
+            var fila = dataGridView1.Rows[e.RowIndex];
+            string codigo = fila.Cells["Codigo"].Value.ToString();
+            string nombre = fila.Cells["Nombre"].Value.ToString();
+            string marca = fila.Cells["Marca"].Value.ToString();
+            string rubro = fila.Cells["Rubro"].Value.ToString();
+            double precio;
+            int stock;
+
+            // Validar y convertir los datos de Precio y Stock
+            if (!double.TryParse(fila.Cells["Precio"].Value.ToString(), out precio) ||
+                !int.TryParse(fila.Cells["Stock"].Value.ToString(), out stock))
+            {
+                MessageBox.Show("Error en los datos de Precio o Stock. Verifica la información ingresada.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Llamar al método para actualizar el artículo
+            if (articuloService.ActualizarArticulo(codigo, nombre, marca, rubro, precio, stock))
+            {
+                MessageBox.Show("Artículo actualizado correctamente desde la grilla.",
+                                "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Error al actualizar el artículo.",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtBuscar__TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void classBtnPersonalizado9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            if (double.TryParse(txtPrecio.Texts, out double precio) &&
+                int.TryParse(txtStock.Texts, out int stock))
+            {
+                if (articuloService.AgregarArticulo(txtCodigo.Texts, txtNombre.Texts, txtMarca.Texts, txtRubro.Texts, precio, stock))
+                {
+                    MessageBox.Show("Artículo procesado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CargarArticulos();
+                    LimpiarCampos();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Datos inválidos en precio o stock.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
+
+    
+

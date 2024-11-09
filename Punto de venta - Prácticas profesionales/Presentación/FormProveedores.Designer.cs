@@ -297,7 +297,6 @@
             dataGridView1.Size = new Size(942, 344);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
-
             // 
             // FormProveedores
             // 

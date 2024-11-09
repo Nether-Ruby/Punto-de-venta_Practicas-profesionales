@@ -105,6 +105,13 @@ namespace Punto_de_venta___Prácticas_profesionales.controlesPersonalizados
                 textBox1.Text = value;
             }
         }
+        //[Category("txt personalizado")]
+        //public override string Text
+        //{
+        //    get => textBox1.Text;
+        //    set => textBox1.Text = value;
+        //}
+
         [Category("txt personalizado")]
         public Color BorderFocusColor
         {
@@ -207,6 +214,11 @@ namespace Punto_de_venta___Prácticas_profesionales.controlesPersonalizados
             isFocused = false;
             this.Invalidate();
         }
+        public void Clear()
+        {
+            textBox1.Clear();
+        }
+
     }
 
 }
