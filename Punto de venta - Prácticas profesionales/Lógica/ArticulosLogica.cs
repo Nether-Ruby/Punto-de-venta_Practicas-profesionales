@@ -12,13 +12,13 @@ using Punto_de_venta___Prácticas_profesionales.Datos;
 
 namespace Punto_de_venta___Prácticas_profesionales.Logica
 {
-    public class ArticuloService
+    public class ArticulosLogica
     {
         public bool AgregarArticulo(string codigo, string nombre, string marca, string rubro, double precio, int stock)
         {
             string checkQuery = "SELECT COUNT(*) FROM Articulos WHERE Codigo = @Codigo AND Activo = 0";
 
-            using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
+            using (var connection = new SQLiteConnection(ArticulosDatos.ConnectionString))
             {
                 connection.Open();
                 using (var checkCommand = new SQLiteCommand(checkQuery, connection))
@@ -141,7 +141,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
         {
             string query = "UPDATE Articulos SET Nombre=@Nombre, Marca=@Marca, Rubro=@Rubro, Precio=@Precio, Stock=@Stock WHERE Codigo=@Codigo";
 
-            using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
+            using (var connection = new SQLiteConnection(ArticulosDatos.ConnectionString))
             {
                 connection.Open();
                 using (var command = new SQLiteCommand(query, connection))
@@ -163,7 +163,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
         {
             string query = "UPDATE Articulos SET Activo = 0 WHERE Codigo = @Codigo";
 
-            using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
+            using (var connection = new SQLiteConnection(ArticulosDatos.ConnectionString))
             {
                 connection.Open();
                 using (var command = new SQLiteCommand(query, connection))
@@ -182,7 +182,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
 
             try
             {
-                using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
+                using (var connection = new SQLiteConnection(ArticulosDatos.ConnectionString))
                 {
                     connection.Open();
                     using (var command = new SQLiteCommand(query, connection))
@@ -212,7 +212,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
             string query = @"SELECT * FROM Articulos 
                      WHERE (Codigo LIKE @Criterio OR Nombre LIKE @Criterio) AND Activo = 1";
 
-            using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
+            using (var connection = new SQLiteConnection(ArticulosDatos.ConnectionString))
             {
                 var dataAdapter = new SQLiteDataAdapter(query, connection);
                 dataAdapter.SelectCommand.Parameters.AddWithValue("@Criterio", "%" + criterio + "%");
@@ -275,7 +275,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
                      WHERE (Codigo LIKE @Criterio OR Nombre LIKE @Criterio OR Marca LIKE @Criterio) 
                      AND Activo = 1";
 
-            using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
+            using (var connection = new SQLiteConnection(ArticulosDatos.ConnectionString))
             {
                 var dataAdapter = new SQLiteDataAdapter(query, connection);
                 dataAdapter.SelectCommand.Parameters.AddWithValue("@Criterio", "%" + criterio + "%");
@@ -308,7 +308,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
                     return new DataTable(); // Devuelve una tabla vacía si el campo no es válido
             }
 
-            using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
+            using (var connection = new SQLiteConnection(ArticulosDatos.ConnectionString))
             {
                 var dataAdapter = new SQLiteDataAdapter(query, connection);
                 dataAdapter.SelectCommand.Parameters.AddWithValue("@Criterio", "%" + criterio + "%");
@@ -325,7 +325,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
         {
             string query = activos ? "SELECT * FROM Articulos WHERE Activo = 1" : "SELECT * FROM Articulos WHERE Activo = 0";
 
-            using (var connection = new SQLiteConnection(DatabaseHelper.ConnectionString))
+            using (var connection = new SQLiteConnection(ArticulosDatos.ConnectionString))
             {
                 var dataAdapter = new SQLiteDataAdapter(query, connection);
                 var dataTable = new DataTable();
