@@ -21,7 +21,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
             string connectionString = @"URI=file:" + databasePath;
             using var conn = new SQLiteConnection(connectionString);
             DataTable tabla = new DataTable();
-            string query = "SELECT * FROM compras";
+            string query = "SELECT \r\n    c.compra_id,\r\n    a.nombre AS nombre_articulo,\r\n    p.nombre AS nombre_proveedor,\r\n    c.cantidad,\r\n    c.monto,\r\n    c.fecha_hora\r\nFROM \r\n    compras c\r\nJOIN \r\n    articulos a ON c.articulo = a.codigo\r\nJOIN \r\n    proveedores p ON c.proveedor = p.proveedor_id;\r\n";
             conn.Open();
             using var cmd = new SQLiteCommand(query, conn);
             using var reader = cmd.ExecuteReader();
@@ -86,7 +86,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
             {
                 conn.Open();
                 using var cmd = conn.CreateCommand();
-                string query = "SELECT codigo, nombre, 'precio_unitario' FROM Articulos WHERE activo = 1";
+                string query = "SELECT codigo, nombre, precio_unitario FROM Articulos WHERE activo = 1";
                 cmd.CommandText = query;
                 using SQLiteDataReader reader = cmd.ExecuteReader();
                 tabla.Load(reader);

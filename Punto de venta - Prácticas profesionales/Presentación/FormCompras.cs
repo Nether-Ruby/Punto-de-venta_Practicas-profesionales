@@ -8,6 +8,11 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
     public partial class FormCompras : Form
     {
         comprasLogica compra = new comprasLogica();
+        int cantidad;
+        DataTable articulosTable; // Declaración de articulos
+        DataTable proveedoresTable;
+        private bool isComboBox1Changing = false; // Bandera para controlar la ejecución
+
 
         public FormCompras()
         {
@@ -19,6 +24,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             cargarCombobox();
             actualizar();
         }
+
 
         private void actualizar()
         {
@@ -46,59 +52,66 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
         private void cargarCombobox()
         {
-            BindingSource bindingSource = new BindingSource();
-            bindingSource.DataSource = comprasLogica.mostrarArticulos();
-            comboBox1.DataSource = bindingSource;
+            articulosTable = comprasLogica.mostrarArticulos();
+            comboBox1.DataSource = articulosTable;
             comboBox1.DisplayMember = "nombre";
             comboBox1.ValueMember = "codigo";
-            DataTable tabla2 = new DataTable();
-            tabla2 = comprasLogica.mostrarProveedores();
-            comboBox2.DataSource = tabla2;
+
+            proveedoresTable = comprasLogica.mostrarProveedores();
+            comboBox2.DataSource = proveedoresTable;
             comboBox2.DisplayMember = "nombre";
             comboBox2.ValueMember = "proveedor_id";
         }
 
+
         private void button_Click(object sender, EventArgs e)
         {
-            // Obtener el DataTable asignado como DataSource del comboBox
-            DataTable tabla = (DataTable)comboBox1.DataSource;
-
-            // Obtener el índice seleccionado
-            int indiceSeleccionado = comboBox1.SelectedIndex;
-
-            // Acceder al valor de precio_unitario en la fila seleccionada
-            if (indiceSeleccionado >= 0 && indiceSeleccionado < tabla.Rows.Count)
-            {
-                double precioUnitario = Convert.ToDouble(tabla.Rows[indiceSeleccionado]["precio_unitario"]);
-                MessageBox.Show("Precio Unitario: " + precioUnitario);
-
-                compra.Articulo = Convert.ToInt32(comboBox1.SelectedValue);
-                compra.Proveedor = Convert.ToInt32(comboBox2.SelectedValue);
-                compra.Cantidad = int.Parse(textbox.Text);
-                compra.Monto = precioUnitario * Convert.ToDouble(compra.Cantidad);
-                compra.Fecha_hora = DateTime.Now;
-                compra.registrar(compra);
-                actualizar();
-                button.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("No se pudo acceder al precio unitario");
-            }
-        }
-
-        private void VerificarValores()
-        {
-            // Verificar si ambos ComboBox tienen un valor seleccionado y si el TextBox no está vacío y es un número
             if (comboBox1.SelectedIndex != -1 && comboBox2.SelectedIndex != -1 &&
                 !string.IsNullOrEmpty(textbox.Text) && int.TryParse(textbox.Text, out int cantidad))
             {
-                DataTable tabla = (DataTable)comboBox1.DataSource;
                 int indiceSeleccionado = comboBox1.SelectedIndex;
 
-                if (indiceSeleccionado >= 0 && indiceSeleccionado < tabla.Rows.Count)
+                if (indiceSeleccionado >= 0 && indiceSeleccionado < articulosTable.Rows.Count)
                 {
-                    double precioUnitario = Convert.ToDouble(tabla.Rows[indiceSeleccionado]["precio_unitario"]);
+                    double precioUnitario = Convert.ToDouble(articulosTable.Rows[indiceSeleccionado]["precio_unitario"]);
+                    double total = precioUnitario * cantidad;
+
+                    // Mostrar el total en textboxTotal
+                    textboxTotal.Text = total.ToString("F2");
+
+                    // Realizar las acciones si todos los controles tienen valores válidos
+                    compra.Articulo = Convert.ToInt32(comboBox1.SelectedValue);
+                    compra.Proveedor = Convert.ToInt32(comboBox2.SelectedValue);
+                    compra.Cantidad = cantidad; // Ya se validó y parseó antes
+                    compra.Monto = total;
+                    compra.Fecha_hora = DateTime.Now;
+                    compra.registrar(compra);
+                    actualizar();
+                    button.Enabled = false;
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo acceder al precio unitario");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, asegúrese de que todos los campos están llenos correctamente.");
+            }
+        }
+
+
+
+        private void VerificarValores()
+        {
+            if (comboBox1.SelectedIndex != -1 && comboBox2.SelectedIndex != -1 &&
+                !string.IsNullOrEmpty(textbox.Text) && int.TryParse(textbox.Text, out int cantidad))
+            {
+                DataRowView selectedRow = comboBox1.SelectedItem as DataRowView;
+
+                if (selectedRow != null)
+                {
+                    double precioUnitario = Convert.ToDouble(selectedRow["precio_unitario"]);
                     double total = precioUnitario * cantidad;
 
                     textboxTotal.Text = total.ToString("F2");
@@ -106,36 +119,93 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 }
                 else
                 {
-                    button.Enabled = false; // Deshabilitar si no se encuentra precio unitario
+                    button.Enabled = false; // Deshabilitar el botón si algún control está vacío o no es válido
+                    textboxTotal.Text = "0.00";
                 }
             }
             else
             {
-                button.Enabled = false; // Si no hay valores válidos, deshabilitar el botón
-                textboxTotal.Text = ""; // Limpiar el total
+                button.Enabled = false; // Deshabilitar el botón si algún control está vacío o no es válido
+                textboxTotal.Text = "0.00";
             }
         }
 
+
         private void FormCompras_Load(object sender, EventArgs e)
         {
-            // Suscribir los eventos
-            comboBox1.SelectedIndexChanged += (s, args) => VerificarValores();
-            comboBox2.SelectedIndexChanged += (s, args) => VerificarValores();
+            comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged; // Evitar múltiple suscripción
+            comboBox2.SelectedIndexChanged -= comboBox2_SelectedIndexChanged; // Evitar múltiple suscripción
+            textbox.TextChanged -= textbox__TextChanged; // Evitar múltiple suscripción
+
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
             textbox.TextChanged += textbox__TextChanged;
 
-            // Asegurar que el botón esté deshabilitado al inicio
-            button.Enabled = false;
+            button.Enabled = false; // Inicialmente deshabilitar el botón
         }
+
+
 
         private void textbox__TextChanged(object sender, EventArgs e)
         {
-            VerificarValores();
+            if (int.TryParse(textbox.Text, out int nuevaCantidad))
+            {
+                cantidad = nuevaCantidad;
+
+                // Solo actualizar el textboxTotal si hay un artículo seleccionado en comboBox1
+                if (comboBox1.SelectedIndex != -1)
+                {
+                    DataRowView selectedRow = comboBox1.SelectedItem as DataRowView;
+
+                    if (selectedRow != null)
+                    {
+                        double precioUnitario = Convert.ToDouble(selectedRow["precio_unitario"]);
+                        double total = precioUnitario * cantidad;
+
+                        textboxTotal.Text = total.ToString("F2"); // Actualizar el textboxTotal con el nuevo total
+                        button.Enabled = true; // Habilitar el botón si todos los controles tienen valores válidos
+                    }
+                    else
+                    {
+                        button.Enabled = false; // Deshabilitar el botón si algún control está vacío o no es válido
+                        textboxTotal.Text = "0.00";
+                    }
+                }
+            }
+            else
+            {
+                button.Enabled = false; // Deshabilitar el botón si el texto no es un número válido
+                textboxTotal.Text = "0.00";
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            VerificarValores();
+            if (comboBox1.SelectedIndex >= 0)
+            {
+                int indiceSeleccionado = comboBox1.SelectedIndex;
+                DataRowView selectedRow = comboBox1.SelectedItem as DataRowView;
+                VerificarValores();
+
+                if (selectedRow != null)
+                {
+                    double precioUnitario = Convert.ToDouble(selectedRow["precio_unitario"]);
+                    double total = precioUnitario * cantidad;
+
+                    textboxTotal.Text = total.ToString("F2");
+                    MessageBox.Show($"Índice seleccionado: {indiceSeleccionado}");
+                }
+                else
+                {
+                    MessageBox.Show("Selección inválida en comboBox1");
+                }
+            }
         }
+
+
+
+
+
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -162,30 +232,32 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         {
             ComboBox cb = sender as ComboBox;
 
-            // Desconectar temporalmente el evento para evitar ciclo de eventos
-            cb.TextChanged -= comboBox1_TextChanged;
+            if (cb != null)
+            {
+                // Desconectar temporalmente el evento para evitar ciclo de eventos
+                cb.TextChanged -= comboBox1_TextChanged;
 
-            string searchText = cb.Text;
+                string searchText = cb.Text;
 
-            DataTable tabla = comprasLogica.mostrarArticulos();
-            DataView vista = tabla.DefaultView;
-            vista.RowFilter = string.Format("nombre LIKE '%{0}%'", searchText);
+                DataTable tabla = comprasLogica.mostrarArticulos();
+                DataView vista = tabla.DefaultView;
+                vista.RowFilter = string.Format("nombre LIKE '%{0}%'", searchText);
 
-            string previousText = cb.Text; // Guardar el texto actual antes de cambiar el DataSource
-            cb.DataSource = vista.ToTable();
-            cb.DisplayMember = "nombre";
-            cb.ValueMember = "codigo";
+                string previousText = cb.Text; // Guardar el texto actual antes de cambiar el DataSource
+                cb.DataSource = vista.ToTable();
+                cb.DisplayMember = "nombre";
+                cb.ValueMember = "codigo";
 
-            // Restaurar el texto ingresado por el usuario
-            cb.Text = previousText;
-            cb.SelectionStart = previousText.Length; // Restaurar el cursor al final del texto ingresado
-            cb.SelectionLength = 0;
+                // Restaurar el texto ingresado por el usuario
+                cb.Text = previousText;
+                cb.SelectionStart = previousText.Length; // Restaurar el cursor al final del texto ingresado
+                cb.SelectionLength = 0;
 
-            // Reconectar el evento después de la actualización
-            cb.TextChanged += comboBox1_TextChanged;
-
-            VerificarValores();
+                // Reconectar el evento después de la actualización
+                cb.TextChanged += comboBox1_TextChanged;
+            }
         }
+
 
         private void comboBox2_TextChanged(object sender, EventArgs e)
         {
@@ -213,7 +285,6 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             // Reconectar el evento después de la actualización
             cb.TextChanged += comboBox2_TextChanged;
 
-            VerificarValores();
         }
 
         // Restaura el evento DateTimePicker_ValueChanged

@@ -30,13 +30,13 @@
         {
             splitContainer1 = new SplitContainer();
             splitContainer2 = new SplitContainer();
+            textbox = new TextBox();
+            textboxTotal = new TextBox();
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
-            textboxTotal = new controlesPersonalizados.Texboxs();
             button = new controlesPersonalizados.ClassBtnPersonalizado();
-            textbox = new controlesPersonalizados.Texboxs();
             comboBox2 = new ComboBox();
             comboBox1 = new ComboBox();
             dateTimePicker1 = new DateTimePicker();
@@ -80,13 +80,13 @@
             // 
             // splitContainer2.Panel1
             // 
+            splitContainer2.Panel1.Controls.Add(textbox);
+            splitContainer2.Panel1.Controls.Add(textboxTotal);
             splitContainer2.Panel1.Controls.Add(label5);
             splitContainer2.Panel1.Controls.Add(label4);
             splitContainer2.Panel1.Controls.Add(label3);
             splitContainer2.Panel1.Controls.Add(label2);
-            splitContainer2.Panel1.Controls.Add(textboxTotal);
             splitContainer2.Panel1.Controls.Add(button);
-            splitContainer2.Panel1.Controls.Add(textbox);
             splitContainer2.Panel1.Controls.Add(comboBox2);
             splitContainer2.Panel1.Controls.Add(comboBox1);
             // 
@@ -97,6 +97,26 @@
             splitContainer2.Size = new Size(942, 219);
             splitContainer2.SplitterDistance = 159;
             splitContainer2.TabIndex = 0;
+            // 
+            // textbox
+            // 
+            textbox.Anchor = AnchorStyles.None;
+            textbox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textbox.Location = new Point(682, 34);
+            textbox.Name = "textbox";
+            textbox.Size = new Size(198, 29);
+            textbox.TabIndex = 10;
+            // 
+            // textboxTotal
+            // 
+            textboxTotal.Anchor = AnchorStyles.None;
+            textboxTotal.BorderStyle = BorderStyle.None;
+            textboxTotal.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textboxTotal.Location = new Point(370, 75);
+            textboxTotal.Name = "textboxTotal";
+            textboxTotal.ReadOnly = true;
+            textboxTotal.Size = new Size(238, 18);
+            textboxTotal.TabIndex = 9;
             // 
             // label5
             // 
@@ -139,24 +159,6 @@
             label2.Text = "El total seria:";
             label2.TextAlign = ContentAlignment.TopCenter;
             // 
-            // textboxTotal
-            // 
-            textboxTotal.Anchor = AnchorStyles.None;
-            textboxTotal.BackColor = SystemColors.Window;
-            textboxTotal.BorderColor = Color.MediumBlue;
-            textboxTotal.BorderFocusColor = Color.DarkGray;
-            textboxTotal.BorderSize = 2;
-            textboxTotal.Enabled = false;
-            textboxTotal.Font = new Font("Segoe UI", 9.5F);
-            textboxTotal.ForeColor = Color.DimGray;
-            textboxTotal.Location = new Point(370, 69);
-            textboxTotal.Name = "textboxTotal";
-            textboxTotal.Padding = new Padding(7);
-            textboxTotal.Size = new Size(238, 32);
-            textboxTotal.TabIndex = 4;
-            textboxTotal.Texts = "";
-            textboxTotal.UnderlinedStyle1 = false;
-            // 
             // button
             // 
             button.Anchor = AnchorStyles.None;
@@ -183,25 +185,6 @@
             button.UseVisualStyleBackColor = false;
             button.Click += button_Click;
             // 
-            // textbox
-            // 
-            textbox.Anchor = AnchorStyles.None;
-            textbox.BackColor = SystemColors.Window;
-            textbox.BorderColor = Color.MediumBlue;
-            textbox.BorderFocusColor = Color.DarkGray;
-            textbox.BorderSize = 2;
-            textbox.Font = new Font("Segoe UI", 9.5F);
-            textbox.ForeColor = Color.DimGray;
-            textbox.Location = new Point(682, 34);
-            textbox.Name = "textbox";
-            textbox.Padding = new Padding(7);
-            textbox.Size = new Size(228, 32);
-            textbox.TabIndex = 2;
-            textbox.Texts = "";
-            textbox.UnderlinedStyle1 = false;
-            textbox._TextChanged += textbox__TextChanged;
-            textbox.KeyPress += textbox_KeyPress;
-            // 
             // comboBox2
             // 
             comboBox2.Anchor = AnchorStyles.None;
@@ -211,8 +194,6 @@
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(238, 29);
             comboBox2.TabIndex = 1;
-            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
-            comboBox2.TextChanged += comboBox2_TextChanged;
             // 
             // comboBox1
             // 
@@ -225,8 +206,6 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(238, 29);
             comboBox1.TabIndex = 0;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
-            comboBox1.TextChanged += comboBox1_TextChanged;
             comboBox1.KeyPress += comboBox1_KeyPress;
             // 
             // dateTimePicker1
@@ -271,6 +250,7 @@
             Name = "FormCompras";
             Text = "FormCompras";
             Load += FormCompras_Load;
+            TextChanged += textbox__TextChanged;
             Resize += FormCompras_Resize;
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
@@ -295,12 +275,12 @@
         private DateTimePicker dateTimePicker1;
         private ComboBox comboBox2;
         private ComboBox comboBox1;
-        private controlesPersonalizados.Texboxs textbox;
         private controlesPersonalizados.ClassBtnPersonalizado button;
         private Label label5;
         private Label label4;
         private Label label3;
         private Label label2;
-        private controlesPersonalizados.Texboxs textboxTotal;
+        private TextBox textboxTotal;
+        private TextBox textbox;
     }
 }
