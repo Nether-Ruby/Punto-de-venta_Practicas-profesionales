@@ -92,15 +92,17 @@ namespace Punto_de_venta___Prácticas_profesionales
         {
 
             ActivateButton(sender, RGBcolors.color1);
-            openChildForm(new FormArticulos());
-            // openChildForm(new FormArticulos());
+
+            openChildForm(new AriculosForm());
+         
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
+         
         private void btnInicio_Click(object sender, EventArgs e)
         {
             //currentChildForm.Close();
