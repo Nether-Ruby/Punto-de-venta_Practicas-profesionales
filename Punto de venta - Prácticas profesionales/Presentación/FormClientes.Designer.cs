@@ -28,142 +28,115 @@
         /// </summary>
         private void InitializeComponent()
         {
-            txtC = new controlesPersonalizados.Texboxs();
+            txtCuil = new controlesPersonalizados.Texboxs();
             panel1 = new Panel();
-            txtEmail = new TextBox();
-            txtDomicilio = new TextBox();
-            txtTelefono = new TextBox();
-            txtApellido = new TextBox();
-            btGuardar = new Button();
-            txtNombre = new TextBox();
-            txtCuil = new TextBox();
+            classBtnPersonalizado1 = new controlesPersonalizados.ClassBtnPersonalizado();
+            btGuardar = new controlesPersonalizados.ClassBtnPersonalizado();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
             label7 = new Label();
-            txtEm = new controlesPersonalizados.Texboxs();
-            txtDom = new controlesPersonalizados.Texboxs();
-            txtTel = new controlesPersonalizados.Texboxs();
-            txtApe = new controlesPersonalizados.Texboxs();
-            txtNo = new controlesPersonalizados.Texboxs();
-            button1 = new Button();
+            txtEmail = new controlesPersonalizados.Texboxs();
+            txtDomicilio = new controlesPersonalizados.Texboxs();
+            txtTelefono = new controlesPersonalizados.Texboxs();
+            txtApellido = new controlesPersonalizados.Texboxs();
+            txtNombre = new controlesPersonalizados.Texboxs();
             dgvClientes = new DataGridView();
+            btNuevoCliente = new controlesPersonalizados.ClassBtnPersonalizado();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvClientes).BeginInit();
             SuspendLayout();
             // 
-            // txtC
+            // txtCuil
             // 
-            txtC.BackColor = Color.FromArgb(0, 0, 64);
-            txtC.BorderColor = Color.MediumBlue;
-            txtC.BorderFocusColor = Color.DarkGray;
-            txtC.BorderSize = 2;
-            txtC.Font = new Font("Segoe UI", 9.5F);
-            txtC.ForeColor = Color.DimGray;
-            txtC.Location = new Point(59, 52);
-            txtC.Name = "txtC";
-            txtC.Padding = new Padding(7);
-            txtC.Size = new Size(285, 36);
-            txtC.TabIndex = 3;
-            txtC.Texts = "";
-            txtC.UnderlinedStyle1 = false;
+            txtCuil.BackColor = Color.FromArgb(0, 0, 64);
+            txtCuil.BorderColor = Color.MediumBlue;
+            txtCuil.BorderFocusColor = Color.DarkGray;
+            txtCuil.BorderSize = 2;
+            txtCuil.Font = new Font("Segoe UI", 9.5F);
+            txtCuil.ForeColor = Color.DimGray;
+            txtCuil.Location = new Point(59, 52);
+            txtCuil.Name = "txtCuil";
+            txtCuil.Padding = new Padding(7);
+            txtCuil.Size = new Size(285, 36);
+            txtCuil.TabIndex = 3;
+            txtCuil.Texts = "";
+            txtCuil.UnderlinedStyle1 = false;
+            txtCuil._TextChanged += txtCuil__TextChanged;
             // 
             // panel1
             // 
             panel1.BackColor = Color.Navy;
-            panel1.Controls.Add(txtEmail);
-            panel1.Controls.Add(txtDomicilio);
-            panel1.Controls.Add(txtTelefono);
-            panel1.Controls.Add(txtApellido);
+            panel1.Controls.Add(classBtnPersonalizado1);
             panel1.Controls.Add(btGuardar);
-            panel1.Controls.Add(txtNombre);
-            panel1.Controls.Add(txtCuil);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(label6);
             panel1.Controls.Add(label7);
-            panel1.Controls.Add(txtEm);
-            panel1.Controls.Add(txtDom);
-            panel1.Controls.Add(txtTel);
-            panel1.Controls.Add(txtApe);
-            panel1.Controls.Add(txtNo);
-            panel1.Controls.Add(txtC);
+            panel1.Controls.Add(txtEmail);
+            panel1.Controls.Add(txtDomicilio);
+            panel1.Controls.Add(txtTelefono);
+            panel1.Controls.Add(txtApellido);
+            panel1.Controls.Add(txtNombre);
+            panel1.Controls.Add(txtCuil);
             panel1.ForeColor = SystemColors.ActiveCaptionText;
-            panel1.Location = new Point(27, 31);
+            panel1.Location = new Point(345, 47);
             panel1.Name = "panel1";
-            panel1.Size = new Size(532, 588);
+            panel1.Size = new Size(429, 588);
             panel1.TabIndex = 4;
             panel1.Paint += panel1_Paint;
             // 
-            // txtEmail
+            // classBtnPersonalizado1
             // 
-            txtEmail.BackColor = Color.FromArgb(0, 0, 64);
-            txtEmail.ForeColor = Color.DimGray;
-            txtEmail.Location = new Point(378, 437);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(125, 27);
-            txtEmail.TabIndex = 18;
-            // 
-            // txtDomicilio
-            // 
-            txtDomicilio.BackColor = Color.FromArgb(0, 0, 64);
-            txtDomicilio.ForeColor = Color.DimGray;
-            txtDomicilio.Location = new Point(378, 361);
-            txtDomicilio.Name = "txtDomicilio";
-            txtDomicilio.Size = new Size(125, 27);
-            txtDomicilio.TabIndex = 17;
-            // 
-            // txtTelefono
-            // 
-            txtTelefono.BackColor = Color.FromArgb(0, 0, 64);
-            txtTelefono.ForeColor = Color.DimGray;
-            txtTelefono.Location = new Point(378, 285);
-            txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(125, 27);
-            txtTelefono.TabIndex = 16;
-            txtTelefono.TextChanged += textBox2_TextChanged;
-            // 
-            // txtApellido
-            // 
-            txtApellido.BackColor = Color.FromArgb(0, 0, 64);
-            txtApellido.ForeColor = Color.DimGray;
-            txtApellido.Location = new Point(378, 212);
-            txtApellido.Name = "txtApellido";
-            txtApellido.Size = new Size(125, 27);
-            txtApellido.TabIndex = 15;
+            classBtnPersonalizado1.BackColor = Color.MidnightBlue;
+            classBtnPersonalizado1.BackgroundColor = Color.MidnightBlue;
+            classBtnPersonalizado1.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado1.BorderRadius = 40;
+            classBtnPersonalizado1.BorderSize = 0;
+            classBtnPersonalizado1.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado1.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado1.ForeColor = Color.White;
+            classBtnPersonalizado1.IconAlignment = ContentAlignment.MiddleLeft;
+            classBtnPersonalizado1.IconChar = FontAwesome.Sharp.IconChar.None;
+            classBtnPersonalizado1.IconColor = Color.White;
+            classBtnPersonalizado1.IconPadding = 5;
+            classBtnPersonalizado1.IconSize = 24;
+            classBtnPersonalizado1.Location = new Point(44, 502);
+            classBtnPersonalizado1.Name = "classBtnPersonalizado1";
+            classBtnPersonalizado1.Size = new Size(151, 50);
+            classBtnPersonalizado1.TabIndex = 16;
+            classBtnPersonalizado1.Text = "Cancelar";
+            classBtnPersonalizado1.TextColor = Color.White;
+            classBtnPersonalizado1.UseVisualStyleBackColor = false;
+            classBtnPersonalizado1.Click += classBtnPersonalizado1_Click;
             // 
             // btGuardar
             // 
-            btGuardar.Location = new Point(400, 503);
+            btGuardar.BackColor = Color.RoyalBlue;
+            btGuardar.BackgroundColor = Color.RoyalBlue;
+            btGuardar.BorderColor = Color.PaleVioletRed;
+            btGuardar.BorderRadius = 40;
+            btGuardar.BorderSize = 0;
+            btGuardar.FlatAppearance.BorderSize = 0;
+            btGuardar.FlatStyle = FlatStyle.Flat;
+            btGuardar.ForeColor = Color.White;
+            btGuardar.IconAlignment = ContentAlignment.MiddleLeft;
+            btGuardar.IconChar = FontAwesome.Sharp.IconChar.None;
+            btGuardar.IconColor = Color.White;
+            btGuardar.IconPadding = 5;
+            btGuardar.IconSize = 24;
+            btGuardar.Location = new Point(245, 502);
             btGuardar.Name = "btGuardar";
-            btGuardar.Size = new Size(94, 29);
-            btGuardar.TabIndex = 14;
-            btGuardar.Text = "button1";
-            btGuardar.UseVisualStyleBackColor = true;
-            btGuardar.Click += btGuardar_Click;
-            // 
-            // txtNombre
-            // 
-            txtNombre.BackColor = Color.FromArgb(0, 0, 64);
-            txtNombre.ForeColor = Color.DimGray;
-            txtNombre.Location = new Point(378, 131);
-            txtNombre.Name = "txtNombre";
-            txtNombre.Size = new Size(125, 27);
-            txtNombre.TabIndex = 13;
-            txtNombre.TextChanged += txtNombre_TextChanged;
-            // 
-            // txtCuil
-            // 
-            txtCuil.BackColor = Color.FromArgb(0, 0, 64);
-            txtCuil.ForeColor = Color.DimGray;
-            txtCuil.Location = new Point(378, 56);
-            txtCuil.Name = "txtCuil";
-            txtCuil.Size = new Size(125, 27);
-            txtCuil.TabIndex = 12;
+            btGuardar.Size = new Size(151, 50);
+            btGuardar.TabIndex = 15;
+            btGuardar.Text = "Agregar";
+            btGuardar.TextColor = Color.White;
+            btGuardar.UseVisualStyleBackColor = false;
+            btGuardar.Click += btGuardar_Click_1;
             // 
             // label2
             // 
@@ -231,108 +204,120 @@
             label7.TabIndex = 11;
             label7.Text = "Email :";
             // 
-            // txtEm
+            // txtEmail
             // 
-            txtEm.BackColor = Color.FromArgb(0, 0, 64);
-            txtEm.BorderColor = Color.MediumBlue;
-            txtEm.BorderFocusColor = Color.DarkGray;
-            txtEm.BorderSize = 2;
-            txtEm.Font = new Font("Segoe UI", 9.5F);
-            txtEm.ForeColor = Color.DimGray;
-            txtEm.Location = new Point(59, 428);
-            txtEm.Name = "txtEm";
-            txtEm.Padding = new Padding(7);
-            txtEm.Size = new Size(285, 36);
-            txtEm.TabIndex = 10;
-            txtEm.Texts = "";
-            txtEm.UnderlinedStyle1 = false;
+            txtEmail.BackColor = Color.FromArgb(0, 0, 64);
+            txtEmail.BorderColor = Color.MediumBlue;
+            txtEmail.BorderFocusColor = Color.DarkGray;
+            txtEmail.BorderSize = 2;
+            txtEmail.Font = new Font("Segoe UI", 9.5F);
+            txtEmail.ForeColor = Color.DimGray;
+            txtEmail.Location = new Point(59, 428);
+            txtEmail.Name = "txtEmail";
+            txtEmail.Padding = new Padding(7);
+            txtEmail.Size = new Size(285, 36);
+            txtEmail.TabIndex = 10;
+            txtEmail.Texts = "";
+            txtEmail.UnderlinedStyle1 = false;
             // 
-            // txtDom
+            // txtDomicilio
             // 
-            txtDom.BackColor = Color.FromArgb(0, 0, 64);
-            txtDom.BorderColor = Color.MediumBlue;
-            txtDom.BorderFocusColor = Color.DarkGray;
-            txtDom.BorderSize = 2;
-            txtDom.Font = new Font("Segoe UI", 9.5F);
-            txtDom.ForeColor = Color.DimGray;
-            txtDom.Location = new Point(59, 352);
-            txtDom.Name = "txtDom";
-            txtDom.Padding = new Padding(7);
-            txtDom.Size = new Size(285, 36);
-            txtDom.TabIndex = 9;
-            txtDom.Texts = "";
-            txtDom.UnderlinedStyle1 = false;
+            txtDomicilio.BackColor = Color.FromArgb(0, 0, 64);
+            txtDomicilio.BorderColor = Color.MediumBlue;
+            txtDomicilio.BorderFocusColor = Color.DarkGray;
+            txtDomicilio.BorderSize = 2;
+            txtDomicilio.Font = new Font("Segoe UI", 9.5F);
+            txtDomicilio.ForeColor = Color.DimGray;
+            txtDomicilio.Location = new Point(59, 352);
+            txtDomicilio.Name = "txtDomicilio";
+            txtDomicilio.Padding = new Padding(7);
+            txtDomicilio.Size = new Size(285, 36);
+            txtDomicilio.TabIndex = 9;
+            txtDomicilio.Texts = "";
+            txtDomicilio.UnderlinedStyle1 = false;
             // 
-            // txtTel
+            // txtTelefono
             // 
-            txtTel.BackColor = Color.FromArgb(0, 0, 64);
-            txtTel.BorderColor = Color.MediumBlue;
-            txtTel.BorderFocusColor = Color.DarkGray;
-            txtTel.BorderSize = 2;
-            txtTel.Font = new Font("Segoe UI", 9.5F);
-            txtTel.ForeColor = Color.DimGray;
-            txtTel.Location = new Point(59, 276);
-            txtTel.Name = "txtTel";
-            txtTel.Padding = new Padding(7);
-            txtTel.Size = new Size(285, 36);
-            txtTel.TabIndex = 8;
-            txtTel.Texts = "";
-            txtTel.UnderlinedStyle1 = false;
+            txtTelefono.BackColor = Color.FromArgb(0, 0, 64);
+            txtTelefono.BorderColor = Color.MediumBlue;
+            txtTelefono.BorderFocusColor = Color.DarkGray;
+            txtTelefono.BorderSize = 2;
+            txtTelefono.Font = new Font("Segoe UI", 9.5F);
+            txtTelefono.ForeColor = Color.DimGray;
+            txtTelefono.Location = new Point(59, 276);
+            txtTelefono.Name = "txtTelefono";
+            txtTelefono.Padding = new Padding(7);
+            txtTelefono.Size = new Size(285, 36);
+            txtTelefono.TabIndex = 8;
+            txtTelefono.Texts = "";
+            txtTelefono.UnderlinedStyle1 = false;
             // 
-            // txtApe
+            // txtApellido
             // 
-            txtApe.BackColor = Color.FromArgb(0, 0, 64);
-            txtApe.BorderColor = Color.MediumBlue;
-            txtApe.BorderFocusColor = Color.DarkGray;
-            txtApe.BorderSize = 2;
-            txtApe.Font = new Font("Segoe UI", 9.5F);
-            txtApe.ForeColor = Color.DimGray;
-            txtApe.Location = new Point(59, 203);
-            txtApe.Name = "txtApe";
-            txtApe.Padding = new Padding(7);
-            txtApe.Size = new Size(285, 36);
-            txtApe.TabIndex = 7;
-            txtApe.Texts = "";
-            txtApe.UnderlinedStyle1 = false;
+            txtApellido.BackColor = Color.FromArgb(0, 0, 64);
+            txtApellido.BorderColor = Color.MediumBlue;
+            txtApellido.BorderFocusColor = Color.DarkGray;
+            txtApellido.BorderSize = 2;
+            txtApellido.Font = new Font("Segoe UI", 9.5F);
+            txtApellido.ForeColor = Color.DimGray;
+            txtApellido.Location = new Point(59, 203);
+            txtApellido.Name = "txtApellido";
+            txtApellido.Padding = new Padding(7);
+            txtApellido.Size = new Size(285, 36);
+            txtApellido.TabIndex = 7;
+            txtApellido.Texts = "";
+            txtApellido.UnderlinedStyle1 = false;
             // 
-            // txtNo
+            // txtNombre
             // 
-            txtNo.BackColor = Color.FromArgb(0, 0, 64);
-            txtNo.BorderColor = Color.MediumBlue;
-            txtNo.BorderFocusColor = Color.DarkGray;
-            txtNo.BorderSize = 2;
-            txtNo.Font = new Font("Segoe UI", 9.5F);
-            txtNo.ForeColor = Color.DimGray;
-            txtNo.Location = new Point(59, 131);
-            txtNo.Name = "txtNo";
-            txtNo.Padding = new Padding(7);
-            txtNo.Size = new Size(285, 36);
-            txtNo.TabIndex = 6;
-            txtNo.Texts = "";
-            txtNo.UnderlinedStyle1 = false;
-            // 
-            // button1
-            // 
-            button1.BackColor = Color.DarkGoldenrod;
-            button1.ForeColor = Color.LightYellow;
-            button1.Location = new Point(894, 12);
-            button1.Name = "button1";
-            button1.Size = new Size(157, 29);
-            button1.TabIndex = 15;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            txtNombre.BackColor = Color.FromArgb(0, 0, 64);
+            txtNombre.BorderColor = Color.MediumBlue;
+            txtNombre.BorderFocusColor = Color.DarkGray;
+            txtNombre.BorderSize = 2;
+            txtNombre.Font = new Font("Segoe UI", 9.5F);
+            txtNombre.ForeColor = Color.DimGray;
+            txtNombre.Location = new Point(59, 131);
+            txtNombre.Name = "txtNombre";
+            txtNombre.Padding = new Padding(7);
+            txtNombre.Size = new Size(285, 36);
+            txtNombre.TabIndex = 6;
+            txtNombre.Texts = "";
+            txtNombre.UnderlinedStyle1 = false;
             // 
             // dgvClientes
             // 
             dgvClientes.BackgroundColor = Color.FromArgb(0, 0, 55);
             dgvClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvClientes.GridColor = Color.Goldenrod;
-            dgvClientes.Location = new Point(27, 73);
+            dgvClientes.Location = new Point(27, 118);
             dgvClientes.Name = "dgvClientes";
             dgvClientes.RowHeadersWidth = 51;
-            dgvClientes.Size = new Size(1024, 304);
+            dgvClientes.Size = new Size(1024, 335);
             dgvClientes.TabIndex = 16;
+            // 
+            // btNuevoCliente
+            // 
+            btNuevoCliente.BackColor = Color.RoyalBlue;
+            btNuevoCliente.BackgroundColor = Color.RoyalBlue;
+            btNuevoCliente.BorderColor = Color.PaleVioletRed;
+            btNuevoCliente.BorderRadius = 40;
+            btNuevoCliente.BorderSize = 0;
+            btNuevoCliente.FlatAppearance.BorderSize = 0;
+            btNuevoCliente.FlatStyle = FlatStyle.Flat;
+            btNuevoCliente.ForeColor = Color.White;
+            btNuevoCliente.IconAlignment = ContentAlignment.MiddleCenter;
+            btNuevoCliente.IconChar = FontAwesome.Sharp.IconChar.None;
+            btNuevoCliente.IconColor = Color.White;
+            btNuevoCliente.IconPadding = 5;
+            btNuevoCliente.IconSize = 24;
+            btNuevoCliente.Location = new Point(881, 12);
+            btNuevoCliente.Name = "btNuevoCliente";
+            btNuevoCliente.Size = new Size(172, 48);
+            btNuevoCliente.TabIndex = 16;
+            btNuevoCliente.Text = "Registrar";
+            btNuevoCliente.TextColor = Color.White;
+            btNuevoCliente.UseVisualStyleBackColor = false;
+            btNuevoCliente.Click += classBtnPersonalizado2_Click;
             // 
             // FormClientes
             // 
@@ -340,9 +325,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(0, 0, 45);
             ClientSize = new Size(1077, 775);
-            Controls.Add(button1);
             Controls.Add(panel1);
             Controls.Add(dgvClientes);
+            Controls.Add(btNuevoCliente);
             Margin = new Padding(3, 4, 3, 4);
             Name = "FormClientes";
             Text = "FormClientes";
@@ -354,27 +339,22 @@
         }
 
         #endregion
-        private controlesPersonalizados.Texboxs txtC;
+        private controlesPersonalizados.Texboxs txtCuil;
         private Panel panel1;
-        private controlesPersonalizados.Texboxs txtEm;
-        private controlesPersonalizados.Texboxs txtDom;
-        private controlesPersonalizados.Texboxs txtTel;
-        private controlesPersonalizados.Texboxs txtApe;
-        private controlesPersonalizados.Texboxs txtNo;
+        private controlesPersonalizados.Texboxs txtEmail;
+        private controlesPersonalizados.Texboxs txtDomicilio;
+        private controlesPersonalizados.Texboxs txtTelefono;
+        private controlesPersonalizados.Texboxs txtApellido;
+        private controlesPersonalizados.Texboxs txtNombre;
         private Label label2;
         private Label label3;
         private Label label4;
         private Label label5;
         private Label label6;
         private Label label7;
-        private TextBox txtCuil;
-        private Button btGuardar;
-        private TextBox txtNombre;
-        private Button button1;
-        private TextBox txtEmail;
-        private TextBox txtDomicilio;
-        private TextBox txtTelefono;
-        private TextBox txtApellido;
         private DataGridView dgvClientes;
+        private controlesPersonalizados.ClassBtnPersonalizado btGuardar;
+        private controlesPersonalizados.ClassBtnPersonalizado btNuevoCliente;
+        private controlesPersonalizados.ClassBtnPersonalizado classBtnPersonalizado1;
     }
 }

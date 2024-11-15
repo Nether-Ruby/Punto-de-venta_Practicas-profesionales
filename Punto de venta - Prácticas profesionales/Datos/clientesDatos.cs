@@ -43,7 +43,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
                         cmd.Parameters.AddWithValue("@email", email);
                         cmd.ExecuteNonQuery();
 
-                        MessageBox.Show("Guardado en la base de datos exitosamente.");
+                     
                     } 
                 }
             }
@@ -110,8 +110,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
                         cmd.Parameters.AddWithValue("@domicilio", domicilio);
                         cmd.Parameters.AddWithValue("@email", email);
                         cmd.ExecuteNonQuery();
-
-                        MessageBox.Show("Cliente actualizado.");
+          
                     }
                 }
             }
@@ -121,7 +120,13 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
             }
         }
 
-
-
+      
     }
+
+
+
+
+
+
 }
+
