@@ -294,6 +294,7 @@
             dgvClientes.RowHeadersWidth = 51;
             dgvClientes.Size = new Size(1024, 335);
             dgvClientes.TabIndex = 16;
+            dgvClientes.CellContentClick += dgvClientes_CellContentClick;
             // 
             // btNuevoCliente
             // 
