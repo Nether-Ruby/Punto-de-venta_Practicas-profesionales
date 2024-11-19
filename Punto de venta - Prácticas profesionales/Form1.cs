@@ -1,6 +1,8 @@
 using FontAwesome.Sharp;
 using Punto_de_venta___Prácticas_profesionales.Lógica;
 using System.Data;
+using System.Globalization;
+
 
 namespace Punto_de_venta___Prácticas_profesionales
 {
@@ -27,12 +29,17 @@ namespace Punto_de_venta___Prácticas_profesionales
             this.DoubleBuffered = true;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
 
-            ////////////////caja reportes
+            ////////////////caja reportes////////////////////////
             ConfigurarComboboxes();
             CargarDatos(); // Mostrar todos los datos al cargar el formulario
             pnCaja.Visible = false;
             EstilizarDataGridViewCajas(); // Estilizar el DataGridView de cajas
             CentrarDataGridViewCajas();   // Centrar el DataGridView de cajas dentro del panel
+
+            /////////////////ventas reporte///////////////////////
+            ConfigurarFiltrosVentas();
+            CargarDatosVentas();
+            pnVentas.Visible = false;
         }
         private struct RGBcolors
         {
@@ -216,7 +223,7 @@ namespace Punto_de_venta___Prácticas_profesionales
         {
 
         }
-        ///caja reporte
+        ////////////////////////////////////////////////////////////caja reporte///////////////////////////////////////////////////////////////
         private void ConfigurarComboboxes()
         {
             // Agregar opciones al ComboBox de filtro
@@ -313,6 +320,7 @@ namespace Punto_de_venta___Prácticas_profesionales
         {
             // Mostrar el panel de caja
             pnCaja.Visible = true;
+            pnVentas.Visible = false;
 
             // Asegurarse de que la grilla se actualice al abrir el panel
             // Si se debe mostrar todos los datos o aplicar algún filtro, lo hacemos aquí
@@ -328,16 +336,19 @@ namespace Punto_de_venta___Prácticas_profesionales
         private void articulosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pnCaja.Visible = false;
+            pnVentas.Visible=false;
         }
 
         private void ventasToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pnCaja.Visible = false;
+            pnVentas.Visible = true;
         }
 
         private void btnCerrarCajas_Click(object sender, EventArgs e)
         {
             pnCaja.Visible = false;
+
         }
         private void EstilizarDataGridViewCajas()
         {
@@ -375,8 +386,122 @@ namespace Punto_de_venta___Prácticas_profesionales
             dgvCajas.Location = new Point(x, y); // Asignar la nueva posición
         }
 
+        private void btCerrarArticulos_Click(object sender, EventArgs e)
+        {
 
+        }
 
+        private void pnCaja_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        ////////////////////////////////////////////////////////////caja reporte///////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////
+        // Configuración de filtros y carga de datos
+        ////////////////////////////////////////////////////////////
+
+        private void ConfigurarFiltrosVentas()
+        {
+            // Configurar ComboBox de Filtros
+            comboBoxFecha.Items.AddRange(new string[]
+            {
+                "Ver todo",
+                "Últimos 7 días",
+                "Últimos 30 días",
+                "Mes"
+            });
+            comboBoxFecha.SelectedIndex = 0;
+
+            // Configurar ComboBox de Meses
+            comboBoxMes.Items.AddRange(CultureInfo.CurrentCulture.DateTimeFormat.MonthNames[..12]);
+            comboBoxMes.Enabled = false;
+
+            // Eventos de ComboBox
+            comboBoxFecha.SelectedIndexChanged += ComboBoxFecha_SelectedIndexChanged;
+            btnFiltrar.Click += BtnFiltrar_Click;
+            btnVerDetalle.Click += BtnVerDetalle_Click;
+        }
+
+        private void CargarDatosVentas(DateTime? fechaInicio = null, DateTime? fechaFin = null)
+        {
+            DataTable datosVentas;
+
+            if (fechaInicio.HasValue && fechaFin.HasValue)
+            {
+                datosVentas = reportesLogica.ObtenerVentasPorRango(fechaInicio.Value, fechaFin.Value);
+            }
+            else
+            {
+                datosVentas = reportesLogica.ObtenerTodasLasVentas();
+            }
+
+            dgvVentas.DataSource = datosVentas;
+        }
+
+        ////////////////////////////////////////////////////////////
+        // Eventos de Filtros
+        ////////////////////////////////////////////////////////////
+
+        private void ComboBoxFecha_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string filtro = comboBoxFecha.SelectedItem.ToString();
+            if (filtro == "Mes")
+            {
+                comboBoxMes.Enabled = true;
+            }
+            else
+            {
+                comboBoxMes.Enabled = false;
+                comboBoxMes.SelectedIndex = -1;
+            }
+        }
+
+        private void BtnFiltrar_Click(object sender, EventArgs e)
+        {
+            string filtro = comboBoxFecha.SelectedItem.ToString();
+            if (filtro == "Últimos 7 días")
+            {
+                CargarDatosVentas(DateTime.Now.AddDays(-7), DateTime.Now);
+            }
+            else if (filtro == "Últimos 30 días")
+            {
+                CargarDatosVentas(DateTime.Now.AddDays(-30), DateTime.Now);
+            }
+            else if (filtro == "Mes" && comboBoxMes.SelectedIndex >= 0)
+            {
+                int mesSeleccionado = comboBoxMes.SelectedIndex + 1;
+                DateTime fechaInicio = new DateTime(DateTime.Now.Year, mesSeleccionado, 1);
+                DateTime fechaFin = fechaInicio.AddMonths(1).AddDays(-1);
+                CargarDatosVentas(fechaInicio, fechaFin);
+            }
+            else
+            {
+                CargarDatosVentas(); // Ver todo
+            }
+        }
+
+        ////////////////////////////////////////////////////////////
+        // Visualización de Detalles de Venta
+        ////////////////////////////////////////////////////////////
+
+        private void BtnVerDetalle_Click(object sender, EventArgs e)
+        {
+            if (dgvVentas.SelectedRows.Count > 0)
+            {
+                int idVentaSeleccionada = Convert.ToInt32(dgvVentas.SelectedRows[0].Cells["id_venta"].Value);
+                DataTable detallesVenta = reportesLogica.ObtenerDetallesVenta(idVentaSeleccionada);
+
+                dgvDetalleVenta.DataSource = detallesVenta;
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione una venta para ver los detalles.",
+                                "Detalle de Venta",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+            }
+        }
 
 
     }

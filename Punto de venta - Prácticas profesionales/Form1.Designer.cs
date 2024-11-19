@@ -49,7 +49,6 @@ namespace Punto_de_venta___Prácticas_profesionales
             articulosToolStripMenuItem = new ToolStripMenuItem();
             cajaToolStripMenuItem = new ToolStripMenuItem();
             ventasToolStripMenuItem = new ToolStripMenuItem();
-            cajaToolStripMenuItem1 = new ToolStripMenuItem();
             labelEtiqueta = new Label();
             iconoActual = new IconPictureBox();
             panelEscritorio = new Panel();
@@ -62,11 +61,13 @@ namespace Punto_de_venta___Prácticas_profesionales
             iconMenuItem3 = new IconMenuItem();
             iconSplitButton2 = new IconSplitButton();
             iconToolStripButton1 = new IconToolStripButton();
-            pnArticulos = new Panel();
-            btCerrarArticulos = new controlesPersonalizados.ClassBtnPersonalizado();
-            comboBox1 = new ComboBox();
-            comboBox2 = new ComboBox();
-            dgvArticulos = new DataGridView();
+            pnVentas = new Panel();
+            dgvVentas = new DataGridView();
+            comboBoxFecha = new ComboBox();
+            comboBoxMes = new ComboBox();
+            btnFiltrar = new controlesPersonalizados.ClassBtnPersonalizado();
+            btnVerDetalle = new controlesPersonalizados.ClassBtnPersonalizado();
+            dgvDetalleVenta = new DataGridView();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnInicio).BeginInit();
@@ -76,8 +77,9 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelEscritorio.SuspendLayout();
             pnCaja.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCajas).BeginInit();
-            pnArticulos.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvArticulos).BeginInit();
+            pnVentas.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvVentas).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvDetalleVenta).BeginInit();
             SuspendLayout();
             // 
             // panelMenu
@@ -393,7 +395,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // 
             toolStripMenuItem1.Checked = true;
             toolStripMenuItem1.CheckState = CheckState.Checked;
-            toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { articulosToolStripMenuItem, cajaToolStripMenuItem, ventasToolStripMenuItem, cajaToolStripMenuItem1 });
+            toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { articulosToolStripMenuItem, cajaToolStripMenuItem, ventasToolStripMenuItem });
             toolStripMenuItem1.Font = new Font("Arial", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             toolStripMenuItem1.ForeColor = SystemColors.ButtonFace;
             toolStripMenuItem1.Name = "toolStripMenuItem1";
@@ -403,29 +405,23 @@ namespace Punto_de_venta___Prácticas_profesionales
             // articulosToolStripMenuItem
             // 
             articulosToolStripMenuItem.Name = "articulosToolStripMenuItem";
-            articulosToolStripMenuItem.Size = new Size(152, 26);
+            articulosToolStripMenuItem.Size = new Size(224, 26);
             articulosToolStripMenuItem.Text = "Articulos";
             articulosToolStripMenuItem.Click += articulosToolStripMenuItem_Click;
             // 
             // cajaToolStripMenuItem
             // 
             cajaToolStripMenuItem.Name = "cajaToolStripMenuItem";
-            cajaToolStripMenuItem.Size = new Size(152, 26);
+            cajaToolStripMenuItem.Size = new Size(224, 26);
             cajaToolStripMenuItem.Text = "Caja";
             cajaToolStripMenuItem.Click += cajaToolStripMenuItem_Click;
             // 
             // ventasToolStripMenuItem
             // 
             ventasToolStripMenuItem.Name = "ventasToolStripMenuItem";
-            ventasToolStripMenuItem.Size = new Size(152, 26);
+            ventasToolStripMenuItem.Size = new Size(224, 26);
             ventasToolStripMenuItem.Text = "Ventas";
             ventasToolStripMenuItem.Click += ventasToolStripMenuItem_Click;
-            // 
-            // cajaToolStripMenuItem1
-            // 
-            cajaToolStripMenuItem1.Name = "cajaToolStripMenuItem1";
-            cajaToolStripMenuItem1.Size = new Size(152, 26);
-            cajaToolStripMenuItem1.Text = "Caja";
             // 
             // labelEtiqueta
             // 
@@ -456,6 +452,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // panelEscritorio
             // 
             panelEscritorio.BackColor = Color.FromArgb(21, 9, 41);
+            panelEscritorio.Controls.Add(pnVentas);
             panelEscritorio.Controls.Add(pnCaja);
             panelEscritorio.Dock = DockStyle.Fill;
             panelEscritorio.Location = new Point(253, 48);
@@ -468,15 +465,15 @@ namespace Punto_de_venta___Prácticas_profesionales
             // pnCaja
             // 
             pnCaja.BackColor = Color.FromArgb(21, 9, 46);
-            pnCaja.Controls.Add(pnArticulos);
             pnCaja.Controls.Add(btnCerrarCajas);
             pnCaja.Controls.Add(cmbMes);
             pnCaja.Controls.Add(cmbFiltro);
             pnCaja.Controls.Add(dgvCajas);
-            pnCaja.Location = new Point(18, 28);
+            pnCaja.Location = new Point(28, 28);
             pnCaja.Name = "pnCaja";
-            pnCaja.Size = new Size(633, 515);
+            pnCaja.Size = new Size(121, 122);
             pnCaja.TabIndex = 0;
+            pnCaja.Paint += pnCaja_Paint;
             // 
             // btnCerrarCajas
             // 
@@ -573,68 +570,98 @@ namespace Punto_de_venta___Prácticas_profesionales
             iconToolStripButton1.Size = new Size(23, 23);
             iconToolStripButton1.Text = "iconToolStripButton1";
             // 
-            // pnArticulos
+            // pnVentas
             // 
-            pnArticulos.BackColor = Color.FromArgb(21, 9, 46);
-            pnArticulos.Controls.Add(btCerrarArticulos);
-            pnArticulos.Controls.Add(comboBox1);
-            pnArticulos.Controls.Add(comboBox2);
-            pnArticulos.Controls.Add(dgvArticulos);
-            pnArticulos.Location = new Point(32, 17);
-            pnArticulos.Name = "pnArticulos";
-            pnArticulos.Size = new Size(633, 515);
-            pnArticulos.TabIndex = 4;
+            pnVentas.Controls.Add(dgvDetalleVenta);
+            pnVentas.Controls.Add(btnVerDetalle);
+            pnVentas.Controls.Add(btnFiltrar);
+            pnVentas.Controls.Add(comboBoxMes);
+            pnVentas.Controls.Add(comboBoxFecha);
+            pnVentas.Controls.Add(dgvVentas);
+            pnVentas.Location = new Point(177, 31);
+            pnVentas.Name = "pnVentas";
+            pnVentas.Size = new Size(501, 449);
+            pnVentas.TabIndex = 1;
             // 
-            // btCerrarArticulos
+            // dgvVentas
             // 
-            btCerrarArticulos.BackColor = Color.DarkSlateBlue;
-            btCerrarArticulos.BackgroundColor = Color.DarkSlateBlue;
-            btCerrarArticulos.BorderColor = Color.PaleVioletRed;
-            btCerrarArticulos.BorderRadius = 40;
-            btCerrarArticulos.BorderSize = 0;
-            btCerrarArticulos.FlatAppearance.BorderSize = 0;
-            btCerrarArticulos.FlatStyle = FlatStyle.Flat;
-            btCerrarArticulos.ForeColor = Color.White;
-            btCerrarArticulos.IconAlignment = ContentAlignment.BottomRight;
-            btCerrarArticulos.IconChar = IconChar.Close;
-            btCerrarArticulos.IconColor = Color.White;
-            btCerrarArticulos.IconPadding = 5;
-            btCerrarArticulos.IconSize = 24;
-            btCerrarArticulos.Location = new Point(506, 458);
-            btCerrarArticulos.Name = "btCerrarArticulos";
-            btCerrarArticulos.Size = new Size(103, 50);
-            btCerrarArticulos.TabIndex = 3;
-            btCerrarArticulos.Text = "Cerrar";
-            btCerrarArticulos.TextColor = Color.White;
-            btCerrarArticulos.UseVisualStyleBackColor = false;
+            dgvVentas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvVentas.Location = new Point(16, 147);
+            dgvVentas.Name = "dgvVentas";
+            dgvVentas.RowHeadersWidth = 51;
+            dgvVentas.Size = new Size(300, 188);
+            dgvVentas.TabIndex = 0;
             // 
-            // comboBox1
+            // comboBoxFecha
             // 
-            comboBox1.BackColor = Color.Lavender;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(338, 53);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(151, 28);
-            comboBox1.TabIndex = 2;
+            comboBoxFecha.FormattingEnabled = true;
+            comboBoxFecha.Location = new Point(32, 30);
+            comboBoxFecha.Name = "comboBoxFecha";
+            comboBoxFecha.Size = new Size(151, 28);
+            comboBoxFecha.TabIndex = 1;
             // 
-            // comboBox2
+            // comboBoxMes
             // 
-            comboBox2.BackColor = Color.Lavender;
-            comboBox2.DisplayMember = "U";
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(116, 53);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(151, 28);
-            comboBox2.TabIndex = 1;
+            comboBoxMes.FormattingEnabled = true;
+            comboBoxMes.Location = new Point(32, 98);
+            comboBoxMes.Name = "comboBoxMes";
+            comboBoxMes.Size = new Size(151, 28);
+            comboBoxMes.TabIndex = 2;
             // 
-            // dgvArticulos
+            // btnFiltrar
             // 
-            dgvArticulos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvArticulos.Location = new Point(45, 150);
-            dgvArticulos.Name = "dgvArticulos";
-            dgvArticulos.RowHeadersWidth = 51;
-            dgvArticulos.Size = new Size(564, 296);
-            dgvArticulos.TabIndex = 0;
+            btnFiltrar.BackColor = Color.MediumSlateBlue;
+            btnFiltrar.BackgroundColor = Color.MediumSlateBlue;
+            btnFiltrar.BorderColor = Color.PaleVioletRed;
+            btnFiltrar.BorderRadius = 40;
+            btnFiltrar.BorderSize = 0;
+            btnFiltrar.FlatAppearance.BorderSize = 0;
+            btnFiltrar.FlatStyle = FlatStyle.Flat;
+            btnFiltrar.ForeColor = Color.White;
+            btnFiltrar.IconAlignment = ContentAlignment.MiddleLeft;
+            btnFiltrar.IconChar = IconChar.None;
+            btnFiltrar.IconColor = Color.White;
+            btnFiltrar.IconPadding = 5;
+            btnFiltrar.IconSize = 24;
+            btnFiltrar.Location = new Point(240, 12);
+            btnFiltrar.Name = "btnFiltrar";
+            btnFiltrar.Size = new Size(123, 50);
+            btnFiltrar.TabIndex = 3;
+            btnFiltrar.Text = "Buscar";
+            btnFiltrar.TextColor = Color.White;
+            btnFiltrar.UseVisualStyleBackColor = false;
+            // 
+            // btnVerDetalle
+            // 
+            btnVerDetalle.BackColor = Color.MediumSlateBlue;
+            btnVerDetalle.BackgroundColor = Color.MediumSlateBlue;
+            btnVerDetalle.BorderColor = Color.PaleVioletRed;
+            btnVerDetalle.BorderRadius = 40;
+            btnVerDetalle.BorderSize = 0;
+            btnVerDetalle.FlatAppearance.BorderSize = 0;
+            btnVerDetalle.FlatStyle = FlatStyle.Flat;
+            btnVerDetalle.ForeColor = Color.White;
+            btnVerDetalle.IconAlignment = ContentAlignment.MiddleLeft;
+            btnVerDetalle.IconChar = IconChar.None;
+            btnVerDetalle.IconColor = Color.White;
+            btnVerDetalle.IconPadding = 5;
+            btnVerDetalle.IconSize = 24;
+            btnVerDetalle.Location = new Point(357, 130);
+            btnVerDetalle.Name = "btnVerDetalle";
+            btnVerDetalle.Size = new Size(123, 50);
+            btnVerDetalle.TabIndex = 4;
+            btnVerDetalle.Text = "Ver Detalle";
+            btnVerDetalle.TextColor = Color.White;
+            btnVerDetalle.UseVisualStyleBackColor = false;
+            // 
+            // dgvDetalleVenta
+            // 
+            dgvDetalleVenta.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvDetalleVenta.Location = new Point(189, 255);
+            dgvDetalleVenta.Name = "dgvDetalleVenta";
+            dgvDetalleVenta.RowHeadersWidth = 51;
+            dgvDetalleVenta.Size = new Size(300, 188);
+            dgvDetalleVenta.TabIndex = 5;
             // 
             // Form1
             // 
@@ -647,7 +674,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             Controls.Add(panelMenu);
             Margin = new Padding(3, 4, 3, 4);
             Name = "Form1";
-            Text = "Form1";
+            Text = "  ";
             Load += Form1_Load;
             panelMenu.ResumeLayout(false);
             panelLogo.ResumeLayout(false);
@@ -660,8 +687,9 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelEscritorio.ResumeLayout(false);
             pnCaja.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvCajas).EndInit();
-            pnArticulos.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvArticulos).EndInit();
+            pnVentas.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvVentas).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvDetalleVenta).EndInit();
             ResumeLayout(false);
         }
 
@@ -698,12 +726,13 @@ namespace Punto_de_venta___Prácticas_profesionales
         private ToolStripMenuItem ventasToolStripMenuItem;
         private ComboBox cmbFiltro;
         private ComboBox cmbMes;
-        private ToolStripMenuItem cajaToolStripMenuItem1;
         private controlesPersonalizados.ClassBtnPersonalizado btnCerrarCajas;
-        private Panel pnArticulos;
-        private controlesPersonalizados.ClassBtnPersonalizado btCerrarArticulos;
-        private ComboBox comboBox1;
-        private ComboBox comboBox2;
-        private DataGridView dgvArticulos;
+        private Panel pnVentas;
+        private DataGridView dgvVentas;
+        private controlesPersonalizados.ClassBtnPersonalizado btnVerDetalle;
+        private controlesPersonalizados.ClassBtnPersonalizado btnFiltrar;
+        private ComboBox comboBoxMes;
+        private ComboBox comboBoxFecha;
+        private DataGridView dgvDetalleVenta;
     }
 }
