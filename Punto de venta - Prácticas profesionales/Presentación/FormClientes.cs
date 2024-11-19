@@ -60,13 +60,6 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         }
 
 
-
-        //private void btGuardar_Click(object sender, EventArgs e)
-        //{
-
-
-        //}
-
         private void button1_Click(object sender, EventArgs e)
         {
             panel1.Visible = true;
@@ -116,9 +109,22 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                     return;
                 }
 
-                // Validación y actualización
-                string mensajeError = _clientesLogica.ValidarYActualizarPersona(cuilStr, nombre, apellido, telefonoStr, domicilio, email, out long cuil, out long telefono);
+                // Intentar convertir CUIL y teléfono a long, y manejar el caso de error
+                if (!long.TryParse(cuilStr, out long cuil) || !long.TryParse(telefonoStr, out long telefono))
+                {
+                    MessageBox.Show("El CUIL o el teléfono tienen un formato inválido.");
+                    dgvClientes.CancelEdit(); // Cancela la edición si hay error
+                    return;
+                }
 
+                // Aquí necesitas el valor de cuilOriginal, que puede ser tomado de la misma fila
+                // El cuilOriginal es necesario para validar que no se cambie el CUIL a uno que ya existe
+                long cuilOriginal = cuil;
+
+                // Validar si los datos cambiaron en relación al original
+                string mensajeError = _clientesLogica.ValidarYActualizarPersona(cuilStr, nombre, apellido, telefonoStr, domicilio, email, cuilOriginal, out long cuilOut, out long telefonoOut);
+
+                // Si hubo un error, lo mostramos
                 if (!string.IsNullOrEmpty(mensajeError))
                 {
                     MessageBox.Show(mensajeError);
@@ -126,10 +132,16 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 }
                 else
                 {
-                    CargarPersonasEnGrilla(); // Recarga para reflejar cambios
+                    // Si no hubo error, recargamos la grilla para reflejar los cambios
+                    CargarPersonasEnGrilla();
                 }
             }
         }
+
+
+
+
+
 
 
 
@@ -175,30 +187,44 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             string domicilio = txtDomicilio.Texts;
             string email = txtEmail.Texts;
 
-
+            // Validamos los datos de la persona (Cuil, Nombre, Apellido, Teléfono, Domicilio)
             string mensajeError = _clientesLogica.ValidarDatosPersona(cuilStr, nombre, apellido, telefonoStr, domicilio, email, out long cuil, out long telefono);
 
+            // Si hay algún error en los datos, mostramos el mensaje de error
             if (!string.IsNullOrEmpty(mensajeError))
             {
                 MessageBox.Show(mensajeError);
-
+                return; // Si hay error, no continuamos con el proceso de guardado
             }
-            else
+
+            // Validamos el formato del correo: permite cualquier dominio
+            if (!_clientesLogica.EsCorreoValido(email))
             {
-                _clientesLogica.GuardarPersona(cuil, nombre, apellido, telefono, domicilio, email);
-                //MessageBox.Show("Cliente registrado correctamente ");
-                panel1.Visible = false;
-                CargarPersonasEnGrilla();
-                txtCuil.Texts = "";
-                txtNombre.Texts = "";
-                txtApellido.Texts = "";
-                txtTelefono.Texts = "";
-                txtDomicilio.Texts = "";
-                txtEmail.Texts = "";
-
-
+                MessageBox.Show("El correo electrónico no tiene un formato válido.");
+                return; // Si el correo no es válido, no seguimos adelante
             }
 
+            // Verificamos si el correo ya está registrado
+            if (_clientesLogica.VerificarCorreoExistente(email))
+            {
+                MessageBox.Show("Este correo ya está registrado.");
+                return; // Si el correo ya está registrado, no seguimos con el guardado
+            }
+
+            // Si todo es válido, guardamos los datos en la base de datos
+            _clientesLogica.GuardarPersona(cuil, nombre, apellido, telefono, domicilio, email);
+
+            // Limpiamos los campos y ocultamos el panel después de guardar
+            panel1.Visible = false;
+            CargarPersonasEnGrilla();
+
+            // Limpiar los campos de entrada
+            txtCuil.Texts = "";
+            txtNombre.Texts = "";
+            txtApellido.Texts = "";
+            txtTelefono.Texts = "";
+            txtDomicilio.Texts = "";
+            txtEmail.Texts = "";
         }
 
         private void classBtnPersonalizado2_Click(object sender, EventArgs e)
@@ -262,6 +288,13 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 dgvClientes.Width = this.ClientSize.Width - 20;
                 dgvClientes.Height = this.ClientSize.Height - dgvClientes.Top - 10;
             };
+
+            //configurar nombre de alas columnas 
+            dgvClientes.Columns["nombres"].HeaderText="Nombre";
+            dgvClientes.Columns["apellido"].HeaderText = "Apellido";
+            dgvClientes.Columns["telefono"].HeaderText = "Telefono";
+            dgvClientes.Columns["domicilio"].HeaderText = "Domicilio";
+            dgvClientes.Columns["email"].HeaderText = "Correo Electronico";
         }
 
         private void classBtnPersonalizado1_Click(object sender, EventArgs e)
@@ -279,7 +312,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         {
             // Configurar el botón para que siempre esté en la esquina superior derecha
             btNuevoCliente.Anchor = AnchorStyles.Top | AnchorStyles.Right; // Fija el botón en la parte superior y derecha
-            btNuevoCliente.Top = 10; // Márgenes de la parte superior
+            btNuevoCliente.Top = 10; // Márgenes de laa parte superior
             btNuevoCliente.Left = this.ClientSize.Width - btNuevoCliente.Width - 10; // Márgenes del lado derecho
 
             // Ajustar cuando el formulario cambia de tamaño
