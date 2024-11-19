@@ -53,6 +53,8 @@
             label12 = new Label();
             comboBox2 = new ComboBox();
             comboBox4 = new ComboBox();
+            label1 = new Label();
+            textBox1 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -70,7 +72,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(118, 63);
+            label2.Location = new Point(375, 68);
             label2.Name = "label2";
             label2.Size = new Size(44, 15);
             label2.TabIndex = 2;
@@ -107,7 +109,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(120, 31);
+            label6.Location = new Point(135, 31);
             label6.Name = "label6";
             label6.Size = new Size(57, 15);
             label6.TabIndex = 6;
@@ -116,7 +118,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(120, 69);
+            label7.Location = new Point(129, 69);
             label7.Name = "label7";
             label7.Size = new Size(63, 15);
             label7.TabIndex = 7;
@@ -183,13 +185,14 @@
             texboxs4.BorderSize = 2;
             texboxs4.Font = new Font("Segoe UI", 9.5F);
             texboxs4.ForeColor = Color.DimGray;
-            texboxs4.Location = new Point(185, 64);
+            texboxs4.Location = new Point(198, 64);
             texboxs4.Name = "texboxs4";
             texboxs4.Padding = new Padding(7);
             texboxs4.Size = new Size(53, 32);
             texboxs4.TabIndex = 20;
             texboxs4.Texts = "";
             texboxs4.UnderlinedStyle1 = false;
+            texboxs4.KeyPress += texboxs4_KeyPress;
             // 
             // texboxs3
             // 
@@ -199,13 +202,14 @@
             texboxs3.BorderSize = 2;
             texboxs3.Font = new Font("Segoe UI", 9.5F);
             texboxs3.ForeColor = Color.DimGray;
-            texboxs3.Location = new Point(185, 19);
+            texboxs3.Location = new Point(198, 19);
             texboxs3.Name = "texboxs3";
             texboxs3.Padding = new Padding(7);
             texboxs3.Size = new Size(53, 32);
             texboxs3.TabIndex = 19;
             texboxs3.Texts = "";
             texboxs3.UnderlinedStyle1 = false;
+            texboxs3.KeyPress += texboxs3_KeyPress;
             // 
             // groupBox2
             // 
@@ -236,6 +240,7 @@
             texboxs5.TabIndex = 21;
             texboxs5.Texts = "";
             texboxs5.UnderlinedStyle1 = false;
+            texboxs5.KeyPress += texboxs5_KeyPress;
             // 
             // comboBox1
             // 
@@ -268,6 +273,7 @@
             classBtnPersonalizado2.Text = "Limpiar";
             classBtnPersonalizado2.TextColor = Color.White;
             classBtnPersonalizado2.UseVisualStyleBackColor = false;
+            classBtnPersonalizado2.Click += classBtnPersonalizado2_Click;
             // 
             // classBtnPersonalizado1
             // 
@@ -356,16 +362,34 @@
             // comboBox4
             // 
             comboBox4.FormattingEnabled = true;
-            comboBox4.Location = new Point(168, 58);
+            comboBox4.Location = new Point(425, 60);
             comboBox4.Name = "comboBox4";
-            comboBox4.Size = new Size(223, 23);
+            comboBox4.Size = new Size(142, 23);
             comboBox4.TabIndex = 18;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(118, 68);
+            label1.Name = "label1";
+            label1.Size = new Size(77, 15);
+            label1.TabIndex = 19;
+            label1.Text = "N° de factura";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(201, 60);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(100, 23);
+            textBox1.TabIndex = 20;
             // 
             // FormVentas
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(942, 581);
+            Controls.Add(textBox1);
+            Controls.Add(label1);
             Controls.Add(comboBox4);
             Controls.Add(comboBox2);
             Controls.Add(groupBox3);
@@ -414,5 +438,7 @@
         private controlesPersonalizados.Texboxs texboxs5;
         private ComboBox comboBox3;
         private ComboBox comboBox4;
+        private Label label1;
+        private TextBox textBox1;
     }
 }

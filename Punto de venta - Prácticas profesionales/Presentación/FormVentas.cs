@@ -58,6 +58,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         }
         private void InicializarEventos()
         {
+            var nrofact = ventaslogica.ObtenerNroFact();
             // Vincular evento TextChanged del ComboBox
             comboBox1.TextChanged += comboBox1_TextChanged;
             //comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
@@ -65,12 +66,22 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             comboBox4.TextChanged += comboBox4_TextChanged;
             // Cargar opciones en el ComboBox
             comboBox3.DataSource = opcionesDePago;
+            textBox1.Text = nrofact.ToString();
+            textBox1.ReadOnly = true;
+            label5.Text = subtotal.ToString("C2");
+            label9.Text = total.ToString("C2");
+            dataGridView1.ReadOnly = true;
         }
 
 
 
         private void classBtnPersonalizado1_Click(object sender, EventArgs e)
         {
+            if (comboBox3.SelectedItem == null || comboBox2.SelectedItem == null || comboBox4.SelectedItem == null || texboxs3.Texts == "" || texboxs4.Texts == "")
+            {
+                MessageBox.Show("Por favor, completa todos los campos.");
+                return;
+            }
             var resultado = ventaslogica.consulta_dgv(comboBox1.Text);
             DataRow row = dt.NewRow();
 
@@ -283,17 +294,69 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 Total = total
             };
 
+            List<detallesVenta> list_detalles = new List<detallesVenta>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                detallesVenta detalles_venta = new detallesVenta();
+
+                detalles_venta.nroFact = textBox1.Text.ToString();
+                detalles_venta.codigo = row["Codigo"].ToString();
+                detalles_venta.cantidad = row["Cantidad"].ToString();
+
+                list_detalles.Add(detalles_venta);
+
+            }
+
             // Llamar a la capa de datos
             try
             {
                 VentasDatos datos = new VentasDatos();
                 datos.RegistrarTransaccion(transaccion);
+                ventaslogica.RegistrarDetallesVenta(list_detalles);
+                textBox1.Text = ventaslogica.ObtenerNroFact().ToString();
 
                 MessageBox.Show("Transacción registrada exitosamente.");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al registrar la transacción: {ex.Message}");
+            }
+        }
+
+        private void classBtnPersonalizado2_Click(object sender, EventArgs e)
+        {
+            total = 0.00;
+            subtotal = 0.00;
+            ((DataTable)dataGridView1.DataSource).Rows.Clear();
+            label5.Text = subtotal.ToString("C2");
+            label9.Text = total.ToString("C2");
+        }
+
+        private void texboxs5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números, tecla de retroceso y teclas de control (e.g., Ctrl+C)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Rechazar el carácter
+            }
+        }
+
+        private void texboxs3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números, tecla de retroceso y teclas de control (e.g., Ctrl+C)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Rechazar el carácter
+            }
+        }
+
+        private void texboxs4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Permitir solo números, tecla de retroceso y teclas de control (e.g., Ctrl+C)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true; // Rechazar el carácter
             }
         }
     }

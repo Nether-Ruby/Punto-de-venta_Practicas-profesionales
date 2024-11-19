@@ -58,5 +58,24 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
             public double Total { get; set; }
         }
 
+        public  int ObtenerNroFact ()
+        {
+
+            return ventasdatos.ObtenerNroFact();
+        }
+
+        public class detallesVenta
+        {
+            public string nroFact { get; set; }
+
+            public string codigo { get; set; }
+
+            public string cantidad { get; set; }
+        }
+
+        public void RegistrarDetallesVenta (List<detallesVenta> F)
+        {
+            ventasdatos.RegistrarDetallesVenta(F);
+        }
     }
 }

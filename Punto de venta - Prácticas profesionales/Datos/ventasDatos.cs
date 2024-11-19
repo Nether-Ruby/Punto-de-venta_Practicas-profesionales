@@ -10,6 +10,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
 {
     internal class VentasDatos
     {
+
         string databasePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database.db");
 
         // Método para obtener artículos filtrados por nombre
@@ -161,7 +162,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
                 conn.Open();
 
                 string query = @"INSERT INTO Ventas (fecha_hora, vendedor, cliente, metodo, total, activa) 
-                             VALUES (@FechaHora, @Vendedor, @Cliente, @MetodoPago, @Total, 1)";
+                             VALUES (@FechaHora, (SELECT CUIL FROM Vendedores WHERE nombres = @Vendedor), (SELECT CUIL FROM Clientes WHERE nombres = @Cliente), @MetodoPago, @Total, 1)";
 
                 using (var cmd = new SQLiteCommand(query, conn))
                 {
@@ -172,6 +173,50 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
                     cmd.Parameters.AddWithValue("@Total", transaccion.Total);
 
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public int ObtenerNroFact()
+        {
+            string connectionString = @"URI=file:" + databasePath;
+            using var conn = new SQLiteConnection(connectionString);
+            string query = @"SELECT COALESCE((SELECT id_venta FROM Ventas ORDER BY id_venta DESC LIMIT 1), 0) + 1 AS siguiente_id_venta;";
+            
+                using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && int.TryParse(result.ToString(), out int siguienteId))
+                        {
+                            return siguienteId;
+                        }
+                        else
+                        {
+                            throw new Exception("Error al calcular el siguiente ID de venta.");
+                        }
+                    }
+                }
+            
+            
+
+        }
+
+        public void RegistrarDetallesVenta(List<detallesVenta> F)
+        {
+            string connectionString = @"URI=file:" + databasePath;
+            using (var conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                foreach (detallesVenta detallesVenta in F) {
+                    string query = @"INSERT INTO Detalles_ventas (id_venta, articulo, cantidad) 
+                             VALUES ("+ Convert.ToInt32(detallesVenta.nroFact)+", "+ Convert.ToInt32(detallesVenta.codigo)+", "+ Convert.ToInt32(detallesVenta.cantidad)+")";
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    command.ExecuteNonQuery();
                 }
             }
         }
