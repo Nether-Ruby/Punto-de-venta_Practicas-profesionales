@@ -94,7 +94,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             ActivateButton(sender, RGBcolors.color1);
 
             openChildForm(new AriculosForm());
-         
+
 
         }
 
@@ -102,7 +102,7 @@ namespace Punto_de_venta___Prácticas_profesionales
         {
 
         }
-         
+
         private void btnInicio_Click(object sender, EventArgs e)
         {
             //currentChildForm.Close();
@@ -195,7 +195,13 @@ namespace Punto_de_venta___Prácticas_profesionales
 
         private void iconButton11_Click(object sender, EventArgs e)
         {
-            WindowState=FormWindowState.Minimized;
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void menuStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }
+ 

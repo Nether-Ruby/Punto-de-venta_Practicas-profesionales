@@ -358,9 +358,10 @@ namespace Punto_de_venta___Prácticas_profesionales
             menuStrip2.Location = new Point(44, 9);
             menuStrip2.Name = "menuStrip2";
             menuStrip2.Padding = new Padding(2, 2, 0, 0);
-            menuStrip2.Size = new Size(81, 24);
+            menuStrip2.Size = new Size(201, 24);
             menuStrip2.TabIndex = 1;
             menuStrip2.Text = "menuStrip2";
+            menuStrip2.ItemClicked += menuStrip2_ItemClicked;
             // 
             // toolStripMenuItem1
             // 
@@ -377,32 +378,32 @@ namespace Punto_de_venta___Prácticas_profesionales
             // 
             toolStripMenuItem2.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem3, toolStripMenuItem4, toolStripMenuItem5 });
             toolStripMenuItem2.Name = "toolStripMenuItem2";
-            toolStripMenuItem2.Size = new Size(153, 22);
+            toolStripMenuItem2.Size = new Size(180, 22);
             toolStripMenuItem2.Text = "Tarjetas";
             // 
             // toolStripMenuItem3
             // 
             toolStripMenuItem3.Name = "toolStripMenuItem3";
-            toolStripMenuItem3.Size = new Size(123, 22);
+            toolStripMenuItem3.Size = new Size(180, 22);
             toolStripMenuItem3.Text = "Tarjeta 1";
             // 
             // toolStripMenuItem4
             // 
             toolStripMenuItem4.Name = "toolStripMenuItem4";
-            toolStripMenuItem4.Size = new Size(123, 22);
+            toolStripMenuItem4.Size = new Size(180, 22);
             toolStripMenuItem4.Text = "Tarjeta 2";
             // 
             // toolStripMenuItem5
             // 
             toolStripMenuItem5.Name = "toolStripMenuItem5";
-            toolStripMenuItem5.Size = new Size(123, 22);
+            toolStripMenuItem5.Size = new Size(180, 22);
             toolStripMenuItem5.Text = "Tarjeta 3";
             // 
             // toolStripMenuItem6
             // 
             toolStripMenuItem6.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem7, toolStripMenuItem8 });
             toolStripMenuItem6.Name = "toolStripMenuItem6";
-            toolStripMenuItem6.Size = new Size(153, 22);
+            toolStripMenuItem6.Size = new Size(180, 22);
             toolStripMenuItem6.Text = "Configuracion";
             // 
             // toolStripMenuItem7
@@ -420,7 +421,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // toolStripMenuItem9
             // 
             toolStripMenuItem9.Name = "toolStripMenuItem9";
-            toolStripMenuItem9.Size = new Size(153, 22);
+            toolStripMenuItem9.Size = new Size(180, 22);
             toolStripMenuItem9.Text = "algo";
             // 
             // labelEtiqueta
