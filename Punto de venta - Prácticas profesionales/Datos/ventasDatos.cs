@@ -118,6 +118,28 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
 
             return clientes;
         }
+
+        public bool ValidarStock(string nombre, int cantidad)
+        {
+            string connectionString = @"URI=file:" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database.db");
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT COUNT(*) FROM Articulos WHERE nombre = @Nombre AND stock >= @Cantidad";
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Nombre", nombre);
+                    command.Parameters.AddWithValue("@Cantidad", cantidad);
+
+                    // Si el conteo es mayor a 0, significa que hay suficiente stock
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+        }
+
         public Tuple<string, string, string, string> consulta_dgv(string nombre)
         {
             string connectionString = @"URI=file:" + databasePath;
