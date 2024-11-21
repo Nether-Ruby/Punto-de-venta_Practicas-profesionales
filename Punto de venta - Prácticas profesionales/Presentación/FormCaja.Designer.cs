@@ -307,7 +307,7 @@
             panelOpciones.Name = "panelOpciones";
             panelOpciones.Size = new Size(526, 202);
             panelOpciones.TabIndex = 16;
-            panelOpciones.Paint += panel1_Paint;
+         //   panelOpciones.Paint += panel1_Paint;
             // 
             // btnVentas
             // 
@@ -331,7 +331,7 @@
             btnVentas.Text = "Ventas";
             btnVentas.TextColor = Color.White;
             btnVentas.UseVisualStyleBackColor = false;
-            btnVentas.Click += btnVentas_Click;
+          //  btnVentas.Click += btnVentas_Click;
             // 
             // btnMovimientos
             // 
@@ -355,7 +355,7 @@
             btnMovimientos.Text = "Movimientos";
             btnMovimientos.TextColor = Color.White;
             btnMovimientos.UseVisualStyleBackColor = false;
-            btnMovimientos.Click += btnMovimientos_Click;
+          //  btnMovimientos.Click += btnMovimientos_Click;
             // 
             // classBtnPersonalizado1
             // 
@@ -379,7 +379,7 @@
             classBtnPersonalizado1.Text = "ver transacciones del dia ";
             classBtnPersonalizado1.TextColor = Color.White;
             classBtnPersonalizado1.UseVisualStyleBackColor = false;
-            classBtnPersonalizado1.Click += classBtnPersonalizado1_Click;
+       //     classBtnPersonalizado1.Click += classBtnPersonalizado1_Click;
             // 
             // FormCaja
             // 

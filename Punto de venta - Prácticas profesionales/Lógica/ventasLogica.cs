@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Punto_de_venta___Prácticas_profesionales.Lógica
 {
     internal class VentasLogica
@@ -49,6 +50,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
             return ventasdatos.consulta_dgv(nombre);
         }
 
+    
         public class Transaccion
         {
             public DateTime FechaHora { get; set; }
@@ -57,8 +59,9 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
             public string MetodoPago { get; set; }
             public double Total { get; set; }
         }
+ 
 
-        public  int ObtenerNroFact ()
+        public int ObtenerNroFact ()
         {
 
             return ventasdatos.ObtenerNroFact();
@@ -72,6 +75,8 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
 
             public string cantidad { get; set; }
         }
+      
+
 
         public void RegistrarDetallesVenta (List<detallesVenta> F)
         {
