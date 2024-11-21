@@ -77,5 +77,20 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
         {
             ventasdatos.RegistrarDetallesVenta(F);
         }
+
+        public bool VerificarYRegistrarVenta(string nombre, int cantidad, out string mensaje)
+        {
+            if (!ventasdatos.ValidarStock(nombre, cantidad))
+            {
+                mensaje = "No hay suficiente stock para realizar la venta.";
+                return false;
+            }
+            else
+            {
+                mensaje = "Articulo agregado con exito";
+                return true;
+
+            }
+        }
     }
 }

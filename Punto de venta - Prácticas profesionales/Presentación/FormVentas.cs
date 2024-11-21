@@ -77,31 +77,50 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
         private void classBtnPersonalizado1_Click(object sender, EventArgs e)
         {
-            if (comboBox3.SelectedItem == null || /*comboBox2.SelectedItem == null || */comboBox4.SelectedItem == null || texboxs3.Texts == "" || texboxs4.Texts == "")
+
+            string nombreArticulo = comboBox1.Text;
+            int cantidad;
+
+            if (!int.TryParse(texboxs5.Texts, out cantidad) || cantidad <= 0)
+
             {
-                MessageBox.Show("Por favor, completa todos los campos.");
+                MessageBox.Show("Ingrese una cantidad válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var resultado = ventaslogica.consulta_dgv(comboBox1.Text);
-            DataRow row = dt.NewRow();
 
-            row["Codigo"] = resultado.Item1; // Consulta SQL
-            row["Nombre"] = comboBox1.Text;
-            row["Marca"] = resultado.Item2; // Consulta SQL
-            row["Rubro"] = resultado.Item3; // Consulta SQL
-            row["Precio Unitario"] = resultado.Item4; // Consulta SQL
-            row["Cantidad"] = texboxs5.Texts;
-            row["Precio Total"] = Int32.Parse(texboxs5.Texts) * double.Parse(resultado.Item4);
+            string mensaje;
+            bool exito = ventaslogica.VerificarYRegistrarVenta(nombreArticulo, cantidad, out mensaje);
 
-            dt.Rows.Add(row);
+            MessageBox.Show(mensaje, exito ? "Éxito" : "Error", MessageBoxButtons.OK, exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
-            double auxImp = double.Parse(texboxs3.Texts) / 100;
-            double auxDesc = double.Parse(texboxs4.Texts) / 100;
-            subtotal = subtotal + (Int32.Parse(texboxs5.Texts) * double.Parse(resultado.Item4));
-            total = subtotal + (subtotal * auxImp) - (subtotal * auxDesc);
+            if (exito)
+            {
+                if (comboBox3.SelectedItem == null || comboBox2.SelectedItem == null || comboBox4.SelectedItem == null || texboxs3.Texts == "" || texboxs4.Texts == "")
+                {
+                    MessageBox.Show("Por favor, completa todos los campos.");
+                    return;
+                }
+                var resultado = ventaslogica.consulta_dgv(comboBox1.Text);
+                DataRow row = dt.NewRow();
 
-            label5.Text = subtotal.ToString("C2");
-            label9.Text = total.ToString("C2");
+                row["Codigo"] = resultado.Item1; // Consulta SQL
+                row["Nombre"] = comboBox1.Text;
+                row["Marca"] = resultado.Item2; // Consulta SQL
+                row["Rubro"] = resultado.Item3; // Consulta SQL
+                row["Precio Unitario"] = resultado.Item4; // Consulta SQL
+                row["Cantidad"] = texboxs5.Texts;
+                row["Precio Total"] = Int32.Parse(texboxs5.Texts) * double.Parse(resultado.Item4);
+
+                dt.Rows.Add(row);
+
+                double auxImp = double.Parse(texboxs3.Texts) / 100;
+                double auxDesc = double.Parse(texboxs4.Texts) / 100;
+                subtotal = subtotal + (Int32.Parse(texboxs5.Texts) * double.Parse(resultado.Item4));
+                total = subtotal + (subtotal * auxImp) - (subtotal * auxDesc);
+
+                label5.Text = subtotal.ToString("C2");
+                label9.Text = total.ToString("C2");
+            }
 
         }
 
@@ -283,6 +302,11 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 MessageBox.Show("Por favor, completa todos los campos.");
                 return;
             }
+            if (dataGridView1.Rows.Count < 2)
+            {
+                MessageBox.Show("No hay artículos en la lista de venta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // Crear la transacción
             Transaccion transaccion = new Transaccion
@@ -317,6 +341,13 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 textBox1.Text = ventaslogica.ObtenerNroFact().ToString();
 
                 MessageBox.Show("Transacción registrada exitosamente.");
+                total = 0.00;
+                subtotal = 0.00;
+                ((DataTable)dataGridView1.DataSource).Rows.Clear();
+                label5.Text = subtotal.ToString("C2");
+                label9.Text = total.ToString("C2");
+                texboxs5.Clear();
+                comboBox1.Text = "";
             }
             catch (Exception ex)
             {
