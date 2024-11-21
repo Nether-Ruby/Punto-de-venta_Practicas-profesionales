@@ -77,10 +77,12 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
         private void classBtnPersonalizado1_Click(object sender, EventArgs e)
         {
+
             string nombreArticulo = comboBox1.Text;
             int cantidad;
 
             if (!int.TryParse(texboxs5.Texts, out cantidad) || cantidad <= 0)
+
             {
                 MessageBox.Show("Ingrese una cantidad válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -295,7 +297,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 return;
             }
 
-            if (comboBox3.SelectedItem == null || comboBox2.SelectedItem == null || comboBox4.SelectedItem == null)
+            if (comboBox3.SelectedItem == null || /*comboBox2.SelectedItem == null || */comboBox4.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, completa todos los campos.");
                 return;
