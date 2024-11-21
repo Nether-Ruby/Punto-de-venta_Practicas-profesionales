@@ -33,13 +33,23 @@ namespace Punto_de_venta___Prácticas_profesionales
             ConfigurarComboboxes();
             CargarDatos(); // Mostrar todos los datos al cargar el formulario
             pnCaja.Visible = false;
-            EstilizarDataGridViewCajas(); // Estilizar el DataGridView de cajas
-            CentrarDataGridViewCajas();   // Centrar el DataGridView de cajas dentro del panel
+            /// EstilizarDataGridView(); // Estilizar el DataGridView de cajas
+            // CentrarDataGridViewCajas();   // Centrar el DataGridView de cajas dentro del panel
+            // Estilizar los DataGridView
+            EstilizarDataGridView(dgvCajas);
+            EstilizarDataGridView(dgvDetalleVenta);
+            EstilizarDataGridView(dgvVentas);
 
+            // Centrar los DataGridView en sus respectivos paneles
+            CentrarDataGridView(dgvCajas, pnCaja);
+            CentrarDataGridView(dgvDetalleVenta, pnDetallesVentas);
+            CentrarDataGridView(dgvVentas, pnVentas);
             /////////////////ventas reporte///////////////////////
             ConfigurarFiltrosVentas();
             CargarDatosVentas();
             pnVentas.Visible = false;
+            pnDetallesVentas.Visible = false;
+
         }
         private struct RGBcolors
         {
@@ -336,12 +346,13 @@ namespace Punto_de_venta___Prácticas_profesionales
         private void articulosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             pnCaja.Visible = false;
-            pnVentas.Visible=false;
+            pnVentas.Visible = false;
         }
 
         private void ventasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pnCaja.Visible = false;
+            pnCaja.Visible = true;
+            //pnVentas.Parent = this; // Mover pnVentas a otro contenedor o formulario
             pnVentas.Visible = true;
         }
 
@@ -350,31 +361,47 @@ namespace Punto_de_venta___Prácticas_profesionales
             pnCaja.Visible = false;
 
         }
-        private void EstilizarDataGridViewCajas()
+        private void EstilizarDataGridView(DataGridView dgv)
         {
-            // Personalización del DataGridView para Caja
-            dgvCajas.BackgroundColor = Color.FromArgb(32, 32, 32); // Fondo oscuro
-            dgvCajas.ForeColor = Color.White; // Texto blanco
-            dgvCajas.BorderStyle = BorderStyle.None; // Sin borde
-            dgvCajas.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40); // Fondo alterno de filas
-            dgvCajas.AlternatingRowsDefaultCellStyle.ForeColor = Color.White; // Texto de filas alternas
-            dgvCajas.DefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 60, 60); // Fondo al seleccionar
-            dgvCajas.DefaultCellStyle.SelectionForeColor = Color.White; // Texto seleccionado blanco
-            dgvCajas.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Alineación al centro
-            dgvCajas.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(50, 50, 50); // Fondo de encabezados
-            dgvCajas.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; // Texto de encabezados
-            dgvCajas.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Encabezados al centro
-            dgvCajas.EnableHeadersVisualStyles = false; // Deshabilitar estilos predeterminados de encabezados
-            dgvCajas.RowTemplate.Height = 30; // Altura de las filas
-            dgvCajas.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; // Ajuste automático del tamaño de las columnas
+            // Estilo de la grilla
+            dgv.BackgroundColor = Color.FromArgb(32, 32, 32); // Fondo oscuro
+            dgv.ForeColor = Color.White; // Texto blanco
+            dgv.BorderStyle = BorderStyle.None; // Sin borde
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40); // Fondo alterno de filas
+            dgv.AlternatingRowsDefaultCellStyle.ForeColor = Color.White; // Texto de filas alternas
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 60, 60); // Fondo al seleccionar
+            dgv.DefaultCellStyle.SelectionForeColor = Color.White; // Texto seleccionado blanco
+            dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Alineación al centro
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(50, 50, 50); // Fondo de encabezados
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; // Texto de encabezados
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Encabezados al centro
+            dgv.EnableHeadersVisualStyles = false; // Deshabilitar estilos predeterminados de encabezados
+            dgv.RowTemplate.Height = 30; // Altura de las filas
+
+            // Ajustar columnas al contenido
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; // Ajustar las columnas al contenido
+            dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells; // Ajustar las filas al contenido
+
+            // Ajustar el anclaje de la grilla para que se ajuste al tamaño del contenedor
+            dgv.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right; // Anclaje a todos los bordes
 
             // Deshabilitar la selección y clic en la grilla
-            dgvCajas.MultiSelect = false;  // No permitir selección múltiple
-            dgvCajas.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Solo se puede seleccionar toda la fila
-            dgvCajas.AllowUserToAddRows = false; // Deshabilitar la posibilidad de agregar filas
-            dgvCajas.AllowUserToDeleteRows = false; // Deshabilitar la posibilidad de borrar filas
-            dgvCajas.ReadOnly = true; // Hacer la grilla solo de lectura (no editable)
+            dgv.MultiSelect = false; // No permitir selección múltiple
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Solo se puede seleccionar toda la fila
+            dgv.AllowUserToAddRows = false; // Deshabilitar la posibilidad de agregar filas
+            dgv.AllowUserToDeleteRows = false; // Deshabilitar la posibilidad de borrar filas
+            dgv.ReadOnly = true; // Hacer la grilla solo de lectura (no editable)
         }
+
+        private void CentrarDataGridView(DataGridView dgv, Panel panel)
+        {
+            // Calcular la posición para centrar el DataGridView en el panel correspondiente
+            int x = (panel.Width - dgv.Width) / 2; // Centrado horizontal
+            int y = (panel.Height - dgv.Height - 60); // Ajuste de margen inferior para espacio adicional
+
+            dgv.Location = new Point(x, y); // Asignar la nueva posición
+        }
+
 
 
         private void CentrarDataGridViewCajas()
@@ -503,6 +530,31 @@ namespace Punto_de_venta___Prácticas_profesionales
             }
         }
 
+        private void btnCerrarVentas_Click(object sender, EventArgs e)
+        {
+            pnCaja.Visible = false;
+            pnVentas.Visible = false;
 
+        }
+
+        private void btnCerrarDetallesV_Click(object sender, EventArgs e)
+        {
+            pnDetallesVentas.Visible = false;
+        }
+
+        private void dgvDetalleVenta_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgvCajas_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnVerDetalle_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
