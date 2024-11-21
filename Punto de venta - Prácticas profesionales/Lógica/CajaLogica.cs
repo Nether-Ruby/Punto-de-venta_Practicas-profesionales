@@ -1,20 +1,125 @@
 ﻿
 
+//using System;
+//using System.Data;
+//using System.Data.SQLite;
+//using System.Windows.Forms;
+//namespace Punto_de_venta___Prácticas_profesionales.Lógica;
+
+//using Punto_de_venta___Prácticas_profesionales.Datos;
+
+//using Punto_de_venta___Prácticas_profesionales.Lógica;
+
+//public class CajaLogica
+//{
+//    /// <summary>
+//    /// Obtiene el resumen del día desde la tabla "Caja".
+//    /// Incluye Efectivo, Tarjeta y el Total general.
+//    /// </summary>
+//    /// <returns>DataRow con el resumen del día.</returns>
+//    public DataRow ObtenerResumenDelDia()
+//    {
+//        return DatosCaja.ObtenerResumenDelDia();
+//    }
+
+
+//    public static int ObtenerIdCajaActual()
+//    {
+//        return DatosCaja.ObtenerIdCajaActual();
+//    }
+
+//    public static void RegistrarCierreDeCaja(int idCaja)
+//    {
+//        DateTime fechaHoraCierre = DateTime.Now;
+//        DatosCaja.RegistrarCierreDeCaja(idCaja, fechaHoraCierre);
+//    }
+//    public static void GuardarCierreDeCaja(DateTime fecha, double efectivo, double tarjeta, double ingresos, double egresos, double total)
+//    {
+//        DatosCaja.GuardarCierreDeCaja(fecha, efectivo, tarjeta, ingresos, egresos, total);
+//    }
+
+
+
+
+
+
+//    internal static (double TotalEfectivo, double TotalTarjeta) FiltrarVentasPorUltimoCierre(int idCaja)
+//    {
+//        // Obtener todas las transacciones posteriores al último cierre
+//        var transacciones = VentasLogica.ObtenerTransaccionesPosterioresAlUltimoCierre(idCaja);
+
+//        // Calcular totales de efectivo y tarjeta
+//        double totalEfectivo = 0;
+//        double totalTarjeta = 0;
+
+//        foreach (var transaccion in transacciones)
+//        {
+//            string metodoPago = transaccion.MetodoPago?.ToLower().Trim();
+//            if (metodoPago == "efectivo")
+//            {
+//                totalEfectivo += transaccion.Total;
+//            }
+//            else if (metodoPago == "tarjeta de crédito" || metodoPago == "tarjeta de débito")
+//            {
+//                totalTarjeta += transaccion.Total;
+//            }
+//        }
+
+//        return (totalEfectivo, totalTarjeta);
+//    }
+
+
+
+
+//    public static List<Dictionary<string, object>> ObtenerMovimientosDelDia()
+//    {
+//        return DatosCaja.ObtenerMovimientosDelDia();
+//    }
+//    internal static (double totalEfectivo, double totalTarjeta) CalcularTotalesDesdeVentas(List<VentasLogica.Transaccion> ventas)
+//    {
+//        double totalEfectivo = 0;
+//        double totalTarjeta = 0;
+
+//        foreach (var venta in ventas)
+//        {
+//            string metodoPago = venta.MetodoPago?.ToLower().Trim(); // Normaliza el texto del método de pago
+
+//            if (metodoPago == "efectivo")
+//            {
+//                totalEfectivo += venta.Total;
+//            }
+//            else if (metodoPago == "tarjeta de crédito" || metodoPago == "tarjeta de débito")
+//            {
+//                totalTarjeta += venta.Total;
+//            }
+//        }
+
+//        return (totalEfectivo, totalTarjeta);
+//    }
+
+//}
+////porfa san expedito, porfa virgencita. suplico e imploro.
+///
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
+
+
+//using Punto_de_venta___Prácticas_profesionales.Datos;
+
+using Punto_de_venta___Prácticas_profesionales.Lógica;
+
 namespace Punto_de_venta___Prácticas_profesionales.Lógica;
 
 using Punto_de_venta___Prácticas_profesionales.Datos;
-
-using Punto_de_venta___Prácticas_profesionales.Lógica;
 
 public class CajaLogica
 {
     /// <summary>
     /// Obtiene el resumen del día desde la tabla "Caja".
-    /// Incluye Efectivo, Tarjeta y el Total general.
     /// </summary>
     /// <returns>DataRow con el resumen del día.</returns>
     public DataRow ObtenerResumenDelDia()
@@ -22,77 +127,79 @@ public class CajaLogica
         return DatosCaja.ObtenerResumenDelDia();
     }
 
-    public void RegistrarCierreDeCaja(DataGridViewRow filaTransacciones)
+    //public static int ObtenerIdCajaActual()
+    //{
+    //    return DatosCaja.ObtenerIdCajaActual();
+    //}
+
+    public static void RegistrarCierreDeCaja(int idCaja)
     {
-        string fechaHora = filaTransacciones.Cells["Fecha"].Value.ToString();
-        double efectivo = Convert.ToDouble(filaTransacciones.Cells["Efectivo"].Value);
-        double tarjeta = Convert.ToDouble(filaTransacciones.Cells["Tarjeta"].Value);
-        double ingresos = Convert.ToDouble(filaTransacciones.Cells["Ingresos"].Value);
-        double egresos = Convert.ToDouble(filaTransacciones.Cells["Egresos"].Value);
-        double total = Convert.ToDouble(filaTransacciones.Cells["Total"].Value);
-
-        // Guardar en la base de datos
-        DatosCaja.RegistrarCierreDeCaja(fechaHora, efectivo, tarjeta, ingresos, egresos, total);
-
-        // Reiniciar todos los datos acumulados
-        DatosCaja.ReiniciarTotales();
+        DateTime fechaHoraCierre = DateTime.Now;
+        DatosCaja.RegistrarCierreDeCaja(idCaja, fechaHoraCierre);
+    }
+    public static int ObtenerIdCajaActual()
+    {
+        return DatosCaja.ObtenerIdCajaActual();
     }
 
-
-    public void RegistrarMovimiento(string tipo, double monto)
+    public static void GuardarCierreDeCaja(DateTime fecha, double efectivo, double tarjeta, double ingresos, double egresos, double total)
     {
-        double ingresos = tipo == "Ingreso" ? monto : 0;
-        double egresos = tipo == "Egreso" ? monto : 0;
-
-        DatosCaja.ActualizarResumenDelDia(ingresos, egresos);
+        DatosCaja.GuardarCierreDeCaja(fecha, efectivo, tarjeta, ingresos, egresos, total);
     }
-   
-    public List<Dictionary<string, object>> ObtenerMovimientosDelDia()
-    {
-        var movimientos = new List<Dictionary<string, object>>();
 
-        using (var connection = new SQLiteConnection(DatosCaja.ConnectionString))
+    //public static void GuardarCierreDeCaja(DateTime fecha, double efectivo, double tarjeta, double ingresos, double egresos, double total)
+    //{
+    //    DatosCaja.GuardarCierreDeCaja(fecha, efectivo, tarjeta, ingresos, egresos, total);
+    //}
+
+    /// <summary>
+    /// Calcula los totales de ventas (efectivo y tarjeta) posteriores al último cierre.
+    /// </summary>
+    /// <param name="idCaja">ID de la caja actual.</param>
+    /// <returns>Totales de efectivo y tarjeta.</returns>
+    internal static (double TotalEfectivo, double TotalTarjeta) FiltrarVentasPorUltimoCierre(int idCaja)
+    {
+        // Obtener todas las transacciones posteriores al último cierre
+        var transacciones = VentasLogica.ObtenerTransaccionesPosterioresAlUltimoCierre(idCaja);
+
+        // Calcular totales de efectivo y tarjeta
+        double totalEfectivo = 0;
+        double totalTarjeta = 0;
+
+        foreach (var transaccion in transacciones)
         {
-            connection.Open();
-            string query = @"
-                SELECT Fecha_Hora, Ingresos, Egresos,
-                       SUM(Ingresos) OVER () AS TotalIngresos,
-                       SUM(Egresos) OVER () AS TotalEgresos,
-                       (SUM(Ingresos) OVER () - SUM(Egresos) OVER ()) AS Total
-                FROM Caja
-                WHERE date(Fecha_Hora) = date('now')";
-
-            using (var command = new SQLiteCommand(query, connection))
-            using (var reader = command.ExecuteReader())
+            string metodoPago = transaccion.MetodoPago?.ToLower().Trim();
+            if (metodoPago == "efectivo")
             {
-                while (reader.Read())
-                {
-                    movimientos.Add(new Dictionary<string, object>
-                    {
-                        { "FechaHora", reader["Fecha_Hora"].ToString() },
-                        { "Ingreso", Convert.ToDouble(reader["Ingresos"]) },
-                        { "Egreso", Convert.ToDouble(reader["Egresos"]) },
-                        { "TotalIngresos", Convert.ToDouble(reader["TotalIngresos"]) },
-                        { "TotalEgresos", Convert.ToDouble(reader["TotalEgresos"]) },
-                        { "Total", Convert.ToDouble(reader["Total"]) }
-                    });
-                }
+                totalEfectivo += transaccion.Total;
+            }
+            else if (metodoPago == "tarjeta de crédito" || metodoPago == "tarjeta de débito")
+            {
+                totalTarjeta += transaccion.Total;
             }
         }
 
-        return movimientos;
-
+        return (totalEfectivo, totalTarjeta);
     }
 
+    public static List<Dictionary<string, object>> ObtenerMovimientosDelDia()
+    {
+        return DatosCaja.ObtenerMovimientosDelDia();
+    }
 
-    internal static (double totalEfectivo, double totalTarjeta) CalcularTotalesDesdeVentas(List<VentasLogica.Transaccion> ventas)
+    /// <summary>
+    /// Calcula los totales desde una lista de ventas.
+    /// </summary>
+    /// <param name="ventas">Lista de transacciones.</param>
+    /// <returns>Totales de efectivo y tarjeta.</returns>
+    internal static (double TotalEfectivo, double TotalTarjeta) CalcularTotalesDesdeVentas(List<VentasLogica.Transaccion> ventas)
     {
         double totalEfectivo = 0;
         double totalTarjeta = 0;
 
         foreach (var venta in ventas)
         {
-            string metodoPago = venta.MetodoPago?.ToLower().Trim(); // Normaliza el texto del método de pago
+            string metodoPago = venta.MetodoPago?.ToLower().Trim();
 
             if (metodoPago == "efectivo")
             {
@@ -106,5 +213,5 @@ public class CajaLogica
 
         return (totalEfectivo, totalTarjeta);
     }
-
 }
+

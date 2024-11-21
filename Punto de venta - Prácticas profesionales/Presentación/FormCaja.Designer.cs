@@ -427,7 +427,7 @@
             Controls.Add(dataGridViewTransacciones);
             Name = "FormCaja";
             Text = "FormCaja";
-            Load += FormCaja_Load;
+          //  Load += FormCaja_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewTransacciones).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewMovimientos).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewVentas).EndInit();

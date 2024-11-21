@@ -13,13 +13,13 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 {
 
 
-    
+
     public partial class FormCaja : Form
     {
         private CajaLogica cajaLogica = new CajaLogica();
+        //  private CajaLogica cajaLogica = new CajaLogica();
 
 
-     
         public FormCaja()
         {
             InitializeComponent();
@@ -30,33 +30,63 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             CargarMovimientos();
             CargarVentas();
             CargarTransacciones();
-            ActualizarTextBox();
+            ActualizarTextBoxMovimiento();
             ReiniciarGrillaTransacciones();
             // RegistrarCierreDeCaja();
         }
 
 
+     
 
-        public void RegistrarCierreDeCaja(DataGridViewRow filaTransacciones)
+        public void RegistrarCierreDeCaja()
         {
-            string fechaHora = filaTransacciones.Cells["Fecha"].Value.ToString();
-            double efectivo = Convert.ToDouble(filaTransacciones.Cells["Efectivo"].Value ?? 0);
-            double tarjeta = Convert.ToDouble(filaTransacciones.Cells["Tarjeta"].Value ?? 0);
-            double ingresos = Convert.ToDouble(filaTransacciones.Cells["Ingresos"].Value ?? 0);
-            double egresos = Convert.ToDouble(filaTransacciones.Cells["Egresos"].Value ?? 0);
-            double total = Convert.ToDouble(filaTransacciones.Cells["Total"].Value ?? 0);
+            try
+            {
+                if (dataGridViewTransacciones.Rows.Count == 0)
+                {
+                    MessageBox.Show("No hay datos para registrar el cierre de caja.",
+                                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            // Registrar los datos del cierre de caja en la base de datos
-            DatosCaja.RegistrarCierreDeCaja(fechaHora, efectivo, tarjeta, ingresos, egresos, total);
+                var fila = dataGridViewTransacciones.Rows[0];
+                string fechaHoraCierre = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                double efectivo = Convert.ToDouble(fila.Cells["Efectivo"].Value ?? 0);
+                double tarjeta = Convert.ToDouble(fila.Cells["Tarjeta"].Value ?? 0);
+                double ingresos = Convert.ToDouble(fila.Cells["Ingresos"].Value ?? 0);
+                double egresos = Convert.ToDouble(fila.Cells["Egresos"].Value ?? 0);
+                double total = Convert.ToDouble(fila.Cells["Total"].Value ?? 0);
 
-            // Reiniciar ingresos y egresos del día
-            DatosCaja.ReiniciarIngresosYEgresosDelDia();
+                int idCaja = CajaLogica.ObtenerIdCajaActual();
+                if (idCaja == -1)
+                {
+                    MessageBox.Show("No hay caja activa para cerrar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            // Recargar la grilla de transacciones para reflejar los cambios
-            CargarTransacciones();
+                // Guardar el cierre en la base de datos
+                CajaLogica.GuardarCierreDeCaja(DateTime.Now, efectivo, tarjeta, ingresos, egresos, total);
+
+                // Reiniciar la interfaz
+                ReiniciarCaja();
+                CargarMovimientos();
+                CargarVentas();
+                CargarTransacciones();
+
+                MessageBox.Show("Cierre de caja realizado correctamente.", "Cierre de Caja", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al registrar el cierre de caja: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
 
+        private void ReiniciarGrillaMovimientos()
+        {
+            // Reiniciar la grilla de movimientos dejando un estado inicial vacío
+            dataGridViewMovimientos.Rows.Clear();
+        }
         private void ConfigurarDataGridView()
         {
             dataGridViewTransacciones.Columns.Clear();
@@ -102,35 +132,69 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             // Evitar edición directa por el usuario
             dataGridViewVentas.ReadOnly = true;
         }
-        private void CargarMovimientos()
-        {
-            dataGridViewMovimientos.Rows.Clear();
-
-            // Obtener movimientos desde la lógica
-            var movimientos = cajaLogica.ObtenerMovimientosDelDia();
-
-            foreach (var movimiento in movimientos)
-            {
-                dataGridViewMovimientos.Rows.Add(
-                    movimiento["FechaHora"],
-                    movimiento["Ingreso"],
-                    movimiento["Egreso"],
-                    movimiento["TotalIngresos"],
-                    movimiento["TotalEgresos"],
-                    movimiento["Total"]
-                );
-            }
-        }
+      
 
         private void btnIngreso_Click(object sender, EventArgs e)
         {
-            RegistrarMovimiento("Ingreso", Convert.ToDouble(txtMonto.Texts));
+            //RegistrarMovimiento("Ingreso", Convert.ToDouble(txtMonto.Texts));
+            if (!double.TryParse(txtMonto.Texts, out double monto) || monto <= 0)
+            {
+                MessageBox.Show("Ingrese un monto válido mayor a cero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Registrar el ingreso en la grilla de movimientos
+            RegistrarMovimientoEnGrilla("Ingreso", monto);
+
+            // Actualizar la grilla de transacciones y los totales
+            CargarTransacciones();
         }
+    
+
+        private void CargarMovimientos()
+        {
+            try
+            {
+                double totalIngresos = 0;
+                double totalEgresos = 0;
+
+                foreach (DataGridViewRow fila in dataGridViewMovimientos.Rows)
+                {
+                    totalIngresos += Convert.ToDouble(fila.Cells["Ingresos"].Value ?? 0);
+                    totalEgresos += Convert.ToDouble(fila.Cells["Egresos"].Value ?? 0);
+                }
+
+                // Actualizar cuadros de texto
+                txtTotalIngresos.Texts = totalIngresos.ToString("F2");
+                txtTotalEgresos.Texts = totalEgresos.ToString("F2");
+
+                // Actualizar transacciones
+                CargarTransacciones();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar movimientos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void btnEgreso_Click(object sender, EventArgs e)
         {
-            RegistrarMovimiento("Egreso", Convert.ToDouble(txtMonto.Texts));
+            // RegistrarMovimiento("Egreso", Convert.ToDouble(txtMonto.Texts));
+            if (!double.TryParse(txtMonto.Texts, out double monto) || monto <= 0)
+            {
+                MessageBox.Show("Ingrese un monto válido mayor a cero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Registrar el egreso en la grilla de movimientos
+            RegistrarMovimientoEnGrilla("Egreso", monto);
+
+            // Actualizar la grilla de transacciones y los totales
+            CargarTransacciones();
         }
+    
+       
 
         private (double, double) CalcularTotalesMovimientos()
         {
@@ -146,24 +210,24 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             return (totalIngresos, totalEgresos);
         }
 
-        
+
         public void ActualizarTotalesVentas(DataTable ventas)
         {
             double totalEfectivo = 0;
             double totalTarjeta = 0;
 
-            
+
             foreach (DataRow row in ventas.Rows)
             {
                 totalEfectivo += Convert.ToDouble(row["Efectivo"]);
                 totalTarjeta += Convert.ToDouble(row["Tarjeta"]);
             }
 
-     
+
             txtEfectivo.Texts = totalEfectivo.ToString("F2");
             txtTarjeta.Texts = totalTarjeta.ToString("F2");
 
-         
+
             if (dataGridViewTransacciones.Rows.Count > 0)
             {
                 var fila = dataGridViewTransacciones.Rows[0];
@@ -171,40 +235,47 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 fila.Cells["Tarjeta"].Value = totalTarjeta;
             }
         }
-        
+
+      
+
+
         private void CargarVentas()
         {
             try
             {
-               
                 dataGridViewVentas.Rows.Clear();
 
-                var transacciones = VentasLogica.ObtenerTransaccionesDelDia();
+                // Obtener el ID de la caja actual
+                int idCaja = CajaLogica.ObtenerIdCajaActual();
+                if (idCaja == -1)
+                {
+                    MessageBox.Show("No hay caja activa para cargar ventas.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-                double totalEfectivo = 0;
-                double totalTarjeta = 0;
+                // Calcular totales desde las transacciones posteriores al último cierre
+                var (totalEfectivo, totalTarjeta) = CajaLogica.FiltrarVentasPorUltimoCierre(idCaja);
 
-             
+                // Obtener las transacciones específicas para mostrarlas en la grilla
+                var transacciones = VentasLogica.ObtenerTransaccionesPosterioresAlUltimoCierre(idCaja);
+
+                // Llenar la grilla con los datos filtrados
                 foreach (var transaccion in transacciones)
                 {
-    
                     string metodoPago = transaccion.MetodoPago?.ToLower().Trim();
-
                     double efectivo = metodoPago == "efectivo" ? transaccion.Total : 0;
                     double tarjeta = (metodoPago == "tarjeta de crédito" || metodoPago == "tarjeta de débito") ? transaccion.Total : 0;
 
-                    totalEfectivo += efectivo;
-                    totalTarjeta += tarjeta;
-
                     dataGridViewVentas.Rows.Add(
-                        transaccion.FechaHora.ToString("yyyy-MM-dd HH:mm:ss"), // Fecha y Hora
-                        efectivo,                                             // Efectivo
-                        tarjeta,                                              // Tarjeta
-                        totalEfectivo,                                        // Total acumulado de efectivo
-                        totalTarjeta                                          // Total acumulado de tarjeta
+                        transaccion.FechaHora.ToString("yyyy-MM-dd HH:mm:ss"),
+                        efectivo,
+                        tarjeta,
+                        totalEfectivo,
+                        totalTarjeta
                     );
                 }
 
+                // Actualizar los cuadros de texto con los totales
                 txtEfectivo.Texts = totalEfectivo.ToString("F2");
                 txtTarjeta.Texts = totalTarjeta.ToString("F2");
             }
@@ -214,43 +285,11 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             }
         }
 
-   
-        private void ActualizarTextBox()
+
+
+
+        private void ActualizarTextBoxMovimiento()
         {
-            try
-            {
-                double totalEfectivo = 0;
-                double totalTarjeta = 0;
-
-                // Recorre las filas de la grilla de ventas
-                foreach (DataGridViewRow fila in dataGridViewVentas.Rows)
-                {
-                    totalEfectivo += ConvertirSeguro(fila.Cells["Efectivo"].Value);
-                    totalTarjeta += ConvertirSeguro(fila.Cells["Tarjeta"].Value);
-                }
-
-                // Actualizar los cuadros de texto con los totales
-                txtEfectivo.Texts = totalEfectivo.ToString("F2");
-                txtTarjeta.Texts = totalTarjeta.ToString("F2");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al actualizar los cuadros de texto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private double ConvertirSeguro(object valor)
-        {
-            return valor != DBNull.Value && double.TryParse(valor?.ToString(), out double resultado) ? resultado : 0;
-        }
-      
-        private void RegistrarMovimientoEnGrilla(string tipo, double monto)
-        {
-            string fechaHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-            double ingreso = tipo == "Ingreso" ? monto : 0;
-            double egreso = tipo == "Egreso" ? monto : 0;
-
             double totalIngresos = 0;
             double totalEgresos = 0;
 
@@ -260,152 +299,198 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 totalEgresos += Convert.ToDouble(fila.Cells["Egresos"].Value ?? 0);
             }
 
-            totalIngresos += ingreso;
-            totalEgresos += egreso;
-
-           
-            double total = totalIngresos - totalEgresos;
-
-           
-            dataGridViewMovimientos.Rows.Add(fechaHora, ingreso, egreso, totalIngresos, totalEgresos, total);
-
-           
-            ActualizarTextBox();
-            CargarTransacciones();
+            txtTotalIngresos.Texts = totalIngresos.ToString("F2");
+            txtTotalEgresos.Texts = totalEgresos.ToString("F2");
         }
+      
+
         public void RegistrarMovimiento(string tipo, double monto)
         {
-        
-            cajaLogica.RegistrarMovimiento(tipo, monto);
+            try
+            {
+                if (monto <= 0)
+                {
+                    MessageBox.Show("El monto debe ser mayor a 0.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
-            
-            RegistrarMovimientoEnGrilla(tipo, monto);
+                // Determinar si es ingreso o egreso
+                string fechaHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                double ingreso = tipo == "Ingreso" ? monto : 0;
+                double egreso = tipo == "Egreso" ? monto : 0;
 
-            CargarTransacciones();
+                // Calcular totales acumulados
+                double totalIngresos = 0;
+                double totalEgresos = 0;
 
-        
-            ActualizarTextBox();
+                foreach (DataGridViewRow fila in dataGridViewMovimientos.Rows)
+                {
+                    totalIngresos += Convert.ToDouble(fila.Cells["Ingresos"].Value ?? 0);
+                    totalEgresos += Convert.ToDouble(fila.Cells["Egresos"].Value ?? 0);
+                }
+
+                totalIngresos += ingreso;
+                totalEgresos += egreso;
+
+                // Calcular el total global
+                double totalGlobal = totalIngresos - totalEgresos;
+
+                // Agregar a la grilla de movimientos
+                dataGridViewMovimientos.Rows.Add(fechaHora, ingreso, egreso, totalIngresos, totalEgresos, totalGlobal);
+
+                // Actualizar los cuadros de texto
+                txtTotalIngresos.Texts = totalIngresos.ToString("F2");
+                txtTotalEgresos.Texts = totalEgresos.ToString("F2");
+
+                // Actualizar transacciones
+                CargarTransacciones();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al registrar el movimiento: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+
 
 
     
         private void CargarTransacciones()
         {
-         
-            dataGridViewTransacciones.Rows.Clear();
+            try
+            {
+                // Limpiar la grilla de transacciones antes de cargar
+                dataGridViewTransacciones.Rows.Clear();
 
-          
-            var ventas = VentasLogica.ObtenerTransaccionesDelDia();
+                // Obtener los valores de los cuadros de texto
+                double totalEfectivo = ConvertirSeguro(txtEfectivo.Texts);
+                double totalTarjeta = ConvertirSeguro(txtTarjeta.Texts);
+                double totalIngresos = ConvertirSeguro(txtTotalIngresos.Texts);
+                double totalEgresos = ConvertirSeguro(txtTotalEgresos.Texts);
 
-            var (totalEfectivo, totalTarjeta) = CajaLogica.CalcularTotalesDesdeVentas(ventas);
+                // Calcular el total global
+                double totalGlobal = totalEfectivo + totalTarjeta + totalIngresos - totalEgresos;
 
-            var (totalIngresos, totalEgresos) = CalcularTotalesMovimientos();
+                // Cargar los valores en la grilla
+                string fecha = DateTime.Now.ToString("yyyy-MM-dd");
+                dataGridViewTransacciones.Rows.Add(fecha, totalEfectivo, totalTarjeta, totalIngresos, totalEgresos, totalGlobal);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cargar transacciones: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-          
-            double totalGlobal = totalEfectivo + totalTarjeta + totalIngresos - totalEgresos;
+        private double ConvertirSeguro(object valor)
+        {
+            if (valor == null || valor == DBNull.Value || string.IsNullOrWhiteSpace(valor.ToString()))
+                return 0.0;
 
-            string fecha = DateTime.Now.ToString("yyyy-MM-dd");
-            dataGridViewTransacciones.Rows.Add(
-                fecha,            // Fecha
-                totalEfectivo,    // Total efectivo
-                totalTarjeta,     // Total tarjeta
-                totalIngresos,    // Total ingresos
-                totalEgresos,     // Total egresos
-                totalGlobal       // Total global
-            );
+            if (double.TryParse(valor.ToString(), out double resultado))
+                return resultado;
 
-          
-            txtEfectivo.Texts = totalEfectivo.ToString("F2");
-            txtTarjeta.Texts = totalTarjeta.ToString("F2");
+            throw new FormatException($"El valor '{valor}' no tiene un formato numérico válido.");
+        }
+
+
+       
+
+        private void RegistrarMovimientoEnGrilla(string tipo, double monto)
+        {
+            string fechaHora = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            double ingreso = tipo == "Ingreso" ? monto : 0;
+            double egreso = tipo == "Egreso" ? monto : 0;
+
+            double totalIngresos = ConvertirSeguro(txtTotalIngresos.Texts) + ingreso;
+            double totalEgresos = ConvertirSeguro(txtTotalEgresos.Texts) + egreso;
+
+            double totalGlobal = totalIngresos - totalEgresos;
+
+            dataGridViewMovimientos.Rows.Add(fechaHora, ingreso, egreso, totalIngresos, totalEgresos, totalGlobal);
+
             txtTotalIngresos.Texts = totalIngresos.ToString("F2");
             txtTotalEgresos.Texts = totalEgresos.ToString("F2");
+
+            CargarTransacciones();
         }
 
-   
-        private void ReiniciarGrillaTransacciones()
-        {
-            dataGridViewTransacciones.Rows.Clear();
-            // Agregar una fila vacía con valores en 0 para iniciar nuevamente
-            string fecha = DateTime.Now.ToString("yyyy-MM-dd");
-            dataGridViewTransacciones.Rows.Add(fecha, 0.0, 0.0, 0.0, 0.0, 0.0);
-        }
-        private void FormCaja_Load(object sender, EventArgs e)
-        {
 
-        }
+     
         private void ReiniciarCaja()
         {
-            
+            // Limpiar las grillas relacionadas
             dataGridViewTransacciones.Rows.Clear();
             dataGridViewMovimientos.Rows.Clear();
+            dataGridViewVentas.Rows.Clear();
 
+            // Reiniciar cuadros de texto a 0
+            txtEfectivo.Texts = "0.00";
+            txtTarjeta.Texts = "0.00";
+            txtTotalIngresos.Texts = "0.00";
+            txtTotalEgresos.Texts = "0.00";
+
+            // Llamar al método que elimina los totales acumulados en la base de datos
+            DatosCaja.ReiniciarTotales();
+
+            // Forzar una fila vacía en la grilla de transacciones
+            ReiniciarGrillaTransacciones();
+            ReiniciarGrillaMovimientos();
+        }
+
+        private void ReiniciarGrillaTransacciones()
+        {
+            // Agregar una fila inicial con todos los valores en 0
             string fecha = DateTime.Now.ToString("yyyy-MM-dd");
             dataGridViewTransacciones.Rows.Add(fecha, 0.0, 0.0, 0.0, 0.0, 0.0);
-
-            // Reiniciar los cuadros de texto
-            txtEfectivo.Texts = "0";
-            txtTarjeta.Texts = "0";
-            txtTotalIngresos.Texts = "0";
-            txtTotalEgresos.Texts = "0";
-
-            
-            DatosCaja.ReiniciarIngresosYEgresosDelDia();
-
-         
         }
+
+
 
 
         private void btnCierreDeCaja_Click(object sender, EventArgs e)
         {
-            // Verificar si hay datos en la grilla de transacciones
-            if (dataGridViewTransacciones.Rows.Count == 0 || dataGridViewTransacciones.Rows[0].Cells["Total"].Value == null)
-            {
-                MessageBox.Show("No hay datos para realizar el cierre de caja.", "Cierre de Caja", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
             }
-
-            // Registrar los datos de la grilla de transacciones en la base de datos
-            var filaTransacciones = dataGridViewTransacciones.Rows[0];
-            string fechaHora = filaTransacciones.Cells["Fecha"].Value.ToString();
-            double efectivo = Convert.ToDouble(filaTransacciones.Cells["Efectivo"].Value ?? 0);
-            double tarjeta = Convert.ToDouble(filaTransacciones.Cells["Tarjeta"].Value ?? 0);
-            double ingresos = Convert.ToDouble(filaTransacciones.Cells["Ingresos"].Value ?? 0);
-            double egresos = Convert.ToDouble(filaTransacciones.Cells["Egresos"].Value ?? 0);
-            double total = Convert.ToDouble(filaTransacciones.Cells["Total"].Value ?? 0);
-
-            DatosCaja.GuardarCierreDeCaja(DateTime.Now, efectivo, tarjeta, ingresos, egresos, total);
-
-            // Reiniciar la caja
-            ReiniciarCaja();
-
-            MessageBox.Show("Cierre de caja realizado correctamente.", "Cierre de Caja", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
 
         private void btnCierreDeCaja_Click_1(object sender, EventArgs e)
         {
-            if (dataGridViewTransacciones.Rows.Count == 0 || dataGridViewTransacciones.Rows[0].Cells["Total"].Value == null)
+
+            try
             {
-                MessageBox.Show("No hay datos para realizar el cierre de caja.", "Cierre de Caja", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                if (dataGridViewTransacciones.Rows.Count == 0)
+                {
+                    MessageBox.Show("No hay datos para cerrar la caja.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Obtener datos de la primera fila de la grilla de transacciones
+                DataGridViewRow fila = dataGridViewTransacciones.Rows[0];
+
+                string fechaHora = fila.Cells["Fecha"].Value.ToString();
+                double efectivo = Convert.ToDouble(fila.Cells["Efectivo"].Value ?? 0);
+                double tarjeta = Convert.ToDouble(fila.Cells["Tarjeta"].Value ?? 0);
+                double ingresos = Convert.ToDouble(fila.Cells["Ingresos"].Value ?? 0);
+                double egresos = Convert.ToDouble(fila.Cells["Egresos"].Value ?? 0);
+                double total = Convert.ToDouble(fila.Cells["Total"].Value ?? 0);
+
+                // Registrar el cierre en la base de datos
+                int idCaja = CajaLogica.ObtenerIdCajaActual();
+                DatosCaja.GuardarCierreDeCaja(DateTime.Now, efectivo, tarjeta, ingresos, egresos, total);
+
+                // Limpiar todas las grillas y cuadros de texto
+                ReiniciarCaja();
+
+                MessageBox.Show("Cierre de caja realizado correctamente.", "Cierre de Caja", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            // Registrar los datos de la grilla de transacciones en la base de datos
-            var filaTransacciones = dataGridViewTransacciones.Rows[0];
-            string fechaHora = filaTransacciones.Cells["Fecha"].Value.ToString();
-            double efectivo = Convert.ToDouble(filaTransacciones.Cells["Efectivo"].Value ?? 0);
-            double tarjeta = Convert.ToDouble(filaTransacciones.Cells["Tarjeta"].Value ?? 0);
-            double ingresos = Convert.ToDouble(filaTransacciones.Cells["Ingresos"].Value ?? 0);
-            double egresos = Convert.ToDouble(filaTransacciones.Cells["Egresos"].Value ?? 0);
-            double total = Convert.ToDouble(filaTransacciones.Cells["Total"].Value ?? 0);
-
-            DatosCaja.GuardarCierreDeCaja(DateTime.Now, efectivo, tarjeta, ingresos, egresos, total);
-
-            // Reiniciar la caja
-            ReiniciarCaja();
-
-            MessageBox.Show("Cierre de caja realizado correctamente.", "Cierre de Caja", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al cerrar la caja: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+    
+
+
+
         private void btnDiagnostico_Click(object sender, EventArgs e)
         {
             //var diagnostico = DatosCaja.DiagnosticoVentas();
@@ -425,18 +510,16 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         {
             try
             {
-                // Llama al método para obtener las transacciones del día
-                var transacciones = VentasLogica.ObtenerTransaccionesDelDia();
+                int idCaja = CajaLogica.ObtenerIdCajaActual();
 
-                // Muestra cada transacción en un cuadro de mensaje
-                foreach (var transaccion in transacciones)
-                {
-                    MessageBox.Show($"Fecha: {transaccion.FechaHora}, Método: {transaccion.MetodoPago}, Total: {transaccion.Total}");
-                }
+                CajaLogica.RegistrarCierreDeCaja(idCaja);
+
+                ReiniciarCaja();
+                MessageBox.Show("Cierre de caja realizado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al obtener transacciones: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cerrar la caja: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
