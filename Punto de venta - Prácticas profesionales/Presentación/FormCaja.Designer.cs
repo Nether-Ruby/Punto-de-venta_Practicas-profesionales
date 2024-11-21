@@ -48,6 +48,7 @@
             btnVentas = new controlesPersonalizados.ClassBtnPersonalizado();
             btnMovimientos = new controlesPersonalizados.ClassBtnPersonalizado();
             classBtnPersonalizado1 = new controlesPersonalizados.ClassBtnPersonalizado();
+            btnDiagnostico = new controlesPersonalizados.ClassBtnPersonalizado();
             ((System.ComponentModel.ISupportInitialize)dataGridViewTransacciones).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewMovimientos).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewVentas).BeginInit();
@@ -307,7 +308,6 @@
             panelOpciones.Name = "panelOpciones";
             panelOpciones.Size = new Size(526, 202);
             panelOpciones.TabIndex = 16;
-         //   panelOpciones.Paint += panel1_Paint;
             // 
             // btnVentas
             // 
@@ -331,7 +331,6 @@
             btnVentas.Text = "Ventas";
             btnVentas.TextColor = Color.White;
             btnVentas.UseVisualStyleBackColor = false;
-          //  btnVentas.Click += btnVentas_Click;
             // 
             // btnMovimientos
             // 
@@ -355,7 +354,6 @@
             btnMovimientos.Text = "Movimientos";
             btnMovimientos.TextColor = Color.White;
             btnMovimientos.UseVisualStyleBackColor = false;
-          //  btnMovimientos.Click += btnMovimientos_Click;
             // 
             // classBtnPersonalizado1
             // 
@@ -379,7 +377,30 @@
             classBtnPersonalizado1.Text = "ver transacciones del dia ";
             classBtnPersonalizado1.TextColor = Color.White;
             classBtnPersonalizado1.UseVisualStyleBackColor = false;
-       //     classBtnPersonalizado1.Click += classBtnPersonalizado1_Click;
+            // 
+            // btnDiagnostico
+            // 
+            btnDiagnostico.BackColor = Color.MediumSlateBlue;
+            btnDiagnostico.BackgroundColor = Color.MediumSlateBlue;
+            btnDiagnostico.BorderColor = Color.PaleVioletRed;
+            btnDiagnostico.BorderRadius = 40;
+            btnDiagnostico.BorderSize = 0;
+            btnDiagnostico.FlatAppearance.BorderSize = 0;
+            btnDiagnostico.FlatStyle = FlatStyle.Flat;
+            btnDiagnostico.ForeColor = Color.White;
+            btnDiagnostico.IconAlignment = ContentAlignment.MiddleLeft;
+            btnDiagnostico.IconChar = FontAwesome.Sharp.IconChar.None;
+            btnDiagnostico.IconColor = Color.White;
+            btnDiagnostico.IconPadding = 5;
+            btnDiagnostico.IconSize = 24;
+            btnDiagnostico.Location = new Point(461, 389);
+            btnDiagnostico.Name = "btnDiagnostico";
+            btnDiagnostico.Size = new Size(141, 42);
+            btnDiagnostico.TabIndex = 18;
+            btnDiagnostico.Text = "diagnostico";
+            btnDiagnostico.TextColor = Color.White;
+            btnDiagnostico.UseVisualStyleBackColor = false;
+            btnDiagnostico.Click += btnDiagnostico_Click_1;
             // 
             // FormCaja
             // 
@@ -387,6 +408,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(21, 8, 38);
             ClientSize = new Size(1006, 500);
+            Controls.Add(btnDiagnostico);
             Controls.Add(classBtnPersonalizado1);
             Controls.Add(panelOpciones);
             Controls.Add(btnCierreDeCaja);
@@ -436,5 +458,6 @@
         private controlesPersonalizados.ClassBtnPersonalizado btnMovimientos;
         private controlesPersonalizados.ClassBtnPersonalizado btnVentas;
         private controlesPersonalizados.ClassBtnPersonalizado classBtnPersonalizado1;
+        private controlesPersonalizados.ClassBtnPersonalizado btnDiagnostico;
     }
 }
