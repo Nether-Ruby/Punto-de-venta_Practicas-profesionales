@@ -77,7 +77,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
         private void classBtnPersonalizado1_Click(object sender, EventArgs e)
         {
-            if (comboBox3.SelectedItem == null || comboBox2.SelectedItem == null || comboBox4.SelectedItem == null || texboxs3.Texts == "" || texboxs4.Texts == "")
+            if (comboBox3.SelectedItem == null || /*comboBox2.SelectedItem == null || */comboBox4.SelectedItem == null || texboxs3.Texts == "" || texboxs4.Texts == "")
             {
                 MessageBox.Show("Por favor, completa todos los campos.");
                 return;
@@ -278,7 +278,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 return;
             }
 
-            if (comboBox3.SelectedItem == null || comboBox2.SelectedItem == null || comboBox4.SelectedItem == null)
+            if (comboBox3.SelectedItem == null || /*comboBox2.SelectedItem == null || */comboBox4.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, completa todos los campos.");
                 return;
