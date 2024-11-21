@@ -317,6 +317,13 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 textBox1.Text = ventaslogica.ObtenerNroFact().ToString();
 
                 MessageBox.Show("Transacción registrada exitosamente.");
+                total = 0.00;
+                subtotal = 0.00;
+                ((DataTable)dataGridView1.DataSource).Rows.Clear();
+                label5.Text = subtotal.ToString("C2");
+                label9.Text = total.ToString("C2");
+                texboxs5.Clear();
+                comboBox1.Text = "";
             }
             catch (Exception ex)
             {
