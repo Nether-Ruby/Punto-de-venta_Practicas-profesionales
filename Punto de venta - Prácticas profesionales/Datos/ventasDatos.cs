@@ -118,6 +118,28 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
 
             return clientes;
         }
+
+        public bool ValidarStock(string nombre, int cantidad)
+        {
+            string connectionString = @"URI=file:" + Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database.db");
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT COUNT(*) FROM Articulos WHERE nombre = @Nombre AND stock >= @Cantidad";
+
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Nombre", nombre);
+                    command.Parameters.AddWithValue("@Cantidad", cantidad);
+
+                    // Si el conteo es mayor a 0, significa que hay suficiente stock
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    return count > 0;
+                }
+            }
+        }
+
         public Tuple<string, string, string, string> consulta_dgv(string nombre)
         {
             string connectionString = @"URI=file:" + databasePath;
@@ -206,18 +228,55 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
 
         }
 
+        //public void RegistrarDetallesVenta(List<detallesVenta> F)
+        //{
+        //    string connectionString = @"URI=file:" + databasePath;
+        //    using (var conn = new SQLiteConnection(connectionString))
+        //    {
+        //        conn.Open();
+        //        foreach (detallesVenta detallesVenta in F) {
+        //            string query = @"INSERT INTO Detalles_ventas (id_venta, articulo, cantidad) 
+        //                     VALUES ("+ Convert.ToInt32(detallesVenta.nroFact)+", "+ Convert.ToInt32(detallesVenta.codigo)+", "+ Convert.ToInt32(detallesVenta.cantidad)+")";
+        //            SQLiteCommand command = new SQLiteCommand(query, conn);
+        //            command.ExecuteNonQuery();
+        //        }
+        //    }
+        //}
         public void RegistrarDetallesVenta(List<detallesVenta> F)
         {
             string connectionString = @"URI=file:" + databasePath;
-            using (var conn = new SQLiteConnection(connectionString))
+            try
             {
+                using var conn = new SQLiteConnection(connectionString);
                 conn.Open();
-                foreach (detallesVenta detallesVenta in F) {
-                    string query = @"INSERT INTO Detalles_ventas (id_venta, articulo, cantidad) 
-                             VALUES ("+ Convert.ToInt32(detallesVenta.nroFact)+", "+ Convert.ToInt32(detallesVenta.codigo)+", "+ Convert.ToInt32(detallesVenta.cantidad)+")";
-                    SQLiteCommand command = new SQLiteCommand(query, conn);
-                    command.ExecuteNonQuery();
+                foreach (detallesVenta detallesVenta in F)
+                {
+                    using var transaction = conn.BeginTransaction();
+                    try
+                    {
+                        string query = @"INSERT INTO Detalles_ventas (id_venta, articulo, cantidad) 
+                             VALUES (" + Convert.ToInt32(detallesVenta.nroFact) + ", " + Convert.ToInt32(detallesVenta.codigo) + ", " + Convert.ToInt32(detallesVenta.cantidad) + ")";
+                        SQLiteCommand command = new SQLiteCommand(query, conn);
+                        command.ExecuteNonQuery();
+
+                        string articulosquery = @"UPDATE Articulos SET stock = stock - " + Convert.ToInt32(detallesVenta.cantidad) + " WHERE codigo = " + Convert.ToInt32(detallesVenta.codigo) + "";
+                        using var articuoscommand = new SQLiteCommand(articulosquery, conn, transaction);
+                        articuoscommand.ExecuteNonQuery();
+
+                        transaction.Commit();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        // Revertir la transacción en caso de error
+                        transaction.Rollback();
+                        MessageBox.Show("No se ha podido registrar la venta. Problema con la base de datos: " + ex.Message);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir la conexión con la base de datos: " + ex.Message);
             }
         }
 
