@@ -48,5 +48,12 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
         {
             return datos.ObtenerDetallesVenta(idVenta);
         }
+
+        public DataTable ObtenerArticulosVendidos()
+        {
+            reportesDatos datos = new reportesDatos();
+            return datos.ObtenerArticulosVendidos();
+        }
+
     }
 }

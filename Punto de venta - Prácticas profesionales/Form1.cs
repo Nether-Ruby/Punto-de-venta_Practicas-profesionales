@@ -2,6 +2,8 @@ using FontAwesome.Sharp;
 using Punto_de_venta___Prácticas_profesionales.Lógica;
 using System.Data;
 using System.Globalization;
+using System.ComponentModel;
+
 
 
 namespace Punto_de_venta___Prácticas_profesionales
@@ -39,17 +41,22 @@ namespace Punto_de_venta___Prácticas_profesionales
             EstilizarDataGridView(dgvCajas);
             EstilizarDataGridView(dgvDetalleVenta);
             EstilizarDataGridView(dgvVentas);
+            EstilizarDataGridView(dgvArticulos);
 
             // Centrar los DataGridView en sus respectivos paneles
             CentrarDataGridView(dgvCajas, pnCaja);
             CentrarDataGridView(dgvDetalleVenta, pnDetallesVentas);
             CentrarDataGridView(dgvVentas, pnVentas);
+            CentrarDataGridView(dgvArticulos, pnArticulos);
             /////////////////ventas reporte///////////////////////
             ConfigurarFiltrosVentas();
             CargarDatosVentas();
             pnVentas.Visible = false;
             pnDetallesVentas.Visible = false;
-
+            //////////////////articulo reportes////////////////
+            pnArticulos.Visible = false;
+            CargarArticulos();
+            ConfigurarCbx();
         }
         private struct RGBcolors
         {
@@ -277,33 +284,33 @@ namespace Punto_de_venta___Prácticas_profesionales
 
         private void CmbFiltro_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string filtroSeleccionado = cmbFiltro.SelectedItem.ToString();
+            //string filtroSeleccionado = cmbFiltro.SelectedItem.ToString();
 
-            // Al seleccionar "Ver todo", no aplicamos filtros de fechas
-            if (filtroSeleccionado == "Ver todo")
-            {
-                cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
-                CargarDatos();  // Cargar todos los datos
-            }
-            // Al seleccionar "Últimos 7 días", mostramos solo esos registros
-            else if (filtroSeleccionado == "Últimos 7 días")
-            {
-                cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
-                CargarDatos(DateTime.Now.AddDays(-7), DateTime.Now);  // Cargar los datos de los últimos 7 días
-            }
-            // Al seleccionar "Últimos 30 días", mostramos solo esos registros
-            else if (filtroSeleccionado == "Últimos 30 días")
-            {
-                cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
-                CargarDatos(DateTime.Now.AddDays(-30), DateTime.Now);  // Cargar los datos de los últimos 30 días
-            }
-            // Si selecciona "Seleccionar mes específico", habilitamos el ComboBox de meses
-            else if (filtroSeleccionado == "Seleccionar mes específico")
-            {
-                cmbMes.Enabled = true;  // Habilitar el ComboBox de meses
-                                        // También debemos actualizar los datos para reflejar el cambio
-                CargarDatos();  // Cargar todos los datos por defecto cuando seleccionan "mes específico"
-            }
+            //// Al seleccionar "Ver todo", no aplicamos filtros de fechas
+            //if (filtroSeleccionado == "Ver todo")
+            //{
+            //    cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
+            //    CargarDatos();  // Cargar todos los datos
+            //}
+            //// Al seleccionar "Últimos 7 días", mostramos solo esos registros
+            //else if (filtroSeleccionado == "Últimos 7 días")
+            //{
+            //    cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
+            //    CargarDatos(DateTime.Now.AddDays(-7), DateTime.Now);  // Cargar los datos de los últimos 7 días
+            //}
+            //// Al seleccionar "Últimos 30 días", mostramos solo esos registros
+            //else if (filtroSeleccionado == "Últimos 30 días")
+            //{
+            //    cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
+            //    CargarDatos(DateTime.Now.AddDays(-30), DateTime.Now);  // Cargar los datos de los últimos 30 días
+            //}
+            //// Si selecciona "Seleccionar mes específico", habilitamos el ComboBox de meses
+            //else if (filtroSeleccionado == "Seleccionar mes específico")
+            //{
+            //    cmbMes.Enabled = true;  // Habilitar el ComboBox de meses
+            //                            // También debemos actualizar los datos para reflejar el cambio
+            //    CargarDatos();  // Cargar todos los datos por defecto cuando seleccionan "mes específico"
+            //}
         }
 
         private void CmbMes_SelectedIndexChanged(object sender, EventArgs e)
@@ -326,33 +333,37 @@ namespace Punto_de_venta___Prácticas_profesionales
             }
         }
 
-        private void cajaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
+         private void cajaToolStripMenuItem_Click(object sender, EventArgs e)
+        {   
             // Mostrar el panel de caja
-            pnCaja.Visible = true;
+            pnArticulos.Visible = false;
             pnVentas.Visible = false;
-
-            // Asegurarse de que la grilla se actualice al abrir el panel
-            // Si se debe mostrar todos los datos o aplicar algún filtro, lo hacemos aquí
+            pnCaja.Visible = true;
+              
+           
             CargarDatos();
 
             // Opcional: Restablecer los filtros para mostrar todo al abrir
             cmbFiltro.SelectedIndex = 0;  // Reseteamos la selección a "Ver todo"
             cmbMes.SelectedIndex = -1;  // Reseteamos el ComboBox de meses
             cmbMes.Enabled = false;  // Deshabilitamos el ComboBox de meses
-        }
-
-
+        }   
+              
+            
         private void articulosToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            CargarArticulos();
             pnCaja.Visible = false;
+            pnDetalleCaja.Visible = false; 
             pnVentas.Visible = false;
+            pnArticulos.Visible = true;
         }
-
+           
         private void ventasToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            pnArticulos.Visible = false;
             pnCaja.Visible = true;
-            //pnVentas.Parent = this; // Mover pnVentas a otro contenedor o formulario
+
             pnVentas.Visible = true;
         }
 
@@ -363,35 +374,38 @@ namespace Punto_de_venta___Prácticas_profesionales
         }
         private void EstilizarDataGridView(DataGridView dgv)
         {
-            // Estilo de la grilla
+            //// Estilo de la grilla
             dgv.BackgroundColor = Color.FromArgb(32, 32, 32); // Fondo oscuro
-            dgv.ForeColor = Color.White; // Texto blanco
+            //dgv.ForeColor = Color.White; // Texto blanco
             dgv.BorderStyle = BorderStyle.None; // Sin borde
-            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40); // Fondo alterno de filas
-            dgv.AlternatingRowsDefaultCellStyle.ForeColor = Color.White; // Texto de filas alternas
-            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(60, 60, 60); // Fondo al seleccionar
-            dgv.DefaultCellStyle.SelectionForeColor = Color.White; // Texto seleccionado blanco
-            dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Alineación al centro
+                                                //dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(40, 40, 40); // Fondo alterno de filas
+                                                //dgv.AlternatingRowsDefaultCellStyle.ForeColor = Color.White; // Texto de filas alternas
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(32, 32, 32); // Fondo seleccionado igual que el fondo general
+            //dgv.DefaultCellStyle.SelectionForeColor = Color.White; // Texto seleccionado blanco
+            //dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Alineación al centro
             dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(50, 50, 50); // Fondo de encabezados
             dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White; // Texto de encabezados
-            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Encabezados al centro
-            dgv.EnableHeadersVisualStyles = false; // Deshabilitar estilos predeterminados de encabezados
-            dgv.RowTemplate.Height = 30; // Altura de las filas
+            //dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter; // Encabezados al centro
+            //dgv.EnableHeadersVisualStyles = false; // Deshabilitar estilos predeterminados de encabezados
+            //dgv.RowTemplate.Height = 30; // Altura de las filas
 
-            // Ajustar columnas al contenido
-            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; // Ajustar las columnas al contenido
-            dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells; // Ajustar las filas al contenido
+            //// Ajustar columnas al contenido
+            //dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells; // Ajustar las columnas al contenido
+            //dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells; // Ajustar las filas al contenido
 
-            // Ajustar el anclaje de la grilla para que se ajuste al tamaño del contenedor
-            dgv.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right; // Anclaje a todos los bordes
+            //// Ajustar el anclaje de la grilla para que se ajuste al tamaño del contenedor
+            //dgv.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right; // Anclaje a todos los bordes
 
-            // Deshabilitar la selección y clic en la grilla
-            dgv.MultiSelect = false; // No permitir selección múltiple
+            //// Deshabilitar la selección y clic en la grilla
+            //dgv.MultiSelect = false; // No permitir selección múltiple
             dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect; // Solo se puede seleccionar toda la fila
             dgv.AllowUserToAddRows = false; // Deshabilitar la posibilidad de agregar filas
             dgv.AllowUserToDeleteRows = false; // Deshabilitar la posibilidad de borrar filas
             dgv.ReadOnly = true; // Hacer la grilla solo de lectura (no editable)
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
         }
+
 
         private void CentrarDataGridView(DataGridView dgv, Panel panel)
         {
@@ -422,8 +436,17 @@ namespace Punto_de_venta___Prácticas_profesionales
         {
 
         }
+        private void btnDetalleCaja_Click(object sender, EventArgs e)
+        {
 
-        ////////////////////////////////////////////////////////////caja reporte///////////////////////////////////////////////////////////////
+        }
+
+        private void classBtnPersonalizado1_Click_1(object sender, EventArgs e)
+        {
+            pnDetalleCaja.Visible = true;
+        }
+
+        ////////////////////////////////////////////////////////////ventas reporte///////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////
         // Configuración de filtros y carga de datos
         ////////////////////////////////////////////////////////////
@@ -520,6 +543,7 @@ namespace Punto_de_venta___Prácticas_profesionales
                 DataTable detallesVenta = reportesLogica.ObtenerDetallesVenta(idVentaSeleccionada);
 
                 dgvDetalleVenta.DataSource = detallesVenta;
+                pnDetallesVentas.Visible = true;
             }
             else
             {
@@ -556,5 +580,93 @@ namespace Punto_de_venta___Prácticas_profesionales
         {
 
         }
+
+        private void btnBuscarCaja_Click(object sender, EventArgs e)
+        {
+            string filtroSeleccionado = cmbFiltro.SelectedItem.ToString();
+
+            // Al seleccionar "Ver todo", no aplicamos filtros de fechas
+            if (filtroSeleccionado == "Ver todo")
+            {
+                cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
+                CargarDatos();  // Cargar todos los datos
+            }
+            // Al seleccionar "Últimos 7 días", mostramos solo esos registros
+            else if (filtroSeleccionado == "Últimos 7 días")
+            {
+                cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
+                CargarDatos(DateTime.Now.AddDays(-7), DateTime.Now);  // Cargar los datos de los últimos 7 días
+            }
+            // Al seleccionar "Últimos 30 días", mostramos solo esos registros
+            else if (filtroSeleccionado == "Últimos 30 días")
+            {
+                cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
+                CargarDatos(DateTime.Now.AddDays(-30), DateTime.Now);  // Cargar los datos de los últimos 30 días
+            }
+            // Si selecciona "Seleccionar mes específico", habilitamos el ComboBox de meses
+            else if (filtroSeleccionado == "Seleccionar mes específico")
+            {
+                cmbMes.Enabled = true;  // Habilitar el ComboBox de meses
+                                        // También debemos actualizar los datos para reflejar el cambio
+                CargarDatos();  // Cargar todos los datos por defecto cuando seleccionan "mes específico"
+            }
+        }
+        /////////articulos reportes///////////////////
+
+        private void CargarArticulos()
+        {
+            // Obtener los datos de la capa de lógica
+            var tablaArticulos = reportesLogica.ObtenerArticulosVendidos();
+
+            // Asignar la tabla al DataGridView
+            dgvArticulos.DataSource = tablaArticulos;
+        }
+        private void ConfigurarCbx()
+        {
+            // Agregar opciones al ComboBox de filtro
+            cbxFiltro.Items.AddRange(new string[]
+            {
+                "Más vendidos",
+                "Menos vendidos"
+            });
+
+            // Opcionalmente, puedes establecer un valor predeterminado
+            cbxFiltro.SelectedIndex = 0; // Esto selecciona "Más vendidos" por defecto
+        }
+
+        //private void cbxFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    //// Filtrar según el valor seleccionado en el ComboBox
+        //    //string filtro = cbxFiltro.SelectedItem.ToString();
+        //    //if (filtro == "Más vendidos")
+        //    //{
+        //    //    dgvArticulos.Sort(dgvArticulos.Columns["cantidad_vendida"], ListSortDirection.Descending);
+        //    //}
+        //    //else if (filtro == "Menos vendidos")
+        //    //{
+        //    //    dgvArticulos.Sort(dgvArticulos.Columns["cantidad_vendida"], ListSortDirection.Ascending);
+        //    //}
+        //}
+
+        private void btnArticulos_Click(object sender, EventArgs e)
+        {
+            // Filtrar según el valor seleccionado en el ComboBox
+            string filtro = cbxFiltro.SelectedItem.ToString();
+            if (filtro == "Más vendidos")
+            {
+                dgvArticulos.Sort(dgvArticulos.Columns["cantidad_vendida"], ListSortDirection.Descending);
+            }
+            else if (filtro == "Menos vendidos")
+            {
+                dgvArticulos.Sort(dgvArticulos.Columns["cantidad_vendida"], ListSortDirection.Ascending);
+            }
+        }
+
+        private void btnCerrarArticulos_Click(object sender, EventArgs e)
+        {
+            pnArticulos.Visible = false;
+        }
+
+         
     }
 }

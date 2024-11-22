@@ -40,6 +40,12 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelLogo = new Panel();
             btnInicio = new PictureBox();
             pnVentas = new Panel();
+            pnArticulos = new Panel();
+            btnCerrarArticulos = new controlesPersonalizados.ClassBtnPersonalizado();
+            btnArticulos = new controlesPersonalizados.ClassBtnPersonalizado();
+            cbxFiltro = new ComboBox();
+            dgvArticulos = new DataGridView();
+            flowLayoutPanel1 = new FlowLayoutPanel();
             pnDetallesVentas = new Panel();
             btnCerrarDetallesV = new controlesPersonalizados.ClassBtnPersonalizado();
             dgvDetalleVenta = new DataGridView();
@@ -63,6 +69,11 @@ namespace Punto_de_venta___Prácticas_profesionales
             iconoActual = new IconPictureBox();
             panelEscritorio = new Panel();
             pnCaja = new Panel();
+            dataGridView1 = new DataGridView();
+            pnDetalleCaja = new Panel();
+            btnCerrarCaja = new controlesPersonalizados.ClassBtnPersonalizado();
+            btnDetalleCaja = new controlesPersonalizados.ClassBtnPersonalizado();
+            btnBuscarCaja = new controlesPersonalizados.ClassBtnPersonalizado();
             btnCerrarCajas = new controlesPersonalizados.ClassBtnPersonalizado();
             cmbMes = new ComboBox();
             cmbFiltro = new ComboBox();
@@ -75,6 +86,8 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnInicio).BeginInit();
             pnVentas.SuspendLayout();
+            pnArticulos.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvArticulos).BeginInit();
             pnDetallesVentas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvDetalleVenta).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvVentas).BeginInit();
@@ -83,6 +96,8 @@ namespace Punto_de_venta___Prácticas_profesionales
             ((System.ComponentModel.ISupportInitialize)iconoActual).BeginInit();
             panelEscritorio.SuspendLayout();
             pnCaja.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            pnDetalleCaja.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCajas).BeginInit();
             SuspendLayout();
             // 
@@ -298,6 +313,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // 
             // pnVentas
             // 
+            pnVentas.Controls.Add(flowLayoutPanel1);
             pnVentas.Controls.Add(pnDetallesVentas);
             pnVentas.Controls.Add(btnCerrarVentas);
             pnVentas.Controls.Add(btnVerDetalle);
@@ -305,10 +321,94 @@ namespace Punto_de_venta___Prácticas_profesionales
             pnVentas.Controls.Add(comboBoxMes);
             pnVentas.Controls.Add(comboBoxFecha);
             pnVentas.Controls.Add(dgvVentas);
-            pnVentas.Location = new Point(22, 19);
+            pnVentas.Location = new Point(22, 18);
             pnVentas.Name = "pnVentas";
             pnVentas.Size = new Size(766, 489);
             pnVentas.TabIndex = 1;
+            // 
+            // pnArticulos
+            // 
+            pnArticulos.BackColor = Color.FromArgb(21, 9, 49);
+            pnArticulos.Controls.Add(btnCerrarArticulos);
+            pnArticulos.Controls.Add(btnArticulos);
+            pnArticulos.Controls.Add(cbxFiltro);
+            pnArticulos.Controls.Add(dgvArticulos);
+            pnArticulos.Location = new Point(91, 28);
+            pnArticulos.Name = "pnArticulos";
+            pnArticulos.Size = new Size(664, 511);
+            pnArticulos.TabIndex = 1;
+            // 
+            // btnCerrarArticulos
+            // 
+            btnCerrarArticulos.BackColor = Color.MediumSlateBlue;
+            btnCerrarArticulos.BackgroundColor = Color.MediumSlateBlue;
+            btnCerrarArticulos.BorderColor = Color.PaleVioletRed;
+            btnCerrarArticulos.BorderRadius = 40;
+            btnCerrarArticulos.BorderSize = 0;
+            btnCerrarArticulos.FlatAppearance.BorderSize = 0;
+            btnCerrarArticulos.FlatStyle = FlatStyle.Flat;
+            btnCerrarArticulos.ForeColor = Color.White;
+            btnCerrarArticulos.IconAlignment = ContentAlignment.MiddleLeft;
+            btnCerrarArticulos.IconChar = IconChar.None;
+            btnCerrarArticulos.IconColor = Color.White;
+            btnCerrarArticulos.IconPadding = 5;
+            btnCerrarArticulos.IconSize = 24;
+            btnCerrarArticulos.Location = new Point(532, 442);
+            btnCerrarArticulos.Name = "btnCerrarArticulos";
+            btnCerrarArticulos.Size = new Size(111, 47);
+            btnCerrarArticulos.TabIndex = 3;
+            btnCerrarArticulos.Text = "Cerrar";
+            btnCerrarArticulos.TextColor = Color.White;
+            btnCerrarArticulos.UseVisualStyleBackColor = false;
+            btnCerrarArticulos.Click += btnCerrarArticulos_Click;
+            // 
+            // btnArticulos
+            // 
+            btnArticulos.BackColor = Color.MediumSlateBlue;
+            btnArticulos.BackgroundColor = Color.MediumSlateBlue;
+            btnArticulos.BorderColor = Color.PaleVioletRed;
+            btnArticulos.BorderRadius = 40;
+            btnArticulos.BorderSize = 0;
+            btnArticulos.FlatAppearance.BorderSize = 0;
+            btnArticulos.FlatStyle = FlatStyle.Flat;
+            btnArticulos.ForeColor = Color.White;
+            btnArticulos.IconAlignment = ContentAlignment.MiddleLeft;
+            btnArticulos.IconChar = IconChar.None;
+            btnArticulos.IconColor = Color.White;
+            btnArticulos.IconPadding = 5;
+            btnArticulos.IconSize = 24;
+            btnArticulos.Location = new Point(295, 56);
+            btnArticulos.Name = "btnArticulos";
+            btnArticulos.Size = new Size(123, 50);
+            btnArticulos.TabIndex = 2;
+            btnArticulos.Text = "Filtrar";
+            btnArticulos.TextColor = Color.White;
+            btnArticulos.UseVisualStyleBackColor = false;
+            btnArticulos.Click += btnArticulos_Click;
+            // 
+            // cbxFiltro
+            // 
+            cbxFiltro.FormattingEnabled = true;
+            cbxFiltro.Location = new Point(109, 67);
+            cbxFiltro.Name = "cbxFiltro";
+            cbxFiltro.Size = new Size(151, 28);
+            cbxFiltro.TabIndex = 1;
+            // 
+            // dgvArticulos
+            // 
+            dgvArticulos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvArticulos.Location = new Point(112, 169);
+            dgvArticulos.Name = "dgvArticulos";
+            dgvArticulos.RowHeadersWidth = 51;
+            dgvArticulos.Size = new Size(416, 240);
+            dgvArticulos.TabIndex = 0;
+            // 
+            // flowLayoutPanel1
+            // 
+            flowLayoutPanel1.Location = new Point(216, 79);
+            flowLayoutPanel1.Name = "flowLayoutPanel1";
+            flowLayoutPanel1.Size = new Size(12, 8);
+            flowLayoutPanel1.TabIndex = 7;
             // 
             // pnDetallesVentas
             // 
@@ -609,6 +709,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // panelEscritorio
             // 
             panelEscritorio.BackColor = Color.FromArgb(21, 9, 41);
+            panelEscritorio.Controls.Add(pnArticulos);
             panelEscritorio.Controls.Add(pnCaja);
             panelEscritorio.Dock = DockStyle.Fill;
             panelEscritorio.Location = new Point(253, 48);
@@ -622,6 +723,10 @@ namespace Punto_de_venta___Prácticas_profesionales
             // 
             pnCaja.BackColor = Color.FromArgb(21, 9, 49);
             pnCaja.Controls.Add(pnVentas);
+            pnCaja.Controls.Add(dataGridView1);
+            pnCaja.Controls.Add(pnDetalleCaja);
+            pnCaja.Controls.Add(btnDetalleCaja);
+            pnCaja.Controls.Add(btnBuscarCaja);
             pnCaja.Controls.Add(btnCerrarCajas);
             pnCaja.Controls.Add(cmbMes);
             pnCaja.Controls.Add(cmbFiltro);
@@ -631,6 +736,95 @@ namespace Punto_de_venta___Prácticas_profesionales
             pnCaja.Size = new Size(812, 527);
             pnCaja.TabIndex = 0;
             pnCaja.Paint += pnCaja_Paint;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(142, 130);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(557, 240);
+            dataGridView1.TabIndex = 7;
+            // 
+            // pnDetalleCaja
+            // 
+            pnDetalleCaja.Controls.Add(btnCerrarCaja);
+            pnDetalleCaja.Location = new Point(111, 110);
+            pnDetalleCaja.Name = "pnDetalleCaja";
+            pnDetalleCaja.Size = new Size(619, 322);
+            pnDetalleCaja.TabIndex = 6;
+            // 
+            // btnCerrarCaja
+            // 
+            btnCerrarCaja.BackColor = Color.DarkSlateBlue;
+            btnCerrarCaja.BackgroundColor = Color.DarkSlateBlue;
+            btnCerrarCaja.BorderColor = Color.PaleVioletRed;
+            btnCerrarCaja.BorderRadius = 40;
+            btnCerrarCaja.BorderSize = 0;
+            btnCerrarCaja.FlatAppearance.BorderSize = 0;
+            btnCerrarCaja.FlatStyle = FlatStyle.Flat;
+            btnCerrarCaja.ForeColor = Color.White;
+            btnCerrarCaja.IconAlignment = ContentAlignment.BottomRight;
+            btnCerrarCaja.IconChar = IconChar.Close;
+            btnCerrarCaja.IconColor = Color.White;
+            btnCerrarCaja.IconPadding = 5;
+            btnCerrarCaja.IconSize = 24;
+            btnCerrarCaja.Location = new Point(518, 268);
+            btnCerrarCaja.Name = "btnCerrarCaja";
+            btnCerrarCaja.Size = new Size(83, 44);
+            btnCerrarCaja.TabIndex = 8;
+            btnCerrarCaja.Text = "Cerrar";
+            btnCerrarCaja.TextColor = Color.White;
+            btnCerrarCaja.UseVisualStyleBackColor = false;
+            btnCerrarCaja.Click += classBtnPersonalizado1_Click_1;
+            // 
+            // btnDetalleCaja
+            // 
+            btnDetalleCaja.BackColor = Color.MediumSlateBlue;
+            btnDetalleCaja.BackgroundColor = Color.MediumSlateBlue;
+            btnDetalleCaja.BorderColor = Color.PaleVioletRed;
+            btnDetalleCaja.BorderRadius = 40;
+            btnDetalleCaja.BorderSize = 0;
+            btnDetalleCaja.FlatAppearance.BorderSize = 0;
+            btnDetalleCaja.FlatStyle = FlatStyle.Flat;
+            btnDetalleCaja.ForeColor = Color.White;
+            btnDetalleCaja.IconAlignment = ContentAlignment.MiddleLeft;
+            btnDetalleCaja.IconChar = IconChar.None;
+            btnDetalleCaja.IconColor = Color.White;
+            btnDetalleCaja.IconPadding = 5;
+            btnDetalleCaja.IconSize = 24;
+            btnDetalleCaja.Location = new Point(324, 74);
+            btnDetalleCaja.Name = "btnDetalleCaja";
+            btnDetalleCaja.Size = new Size(123, 50);
+            btnDetalleCaja.TabIndex = 5;
+            btnDetalleCaja.Text = "Buscar";
+            btnDetalleCaja.TextColor = Color.White;
+            btnDetalleCaja.UseVisualStyleBackColor = false;
+            btnDetalleCaja.Click += btnDetalleCaja_Click;
+            // 
+            // btnBuscarCaja
+            // 
+            btnBuscarCaja.BackColor = Color.MediumSlateBlue;
+            btnBuscarCaja.BackgroundColor = Color.MediumSlateBlue;
+            btnBuscarCaja.BorderColor = Color.PaleVioletRed;
+            btnBuscarCaja.BorderRadius = 40;
+            btnBuscarCaja.BorderSize = 0;
+            btnBuscarCaja.FlatAppearance.BorderSize = 0;
+            btnBuscarCaja.FlatStyle = FlatStyle.Flat;
+            btnBuscarCaja.ForeColor = Color.White;
+            btnBuscarCaja.IconAlignment = ContentAlignment.MiddleLeft;
+            btnBuscarCaja.IconChar = IconChar.None;
+            btnBuscarCaja.IconColor = Color.White;
+            btnBuscarCaja.IconPadding = 5;
+            btnBuscarCaja.IconSize = 24;
+            btnBuscarCaja.Location = new Point(324, 18);
+            btnBuscarCaja.Name = "btnBuscarCaja";
+            btnBuscarCaja.Size = new Size(123, 50);
+            btnBuscarCaja.TabIndex = 4;
+            btnBuscarCaja.Text = "Buscar";
+            btnBuscarCaja.TextColor = Color.White;
+            btnBuscarCaja.UseVisualStyleBackColor = false;
+            btnBuscarCaja.Click += btnBuscarCaja_Click;
             // 
             // btnCerrarCajas
             // 
@@ -660,7 +854,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             // 
             cmbMes.BackColor = Color.Lavender;
             cmbMes.FormattingEnabled = true;
-            cmbMes.Location = new Point(338, 53);
+            cmbMes.Location = new Point(113, 83);
             cmbMes.Name = "cmbMes";
             cmbMes.Size = new Size(151, 28);
             cmbMes.TabIndex = 2;
@@ -670,7 +864,7 @@ namespace Punto_de_venta___Prácticas_profesionales
             cmbFiltro.BackColor = Color.Lavender;
             cmbFiltro.DisplayMember = "U";
             cmbFiltro.FormattingEnabled = true;
-            cmbFiltro.Location = new Point(116, 53);
+            cmbFiltro.Location = new Point(113, 30);
             cmbFiltro.Name = "cmbFiltro";
             cmbFiltro.Size = new Size(151, 28);
             cmbFiltro.TabIndex = 1;
@@ -745,6 +939,8 @@ namespace Punto_de_venta___Prácticas_profesionales
             panelLogo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)btnInicio).EndInit();
             pnVentas.ResumeLayout(false);
+            pnArticulos.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvArticulos).EndInit();
             pnDetallesVentas.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvDetalleVenta).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvVentas).EndInit();
@@ -755,6 +951,8 @@ namespace Punto_de_venta___Prácticas_profesionales
             ((System.ComponentModel.ISupportInitialize)iconoActual).EndInit();
             panelEscritorio.ResumeLayout(false);
             pnCaja.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            pnDetalleCaja.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvCajas).EndInit();
             ResumeLayout(false);
         }
@@ -803,5 +1001,16 @@ namespace Punto_de_venta___Prácticas_profesionales
         private Panel pnDetallesVentas;
         private controlesPersonalizados.ClassBtnPersonalizado btnCerrarDetallesV;
         private controlesPersonalizados.ClassBtnPersonalizado btnCerrarVentas;
+        private controlesPersonalizados.ClassBtnPersonalizado btnBuscarCaja;
+        private FlowLayoutPanel flowLayoutPanel1;
+        private Panel pnArticulos;
+        private controlesPersonalizados.ClassBtnPersonalizado btnCerrarArticulos;
+        private controlesPersonalizados.ClassBtnPersonalizado btnArticulos;
+        private ComboBox cbxFiltro;
+        private DataGridView dgvArticulos;
+        private controlesPersonalizados.ClassBtnPersonalizado btnDetalleCaja;
+        private DataGridView dataGridView1;
+        private Panel pnDetalleCaja;
+        private controlesPersonalizados.ClassBtnPersonalizado btnCerrarCaja;
     }
 }

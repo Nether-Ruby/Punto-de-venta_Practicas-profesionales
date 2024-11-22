@@ -142,7 +142,18 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
         public DataTable ObtenerDetallesVenta(int idVenta)
         {
             DataTable tabla = new DataTable();
-            string query = "SELECT articulo, cantidad FROM Detalles_venta WHERE id_venta = @idVenta";
+            string query = @"
+        SELECT 
+            a.nombre AS articulo, -- Selecciona el nombre del artículo
+            dv.cantidad
+        FROM 
+            Detalles_ventas dv
+        INNER JOIN 
+            Articulos a
+        ON 
+            dv.articulo = a.codigo -- Relaciona por el código del artículo
+        WHERE 
+            dv.id_venta = @idVenta";
 
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
@@ -160,5 +171,40 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
 
             return tabla;
         }
+
+        public DataTable ObtenerArticulosVendidos()    
+        {
+            DataTable tabla = new DataTable();
+            string query = @"
+        SELECT 
+            a.nombre AS articulo,
+            SUM(dv.cantidad) AS cantidad_vendida
+        FROM 
+            Detalles_ventas dv
+        INNER JOIN 
+            Articulos a
+        ON 
+            dv.articulo = a.codigo
+        GROUP BY 
+            a.nombre
+        ORDER BY 
+            cantidad_vendida DESC";
+
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            {
+                conn.Open();
+                using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
+                {
+                    using (SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd))
+                    {
+                        adapter.Fill(tabla);
+                    }
+                }
+            }
+
+            return tabla;
+        }
+
+
     }
 }
