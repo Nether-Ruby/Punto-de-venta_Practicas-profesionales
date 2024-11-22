@@ -24,7 +24,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         "Efectivo",
         "Tarjeta de crédito",
         "Tarjeta de débito",
-        "Transferencia bancaria"
+        "Transferencia"
     };
 
         private bool isUpdating = false;

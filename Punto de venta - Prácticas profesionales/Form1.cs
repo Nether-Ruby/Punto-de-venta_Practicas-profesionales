@@ -14,9 +14,11 @@ namespace Punto_de_venta___Prácticas_profesionales
         private Panel leftBorderBtn;
         private Form currentChildForm;
 
-        /////////
         private readonly reportesLogica reportesLogica = new reportesLogica();
 
+        public double Ingreso { get; set; } = 0; // Inicializar en 0
+        public double Egreso { get; set; } = 0; // Inicializar en 0
+        public bool IsOpen { get; set; } = false;
 
         public Form1()
         {
@@ -175,7 +177,8 @@ namespace Punto_de_venta___Prácticas_profesionales
         private void iconButton3_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBcolors.color1);
-            openChildForm(new Presentación.FormCaja());
+            Presentación.FormCaja formCaja = new Presentación.FormCaja(this);
+            openChildForm(formCaja);
         }
 
         private void iconButton4_Click(object sender, EventArgs e)
