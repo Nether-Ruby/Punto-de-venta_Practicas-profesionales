@@ -13,17 +13,13 @@ namespace Punto_de_venta___Prácticas_profesionales
         private IconButton currentBtn;
         private Panel leftBorderBtn;
         private Form currentChildForm;
-<<<<<<< HEAD
 
-        /////////
         private readonly reportesLogica reportesLogica = new reportesLogica();
 
-
-=======
-        public decimal Ingreso { get; set; } = 0; // Inicializar en 0
-        public decimal Egreso { get; set; } = 0; // Inicializar en 0
+        public double Ingreso { get; set; } = 0; // Inicializar en 0
+        public double Egreso { get; set; } = 0; // Inicializar en 0
         public bool IsOpen { get; set; } = false;
->>>>>>> 83c8a09 (primer commit caja)
+
         public Form1()
         {
             InitializeComponent();

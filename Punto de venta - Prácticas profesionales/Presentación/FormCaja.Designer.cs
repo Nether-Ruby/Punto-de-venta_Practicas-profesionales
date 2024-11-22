@@ -42,10 +42,7 @@
             ingresostxt = new TextBox();
             egresostxt = new TextBox();
             ingresoBtn = new controlesPersonalizados.ClassBtnPersonalizado();
-            busquedatxt = new TextBox();
-            label9 = new Label();
             egresosBtn = new controlesPersonalizados.ClassBtnPersonalizado();
-            devolucionBtn = new controlesPersonalizados.ClassBtnPersonalizado();
             groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             groupBox1.SuspendLayout();
@@ -74,7 +71,7 @@
             abrirBtn.IconColor = Color.White;
             abrirBtn.IconPadding = 5;
             abrirBtn.IconSize = 24;
-            abrirBtn.Location = new Point(12, 375);
+            abrirBtn.Location = new Point(24, 375);
             abrirBtn.Name = "abrirBtn";
             abrirBtn.Size = new Size(150, 40);
             abrirBtn.TabIndex = 1;
@@ -98,7 +95,7 @@
             cerrarBtn.IconColor = Color.White;
             cerrarBtn.IconPadding = 5;
             cerrarBtn.IconSize = 24;
-            cerrarBtn.Location = new Point(168, 375);
+            cerrarBtn.Location = new Point(227, 375);
             cerrarBtn.Name = "cerrarBtn";
             cerrarBtn.Size = new Size(150, 40);
             cerrarBtn.TabIndex = 2;
@@ -128,7 +125,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(15, 137);
+            label3.Location = new Point(15, 171);
             label3.Name = "label3";
             label3.Size = new Size(35, 15);
             label3.TabIndex = 7;
@@ -138,7 +135,7 @@
             // 
             totallbl.AutoSize = true;
             totallbl.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            totallbl.Location = new Point(65, 158);
+            totallbl.Location = new Point(6, 197);
             totallbl.Name = "totallbl";
             totallbl.Size = new Size(71, 40);
             totallbl.TabIndex = 8;
@@ -147,7 +144,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(15, 74);
+            label5.Location = new Point(15, 93);
             label5.Name = "label5";
             label5.Size = new Size(52, 15);
             label5.TabIndex = 9;
@@ -157,7 +154,7 @@
             // 
             efectivolbl.AutoSize = true;
             efectivolbl.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            efectivolbl.Location = new Point(65, 92);
+            efectivolbl.Location = new Point(6, 117);
             efectivolbl.Name = "efectivolbl";
             efectivolbl.Size = new Size(71, 40);
             efectivolbl.TabIndex = 10;
@@ -166,7 +163,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(15, 15);
+            label7.Location = new Point(15, 28);
             label7.Name = "label7";
             label7.Size = new Size(44, 15);
             label7.TabIndex = 11;
@@ -176,7 +173,7 @@
             // 
             tarjetalbl.AutoSize = true;
             tarjetalbl.Font = new Font("Segoe UI", 21.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            tarjetalbl.Location = new Point(65, 30);
+            tarjetalbl.Location = new Point(6, 53);
             tarjetalbl.Name = "tarjetalbl";
             tarjetalbl.Size = new Size(71, 40);
             tarjetalbl.TabIndex = 12;
@@ -211,29 +208,14 @@
             ingresoBtn.IconColor = Color.White;
             ingresoBtn.IconPadding = 5;
             ingresoBtn.IconSize = 24;
-            ingresoBtn.Location = new Point(324, 375);
+            ingresoBtn.Location = new Point(432, 375);
             ingresoBtn.Name = "ingresoBtn";
             ingresoBtn.Size = new Size(150, 40);
             ingresoBtn.TabIndex = 15;
             ingresoBtn.Text = "Ingresos";
             ingresoBtn.TextColor = Color.White;
             ingresoBtn.UseVisualStyleBackColor = false;
-            // 
-            // busquedatxt
-            // 
-            busquedatxt.Location = new Point(432, 14);
-            busquedatxt.Name = "busquedatxt";
-            busquedatxt.Size = new Size(150, 23);
-            busquedatxt.TabIndex = 16;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(364, 20);
-            label9.Name = "label9";
-            label9.Size = new Size(62, 15);
-            label9.TabIndex = 17;
-            label9.Text = "Busqueda:";
+            ingresoBtn.Click += ingresoBtn_Click;
             // 
             // egresosBtn
             // 
@@ -250,36 +232,14 @@
             egresosBtn.IconColor = Color.White;
             egresosBtn.IconPadding = 5;
             egresosBtn.IconSize = 24;
-            egresosBtn.Location = new Point(480, 375);
+            egresosBtn.Location = new Point(638, 375);
             egresosBtn.Name = "egresosBtn";
             egresosBtn.Size = new Size(150, 40);
             egresosBtn.TabIndex = 18;
             egresosBtn.Text = "Egresos";
             egresosBtn.TextColor = Color.White;
             egresosBtn.UseVisualStyleBackColor = false;
-            // 
-            // devolucionBtn
-            // 
-            devolucionBtn.BackColor = Color.MediumSlateBlue;
-            devolucionBtn.BackgroundColor = Color.MediumSlateBlue;
-            devolucionBtn.BorderColor = Color.PaleVioletRed;
-            devolucionBtn.BorderRadius = 40;
-            devolucionBtn.BorderSize = 0;
-            devolucionBtn.FlatAppearance.BorderSize = 0;
-            devolucionBtn.FlatStyle = FlatStyle.Flat;
-            devolucionBtn.ForeColor = Color.White;
-            devolucionBtn.IconAlignment = ContentAlignment.MiddleLeft;
-            devolucionBtn.IconChar = FontAwesome.Sharp.IconChar.None;
-            devolucionBtn.IconColor = Color.White;
-            devolucionBtn.IconPadding = 5;
-            devolucionBtn.IconSize = 24;
-            devolucionBtn.Location = new Point(638, 375);
-            devolucionBtn.Name = "devolucionBtn";
-            devolucionBtn.Size = new Size(150, 40);
-            devolucionBtn.TabIndex = 19;
-            devolucionBtn.Text = "Devolucion";
-            devolucionBtn.TextColor = Color.White;
-            devolucionBtn.UseVisualStyleBackColor = false;
+            egresosBtn.Click += egresosBtn_Click;
             // 
             // groupBox1
             // 
@@ -301,10 +261,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(groupBox1);
-            Controls.Add(devolucionBtn);
             Controls.Add(egresosBtn);
-            Controls.Add(label9);
-            Controls.Add(busquedatxt);
             Controls.Add(ingresoBtn);
             Controls.Add(egresostxt);
             Controls.Add(ingresostxt);
@@ -315,6 +272,7 @@
             Controls.Add(dataGridView1);
             Name = "FormCaja";
             Text = "FormCaja";
+            Load += FormCaja_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -338,10 +296,7 @@
         private TextBox ingresostxt;
         private TextBox egresostxt;
         private controlesPersonalizados.ClassBtnPersonalizado ingresoBtn;
-        private TextBox busquedatxt;
-        private Label label9;
         private controlesPersonalizados.ClassBtnPersonalizado egresosBtn;
-        private controlesPersonalizados.ClassBtnPersonalizado devolucionBtn;
         private GroupBox groupBox1;
     }
 }

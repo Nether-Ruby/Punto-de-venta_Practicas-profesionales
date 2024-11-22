@@ -10,14 +10,12 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
 {
     internal class cajaLogica
     {
-        int id;
-        string fecha_hora;
-        double efectivo;
-        double tarjeta;
-        double total;
-        double ingreso;
-        double egreso;
+        private cajaDatos cd = new cajaDatos();
 
+        public bool CerrarCaja(double efectivo, double tarjeta, double totalCaja, double ingresos, double egresos, DateTime horaCierre)
+        {
+            return cd.insertarCierreCaja(efectivo, tarjeta, totalCaja, ingresos, egresos, horaCierre);
+        }
         public static DataTable ventasHoy()
         {
             DataTable dt = new DataTable();
