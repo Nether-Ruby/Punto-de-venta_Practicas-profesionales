@@ -13,11 +13,17 @@ namespace Punto_de_venta___Prácticas_profesionales
         private IconButton currentBtn;
         private Panel leftBorderBtn;
         private Form currentChildForm;
+<<<<<<< HEAD
 
         /////////
         private readonly reportesLogica reportesLogica = new reportesLogica();
 
 
+=======
+        public decimal Ingreso { get; set; } = 0; // Inicializar en 0
+        public decimal Egreso { get; set; } = 0; // Inicializar en 0
+        public bool IsOpen { get; set; } = false;
+>>>>>>> 83c8a09 (primer commit caja)
         public Form1()
         {
             InitializeComponent();
@@ -175,7 +181,8 @@ namespace Punto_de_venta___Prácticas_profesionales
         private void iconButton3_Click(object sender, EventArgs e)
         {
             ActivateButton(sender, RGBcolors.color1);
-            openChildForm(new Presentación.FormCaja());
+            Presentación.FormCaja formCaja = new Presentación.FormCaja(this);
+            openChildForm(formCaja);
         }
 
         private void iconButton4_Click(object sender, EventArgs e)
