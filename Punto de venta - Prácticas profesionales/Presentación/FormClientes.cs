@@ -239,7 +239,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         {
 
         }
-       
+
 
 
         private void ConfigurarEstiloDataGridView()
@@ -316,7 +316,8 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             btNuevoCliente.Left = this.ClientSize.Width - btNuevoCliente.Width - 10; // Márgenes del lado derecho
 
             // Ajustar cuando el formulario cambia de tamaño
-            this.Resize += (sender, e) => {
+            this.Resize += (sender, e) =>
+            {
                 btNuevoCliente.Left = this.ClientSize.Width - btNuevoCliente.Width - 10;
                 btNuevoCliente.Top = 10;
             };
@@ -336,6 +337,9 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             };
         }
 
+        private void dgvClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
+        }
     }
 }
