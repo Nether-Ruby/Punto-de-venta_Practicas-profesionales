@@ -38,6 +38,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
                                     Marca TEXT,
                                     Rubro TEXT,
                                     precio_unitario REAL,
+                                    precio_lista REAL,
                                     Stock INTEGER,
                                     Activo INTEGER DEFAULT 1
                                 )";
@@ -50,6 +51,9 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
                         {
                             // Verificar y agregar las columnas que puedan faltar
                             VerifyAndAddColumn(connection, "precio_unitario", "REAL");
+                            // Agregar verificación de la nueva columna "precio_lista"
+                            VerifyAndAddColumn(connection, "precio_lista", "REAL");
+
                             VerifyAndAddColumn(connection, "Stock", "INTEGER");
                             VerifyAndAddColumn(connection, "Activo", "INTEGER DEFAULT 1");
                         }

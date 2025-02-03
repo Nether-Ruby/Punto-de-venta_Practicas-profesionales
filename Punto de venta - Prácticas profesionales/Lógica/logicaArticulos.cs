@@ -12,10 +12,39 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
     {
         // Método para agregar un nuevo artículo
 
+        //2024 este es 
+        //public bool AgregarArticulo(string nombre, string marca, string rubro, double precio, int stock)
+        //{
+        //    string insertQuery = "INSERT INTO Articulos (Nombre, Marca, Rubro, precio_unitario, Stock, Activo) VALUES (@Nombre, @Marca, @Rubro, @precio_unitario, @Stock, 1)";
 
-        public bool AgregarArticulo(string nombre, string marca, string rubro, double precio, int stock)
+        //    using (var connection = new SQLiteConnection(DatosArticuloscs.ConnectionString))
+        //    {
+        //        connection.Open();
+        //        using (var insertCommand = new SQLiteCommand(insertQuery, connection))
+        //        {
+        //            insertCommand.Parameters.AddWithValue("@Nombre", nombre);
+        //            insertCommand.Parameters.AddWithValue("@Marca", marca);
+        //            insertCommand.Parameters.AddWithValue("@Rubro", rubro);
+        //            insertCommand.Parameters.AddWithValue("@precio_unitario", precio);
+        //            insertCommand.Parameters.AddWithValue("@Stock", stock);
+
+        //            try
+        //            {
+        //                insertCommand.ExecuteNonQuery();
+        //                return true;
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                MessageBox.Show($"Error al agregar el artículo: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //                return false;
+        //            }
+        //        }
+        //    }
+        //}
+        public bool AgregarArticulo(string nombre, string marca, string rubro, double precio, double precioLista, int stock)
         {
-            string insertQuery = "INSERT INTO Articulos (Nombre, Marca, Rubro, precio_unitario, Stock, Activo) VALUES (@Nombre, @Marca, @Rubro, @precio_unitario, @Stock, 1)";
+            string insertQuery = "INSERT INTO Articulos (Nombre, Marca, Rubro, precio_unitario, precio_lista, Stock, Activo) " +
+                                 "VALUES (@Nombre, @Marca, @Rubro, @precio_unitario, @precio_lista, @Stock, 1)";
 
             using (var connection = new SQLiteConnection(DatosArticuloscs.ConnectionString))
             {
@@ -26,24 +55,16 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
                     insertCommand.Parameters.AddWithValue("@Marca", marca);
                     insertCommand.Parameters.AddWithValue("@Rubro", rubro);
                     insertCommand.Parameters.AddWithValue("@precio_unitario", precio);
+                    insertCommand.Parameters.AddWithValue("@precio_lista", precioLista);
                     insertCommand.Parameters.AddWithValue("@Stock", stock);
 
-                    try
-                    {
-                        insertCommand.ExecuteNonQuery();
-                        return true;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error al agregar el artículo: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return false;
-                    }
+                    return insertCommand.ExecuteNonQuery() > 0;
                 }
             }
         }
 
 
-
+        //este ni idea ya estaba comentado 
         // Método para actualizar un artículo existente
         //public bool ActualizarArticulo(int codigo, string nombre, string marca, string rubro, double precio, int stock)
         //{
@@ -73,15 +94,44 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
         //        }
         //    }
         //}
-        public bool ActualizarArticulo(int codigo, string? nombre, string? marca, string? rubro, double precio, int stock)
+
+        //2024
+        //public bool ActualizarArticulo(int codigo, string? nombre, string? marca, string? rubro, double precio, int stock)
+        //{
+        //    if (codigo <= 0)
+        //    {
+        //        return false; // Evitar actualizaciones con un código inválido
+        //    }
+
+        //    // Query para actualizar solo los campos permitidos (excepto "Codigo")
+        //    string query = "UPDATE Articulos SET Nombre=@Nombre, Marca=@Marca, Rubro=@Rubro, Precio_Unitario=@Precio, Stock=@Stock WHERE Codigo=@Codigo";
+
+        //    using (var connection = new SQLiteConnection(DatosArticuloscs.ConnectionString))
+        //    {
+        //        connection.Open();
+        //        using (var command = new SQLiteCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@Codigo", codigo);
+        //            command.Parameters.AddWithValue("@Nombre", nombre ?? (object)DBNull.Value);
+        //            command.Parameters.AddWithValue("@Marca", marca ?? (object)DBNull.Value);
+        //            command.Parameters.AddWithValue("@Rubro", rubro ?? (object)DBNull.Value);
+        //            command.Parameters.AddWithValue("@Precio", precio);
+        //            command.Parameters.AddWithValue("@Stock", stock);
+
+        //            return command.ExecuteNonQuery() > 0;
+        //        }
+        //    }
+        //}
+
+        public bool ActualizarArticulo(int codigo, string? nombre, string? marca, string? rubro, double precio, double precioLista, int stock)
         {
             if (codigo <= 0)
             {
-                return false; // Evitar actualizaciones con un código inválido
+                return false;
             }
 
-            // Query para actualizar solo los campos permitidos (excepto "Codigo")
-            string query = "UPDATE Articulos SET Nombre=@Nombre, Marca=@Marca, Rubro=@Rubro, Precio_Unitario=@Precio, Stock=@Stock WHERE Codigo=@Codigo";
+            string query = "UPDATE Articulos SET Nombre=@Nombre, Marca=@Marca, Rubro=@Rubro, precio_unitario=@Precio, " +
+                           "precio_lista=@PrecioLista, Stock=@Stock WHERE Codigo=@Codigo";
 
             using (var connection = new SQLiteConnection(DatosArticuloscs.ConnectionString))
             {
@@ -93,13 +143,13 @@ namespace Punto_de_venta___Prácticas_profesionales.Logica
                     command.Parameters.AddWithValue("@Marca", marca ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@Rubro", rubro ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@Precio", precio);
+                    command.Parameters.AddWithValue("@PrecioLista", precioLista);
                     command.Parameters.AddWithValue("@Stock", stock);
 
                     return command.ExecuteNonQuery() > 0;
                 }
             }
         }
-
 
 
 
