@@ -24,6 +24,10 @@ namespace Punto_de_venta___Prácticas_profesionales
         // private ArticulosLogica articuloService;
         private logicaArticulos articuloService;
         //  private object? valorOriginalCodigo;
+        //2025
+        private Dictionary<Control, Rectangle> originalControls = new Dictionary<Control, Rectangle>();
+        private Size originalFormSize;
+
         public AriculosForm()
         {
             InitializeComponent();
@@ -31,6 +35,12 @@ namespace Punto_de_venta___Prácticas_profesionales
             CargarArticulos(); // Cargar datos al iniciar el formulario
                                //  dataGridView1.CellBeginEdit += dataGridView1_CellBeginEdit;
             dataGridView1.Columns[0].ReadOnly = true;                 // dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+
+            this.Load += AriculosForm_Load;
+            this.Resize += AriculosForm_Resize;
+
+
+
 
         }
 
@@ -50,7 +60,28 @@ namespace Punto_de_venta___Prácticas_profesionales
             txtMarca.Clear();
             txtRubro.Clear();
             txtPrecio.Clear();
+            txtPrecioLista.Clear();
             txtStock.Clear();
+        }
+
+        private void AriculosForm_Resize(object sender, EventArgs e)
+        {
+            float xRatio = (float)this.Width / originalFormSize.Width;
+            float yRatio = (float)this.Height / originalFormSize.Height;
+
+            foreach (Control control in this.Controls)
+            {
+                if (originalControls.ContainsKey(control))
+                {
+                    Rectangle original = originalControls[control];
+                    control.SetBounds(
+                        (int)(original.X * xRatio),
+                        (int)(original.Y * yRatio),
+                        (int)(original.Width * xRatio),
+                        (int)(original.Height * yRatio)
+                    );
+                }
+            }
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
@@ -96,18 +127,15 @@ namespace Punto_de_venta___Prácticas_profesionales
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-
-
-            // Validar que los campos de precio y stock tengan valores válidos
-            if (double.TryParse(txtPrecio.Texts, out double precio) && int.TryParse(txtStock.Texts, out int stock))
+            if (double.TryParse(txtPrecio.Texts, out double precio) &&
+         double.TryParse(txtPrecioLista.Texts, out double precioLista) &&
+       int.TryParse(txtStock.Texts, out int stock))
             {
                 string nombre = txtNombre.Texts.Trim();
                 string marca = txtMarca.Texts.Trim();
 
-                // Verificar si el artículo ya existe pero está deshabilitado
                 if (articuloService.ArticuloDeshabilitadoExiste(nombre, marca, out int codigoExistente))
                 {
-                    // Mostrar un mensaje y preguntar si desea reactivarlo
                     DialogResult result = MessageBox.Show(
                         "El artículo con el mismo Nombre y Marca ya existe pero está deshabilitado. ¿Desea volver a activarlo?",
                         "Artículo Deshabilitado",
@@ -116,34 +144,80 @@ namespace Punto_de_venta___Prácticas_profesionales
 
                     if (result == DialogResult.Yes)
                     {
-                        // Reactivar el artículo
                         if (articuloService.HabilitarArticulo(codigoExistente))
                         {
                             MessageBox.Show("Artículo reactivado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            CargarArticulos(); // Recargar la lista de artículos
-                            LimpiarCampos(); // Limpiar los campos
+                            CargarArticulos();
+                            LimpiarCampos();
                         }
                         else
                         {
                             MessageBox.Show("Error al reactivar el artículo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                    return; // Salir del método si se eligió reactivar el artículo
+                    return;
                 }
 
-                // Si el artículo no existe o no está deshabilitado, agregarlo como nuevo
-                if (articuloService.AgregarArticulo(nombre, marca, txtRubro.Texts.Trim(), precio, stock))
+                if (articuloService.AgregarArticulo(nombre, marca, txtRubro.Texts.Trim(), precio, precioLista, stock))
                 {
                     MessageBox.Show("Artículo agregado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CargarArticulos(); // Recargar la lista de artículos
-                    LimpiarCampos(); // Limpiar los campos
+                    CargarArticulos();
+                    LimpiarCampos();
                 }
             }
             else
             {
-                MessageBox.Show("Datos inválidos en precio o stock.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Datos inválidos en precio, precio lista o stock.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        // 2024 lo de abajo 
+        // Validar que los campos de precio y stock tengan valores válidos
+        //    if (double.TryParse(txtPrecio.Texts, out double precio) && int.TryParse(txtStock.Texts, out int stock))
+        //    {
+        //        string nombre = txtNombre.Texts.Trim();
+        //        string marca = txtMarca.Texts.Trim();
+
+        //        // Verificar si el artículo ya existe pero está deshabilitado
+        //        if (articuloService.ArticuloDeshabilitadoExiste(nombre, marca, out int codigoExistente))
+        //        {
+        //            // Mostrar un mensaje y preguntar si desea reactivarlo
+        //            DialogResult result = MessageBox.Show(
+        //                "El artículo con el mismo Nombre y Marca ya existe pero está deshabilitado. ¿Desea volver a activarlo?",
+        //                "Artículo Deshabilitado",
+        //                MessageBoxButtons.YesNo,
+        //                MessageBoxIcon.Question);
+
+        //            if (result == DialogResult.Yes)
+        //            {
+        //                // Reactivar el artículo
+        //                if (articuloService.HabilitarArticulo(codigoExistente))
+        //                {
+        //                    MessageBox.Show("Artículo reactivado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //                    CargarArticulos(); // Recargar la lista de artículos
+        //                    LimpiarCampos(); // Limpiar los campos
+        //                }
+        //                else
+        //                {
+        //                    MessageBox.Show("Error al reactivar el artículo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //                }
+        //            }
+        //            return; // Salir del método si se eligió reactivar el artículo
+        //        }
+
+        //        // Si el artículo no existe o no está deshabilitado, agregarlo como nuevo
+        //        if (articuloService.AgregarArticulo(nombre, marca, txtRubro.Texts.Trim(), precio, stock))
+        //        {
+        //            MessageBox.Show("Artículo agregado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //            CargarArticulos(); // Recargar la lista de artículos
+        //            LimpiarCampos(); // Limpiar los campos
+        //        }
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Datos inválidos en precio o stock.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
 
 
 
@@ -216,6 +290,11 @@ namespace Punto_de_venta___Prácticas_profesionales
             dataGridView1.DataSource = articuloService.CargarArticulos(false);
             btnDeshabilitar.Visible = false;
             btnHabilitar.Visible = true;
+
+
+            //2025
+            // Actualizar apariencia de botones decorativos
+            ActualizarBotonesDecorativos(false);
         }
 
         private void btnArticulosActivos_Click(object sender, EventArgs e)
@@ -224,13 +303,39 @@ namespace Punto_de_venta___Prácticas_profesionales
             dataGridView1.DataSource = articuloService.CargarArticulos(true);
             btnDeshabilitar.Visible = true;
             btnHabilitar.Visible = false;
+
+            // Actualizar apariencia de botones decorativos
+            ActualizarBotonesDecorativos(true);
+        }
+
+        //2025
+        private void ActualizarBotonesDecorativos(bool mostrandoActivos)
+        {
+            if (mostrandoActivos)
+            {
+                btnArticulosActivos.BackColor = SystemColors.Control;
+                btnArticulosActivos.ForeColor = Color.Black;
+               // btnArticulosActivos.FlatAppearance.BorderSize = 2;
+
+                btnArticulosDeshabilitados.BackColor = Color.Azure;
+                btnArticulosDeshabilitados.ForeColor = Color.Black;
+               // btnArticulosDeshabilitados.FlatAppearance.BorderSize = 1;
+            }
+            else
+            {
+                btnArticulosDeshabilitados.BackColor = SystemColors.Control;
+                btnArticulosDeshabilitados.ForeColor = Color.Black;
+               // btnArticulosDeshabilitados.FlatAppearance.BorderSize = 2;
+
+                btnArticulosActivos.BackColor = Color.Azure;
+                btnArticulosActivos.ForeColor = Color.Black;
+               // btnArticulosActivos.FlatAppearance.BorderSize = 1;
+            }
         }
 
 
 
-
-
-
+        //esto ya estaba cmentado 
         //private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         //{
         //    // Obtener la fila y la columna editada
@@ -296,43 +401,97 @@ namespace Punto_de_venta___Prácticas_profesionales
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            // Obtener la columna editada
             string nombreColumna = dataGridView1.Columns[e.ColumnIndex].Name;
 
-            // Si la columna editada es "Codigo", mostrar un mensaje de error y cancelar la edición
             if (nombreColumna == "Codigo")
             {
-                MessageBox.Show("No se puede modificar el código del artículo. Este campo es de solo lectura.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("No se puede modificar el código del artículo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 dataGridView1.CancelEdit();
-                CargarArticulos(); // Recargar los datos originales
+                CargarArticulos();
                 return;
             }
 
-            // Continuar con la lógica de actualización normal para las demás columnas
             var fila = dataGridView1.Rows[e.RowIndex];
             int codigo = Convert.ToInt32(fila.Cells["Codigo"].Value);
             string? nombre = fila.Cells["Nombre"].Value?.ToString()?.Trim();
             string? marca = fila.Cells["Marca"].Value?.ToString()?.Trim();
             string? rubro = fila.Cells["Rubro"].Value?.ToString()?.Trim();
 
-            // Validar Precio y Stock para evitar valores nulos
-            if (!double.TryParse(fila.Cells["Precio_Unitario"].Value?.ToString(), out double precio) ||
+            if (!double.TryParse(fila.Cells["precio_unitario"].Value?.ToString(), out double precio) ||
+                !double.TryParse(fila.Cells["precio_lista"].Value?.ToString(), out double precioLista) ||
                 !int.TryParse(fila.Cells["Stock"].Value?.ToString(), out int stock))
             {
-                MessageBox.Show("Error en los datos de Precio o Stock. Verifica la información ingresada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error en los datos. Verifica la información ingresada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            // Llamar a la lógica de negocio para actualizar los datos
-            if (articuloService.ActualizarArticulo(codigo, nombre, marca, rubro, precio, stock))
+            if (articuloService.ActualizarArticulo(codigo, nombre, marca, rubro, precio, precioLista, stock))
             {
-                MessageBox.Show("Artículo actualizado correctamente desde la grilla.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Artículo actualizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 MessageBox.Show("Error al actualizar el artículo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        //2025
+        private void AriculosForm_Load(object sender, EventArgs e)
+        {
+            // Guardamos el tamaño original del formulario
+            originalFormSize = this.Size;
+
+            // Guardamos las posiciones y tamaños originales de todos los controles
+            foreach (Control control in this.Controls)
+            {
+                originalControls[control] = new Rectangle(control.Location, control.Size);
+            }
+        }
+
+        private void txtPrecioLista__TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        //2024
+        //    // Obtener la columna editada
+        //    string nombreColumna = dataGridView1.Columns[e.ColumnIndex].Name;
+
+        //    // Si la columna editada es "Codigo", mostrar un mensaje de error y cancelar la edición
+        //    if (nombreColumna == "Codigo")
+        //    {
+        //        MessageBox.Show("No se puede modificar el código del artículo. Este campo es de solo lectura.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        dataGridView1.CancelEdit();
+        //        CargarArticulos(); // Recargar los datos originales
+        //        return;
+        //    }
+
+        //    // Continuar con la lógica de actualización normal para las demás columnas
+        //    var fila = dataGridView1.Rows[e.RowIndex];
+        //    int codigo = Convert.ToInt32(fila.Cells["Codigo"].Value);
+        //    string? nombre = fila.Cells["Nombre"].Value?.ToString()?.Trim();
+        //    string? marca = fila.Cells["Marca"].Value?.ToString()?.Trim();
+        //    string? rubro = fila.Cells["Rubro"].Value?.ToString()?.Trim();
+
+        //    // Validar Precio y Stock para evitar valores nulos
+        //    if (!double.TryParse(fila.Cells["Precio_Unitario"].Value?.ToString(), out double precio) ||
+        //        !int.TryParse(fila.Cells["Stock"].Value?.ToString(), out int stock))
+        //    {
+        //        MessageBox.Show("Error en los datos de Precio o Stock. Verifica la información ingresada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+
+        //    // Llamar a la lógica de negocio para actualizar los datos
+        //    if (articuloService.ActualizarArticulo(codigo, nombre, marca, rubro, precio, stock))
+        //    {
+        //        MessageBox.Show("Artículo actualizado correctamente desde la grilla.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Error al actualizar el artículo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
 
 
 

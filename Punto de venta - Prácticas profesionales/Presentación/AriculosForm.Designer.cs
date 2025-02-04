@@ -51,6 +51,8 @@
             txtNombre = new controlesPersonalizados.Texboxs();
             label1 = new Label();
             txtBuscar = new controlesPersonalizados.Texboxs();
+            txtPrecioLista = new controlesPersonalizados.Texboxs();
+            label2 = new Label();
             panel1.SuspendLayout();
             panelOpciones.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -73,7 +75,7 @@
             btnAgregar.IconColor = Color.White;
             btnAgregar.IconPadding = 4;
             btnAgregar.IconSize = 24;
-            btnAgregar.Location = new Point(70, 324);
+            btnAgregar.Location = new Point(88, 391);
             btnAgregar.Name = "btnAgregar";
             btnAgregar.Size = new Size(140, 40);
             btnAgregar.TabIndex = 55;
@@ -124,6 +126,7 @@
             // 
             // btnHabilitar
             // 
+            btnHabilitar.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnHabilitar.Location = new Point(458, 414);
             btnHabilitar.Name = "btnHabilitar";
             btnHabilitar.Size = new Size(126, 25);
@@ -198,7 +201,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(71, 289);
+            label7.Location = new Point(70, 291);
             label7.Name = "label7";
             label7.Size = new Size(50, 17);
             label7.TabIndex = 54;
@@ -223,11 +226,11 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.Size = new Size(624, 360);
             dataGridView1.TabIndex = 10;
-          //  dataGridView1.CellBeginEdit += dataGridView1_CellBeginEdit;
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
             // 
             // btnDeshabilitar
             // 
+            btnDeshabilitar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDeshabilitar.Location = new Point(110, 414);
             btnDeshabilitar.Name = "btnDeshabilitar";
             btnDeshabilitar.Size = new Size(126, 25);
@@ -286,7 +289,7 @@
             txtStock.BorderSize = 2;
             txtStock.Font = new Font("Segoe UI", 9.5F);
             txtStock.ForeColor = Color.DimGray;
-            txtStock.Location = new Point(137, 274);
+            txtStock.Location = new Point(137, 276);
             txtStock.Name = "txtStock";
             txtStock.Padding = new Padding(7);
             txtStock.Size = new Size(115, 32);
@@ -385,11 +388,39 @@
             txtBuscar.Texts = "Buscar...";
             txtBuscar.UnderlinedStyle1 = false;
             // 
+            // txtPrecioLista
+            // 
+            txtPrecioLista.BackColor = SystemColors.Control;
+            txtPrecioLista.BorderColor = Color.DarkSlateGray;
+            txtPrecioLista.BorderFocusColor = Color.DarkGray;
+            txtPrecioLista.BorderSize = 2;
+            txtPrecioLista.Font = new Font("Segoe UI", 9.5F);
+            txtPrecioLista.ForeColor = Color.DimGray;
+            txtPrecioLista.Location = new Point(137, 322);
+            txtPrecioLista.Name = "txtPrecioLista";
+            txtPrecioLista.Padding = new Padding(7);
+            txtPrecioLista.Size = new Size(115, 32);
+            txtPrecioLista.TabIndex = 56;
+            txtPrecioLista.Texts = "";
+            txtPrecioLista.UnderlinedStyle1 = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(70, 337);
+            label2.Name = "label2";
+            label2.Size = new Size(87, 17);
+            label2.TabIndex = 57;
+            label2.Text = "Precio Lista: ";
+            // 
             // AriculosForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(974, 518);
+            Controls.Add(label2);
+            Controls.Add(txtPrecioLista);
             Controls.Add(btnAgregar);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -408,6 +439,7 @@
             Controls.Add(txtBuscar);
             Name = "AriculosForm";
             Text = "AriculosForm";
+            Load += AriculosForm_Load;
             panel1.ResumeLayout(false);
             panelOpciones.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
@@ -441,5 +473,7 @@
         private controlesPersonalizados.Texboxs txtNombre;
         private Label label1;
         private controlesPersonalizados.Texboxs txtBuscar;
+        private controlesPersonalizados.Texboxs txtPrecioLista;
+        private Label label2;
     }
 }
