@@ -11,13 +11,14 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
 {
     internal class reportesDatos
     {
-        private readonly string connectionString = $"Data Source={AppDomain.CurrentDomain.BaseDirectory}database.db; Version=3;";
+        //private readonly string connectionString = $"Data Source={AppDomain.CurrentDomain.BaseDirectory}database.db; Version=3;";
+        private readonly string connectionString = @"Data Source=C:\Users\Acer\Desktop\nuevoProyecto\Punto-de-venta_Practicas-profesionales\Punto de venta - Prácticas profesionales\database.db; Version=3;";
 
         // Obtener todos los datos de Caja
         public DataTable ObtenerTodosLosDatosCaja()
         {
             DataTable tabla = new DataTable();
-            string query = "SELECT fecha_hora, efectivo, tarjeta, total, ingresos, egresos FROM Caja";
+            string query = "SELECT id, fecha_hora_apertura, fecha_hora_cierre, efectivo, tarjeta, total, ingresos, egresos FROM Caja";
 
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
@@ -34,21 +35,20 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
             return tabla;
         }
 
-        // Obtener los datos de Caja por rango de fechas
         public DataTable ObtenerDatosCajaPorRango(DateTime fechaInicio, DateTime fechaFin)
         {
             DataTable tabla = new DataTable();
-            string query = @"SELECT fecha_hora, efectivo, tarjeta, total, ingresos, egresos 
-                             FROM Caja 
-                             WHERE fecha_hora BETWEEN @fechaInicio AND @fechaFin";
+            string query = @"SELECT id, fecha_hora_apertura, fecha_hora_cierre, efectivo, tarjeta, total, ingresos, egresos 
+                     FROM Caja 
+                     WHERE fecha_hora_apertura BETWEEN @fechaInicio AND @fechaFin";
 
             using (SQLiteConnection conn = new SQLiteConnection(connectionString))
             {
                 conn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio);
-                    cmd.Parameters.AddWithValue("@fechaFin", fechaFin);
+                    cmd.Parameters.AddWithValue("@fechaInicio", fechaInicio.ToString("yyyy-MM-dd HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@fechaFin", fechaFin.ToString("yyyy-MM-dd HH:mm:ss"));
 
                     using (SQLiteDataAdapter adapter = new SQLiteDataAdapter(cmd))
                     {
@@ -172,7 +172,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
             return tabla;
         }
 
-        public DataTable ObtenerArticulosVendidos()    
+        public DataTable ObtenerArticulosVendidos()
         {
             DataTable tabla = new DataTable();
             string query = @"
