@@ -21,10 +21,15 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             comboBox1.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBox2.AutoCompleteMode = AutoCompleteMode.Suggest;
             comboBox2.AutoCompleteSource = AutoCompleteSource.ListItems;
+
+
+         
+
             cargarCombobox();
             actualizar();
         }
 
+       
 
         private void actualizar()
         {

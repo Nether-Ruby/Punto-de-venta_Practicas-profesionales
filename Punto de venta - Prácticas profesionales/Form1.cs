@@ -152,6 +152,10 @@ namespace Punto_de_venta___Prácticas_profesionales
             }
             Reset();
 
+            //lo
+            //pnCaja.Visible = false;
+
+
         }
         private void Reset()
         {
@@ -327,6 +331,10 @@ namespace Punto_de_venta___Prácticas_profesionales
                 DateTime fechaFin = fechaInicio.AddMonths(1).AddDays(-1);
 
                 CargarDatos(fechaInicio, fechaFin);
+
+
+                //lo
+                //pnCaja.Visible = true;
             }
         }
 
@@ -384,6 +392,8 @@ namespace Punto_de_venta___Prácticas_profesionales
          private void cajaToolStripMenuItem_Click(object sender, EventArgs e)
         {   
             // Mostrar el panel de caja
+
+
             pnArticulos.Visible = false;
             pnVentas.Visible = false;
             pnCaja.Visible = true;

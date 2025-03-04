@@ -399,45 +399,126 @@ namespace Punto_de_venta___Prácticas_profesionales
             dataGridView1.Columns["Codigo"].ReadOnly = true; // Hacer que la columna "Codigo" sea de solo lectura
         }
 
+        //antes de lo
+        //private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    string nombreColumna = dataGridView1.Columns[e.ColumnIndex].Name;
+
+        //    if (nombreColumna == "Codigo")
+        //    {
+        //        MessageBox.Show("No se puede modificar el código del artículo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        dataGridView1.CancelEdit();
+        //        CargarArticulos();
+        //        return;
+        //    }
+
+        //    var fila = dataGridView1.Rows[e.RowIndex];
+        //    int codigo = Convert.ToInt32(fila.Cells["Codigo"].Value);
+        //    string? nombre = fila.Cells["Nombre"].Value?.ToString()?.Trim();
+        //    string? marca = fila.Cells["Marca"].Value?.ToString()?.Trim();
+        //    string? rubro = fila.Cells["Rubro"].Value?.ToString()?.Trim();
+
+        //    if (!double.TryParse(fila.Cells["precio_unitario"].Value?.ToString(), out double precio) ||
+        //        !double.TryParse(fila.Cells["precio_lista"].Value?.ToString(), out double precioLista) ||
+        //        !int.TryParse(fila.Cells["Stock"].Value?.ToString(), out int stock))
+        //    {
+        //        MessageBox.Show("Error en los datos. Verifica la información ingresada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+
+        //    if (articuloService.ActualizarArticulo(codigo, nombre, marca, rubro, precio, precioLista, stock))
+        //    {
+        //        MessageBox.Show("Artículo actualizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Error al actualizar el artículo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
+        //lo
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            if (dataGridView1.CurrentCell == null) return;
+
             string nombreColumna = dataGridView1.Columns[e.ColumnIndex].Name;
-
-            if (nombreColumna == "Codigo")
-            {
-                MessageBox.Show("No se puede modificar el código del artículo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                dataGridView1.CancelEdit();
-                CargarArticulos();
-                return;
-            }
-
             var fila = dataGridView1.Rows[e.RowIndex];
-            int codigo = Convert.ToInt32(fila.Cells["Codigo"].Value);
-            string? nombre = fila.Cells["Nombre"].Value?.ToString()?.Trim();
-            string? marca = fila.Cells["Marca"].Value?.ToString()?.Trim();
-            string? rubro = fila.Cells["Rubro"].Value?.ToString()?.Trim();
 
-            if (!double.TryParse(fila.Cells["precio_unitario"].Value?.ToString(), out double precio) ||
-                !double.TryParse(fila.Cells["precio_lista"].Value?.ToString(), out double precioLista) ||
-                !int.TryParse(fila.Cells["Stock"].Value?.ToString(), out int stock))
+            // Obtener el valor ingresado en la celda
+            string valorIngresado = fila.Cells[nombreColumna].Value?.ToString()?.Trim() ?? "";
+
+            try
             {
-                MessageBox.Show("Error en los datos. Verifica la información ingresada.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                // Validar campos numéricos
+                if (nombreColumna == "precio_unitario" || nombreColumna == "precio_lista")
+                {
+                    if (!double.TryParse(valorIngresado, out _))
+                    {
+                        MostrarError($"Ingrese un número válido en {nombreColumna}.");
+                        RestaurarValorAnterior(fila, nombreColumna);
+                        return;
+                    }
+                }
+                else if (nombreColumna == "Stock")
+                {
+                    if (!int.TryParse(valorIngresado, out _))
+                    {
+                        MostrarError("Ingrese un número entero válido en Stock.");
+                        RestaurarValorAnterior(fila, nombreColumna);
+                        return;
+                    }
+                }
+                // Validar campos de texto (solo letras permitidas)
+                else if (nombreColumna == "Nombre" || nombreColumna == "Marca" || nombreColumna == "Rubro")
+                {
+                    if (valorIngresado.Any(char.IsDigit))
+                    {
+                        MostrarError($"El campo {nombreColumna} solo debe contener letras.");
+                        RestaurarValorAnterior(fila, nombreColumna);
+                        return;
+                    }
+                }
             }
-
-            if (articuloService.ActualizarArticulo(codigo, nombre, marca, rubro, precio, precioLista, stock))
+            catch (Exception ex)
             {
-                MessageBox.Show("Artículo actualizado correctamente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MostrarError("Error inesperado: " + ex.Message);
+                RestaurarValorAnterior(fila, nombreColumna);
+            }
+        }
+
+        private void MostrarError(string mensaje)
+        {
+            MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void RestaurarValorAnterior(DataGridViewRow fila, string nombreColumna)
+        {
+            if (fila.Cells[nombreColumna].Tag != null)
+            {
+                fila.Cells[nombreColumna].Value = fila.Cells[nombreColumna].Tag;
             }
             else
             {
-                MessageBox.Show("Error al actualizar el artículo.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                fila.Cells[nombreColumna].Value = DBNull.Value; // Evita errores de tipo al dejar vacío
             }
+            dataGridView1.CancelEdit();
+            dataGridView1.EndEdit();
         }
+
+        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            var fila = dataGridView1.Rows[e.RowIndex];
+            string nombreColumna = dataGridView1.Columns[e.ColumnIndex].Name;
+
+            fila.Cells[nombreColumna].Tag = fila.Cells[nombreColumna].Value; // Guardar valor anterior
+        }
+
+
 
         //2025
         private void AriculosForm_Load(object sender, EventArgs e)
         {
+
             // Guardamos el tamaño original del formulario
             originalFormSize = this.Size;
 
