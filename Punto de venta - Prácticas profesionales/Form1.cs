@@ -249,10 +249,10 @@ namespace Punto_de_venta___Prácticas_profesionales
             // Agregar opciones al ComboBox de filtro
             cmbFiltro.Items.AddRange(new string[]
             {
-                "Ver todo",
-                "Últimos 7 días",
-                "Últimos 30 días",
-                "Seleccionar mes específico"
+        "Ver todo",
+        "Últimos 7 días",
+        "Últimos 30 días",
+        "Seleccionar mes específico"
             });
 
             // Agregar meses al ComboBox de meses
@@ -275,7 +275,7 @@ namespace Punto_de_venta___Prácticas_profesionales
 
             if (fechaInicio.HasValue && fechaFin.HasValue)
             {
-                datosCaja = reportesLogica.ObtenerDatosCajaPorRango(fechaInicio.Value, fechaFin.Value);
+                datosCaja = reportesLogica.ObtenerDatosCajaPorRango(fechaInicio.Value.Date, fechaFin.Value.Date.AddDays(1).AddTicks(-1));
             }
             else
             {
@@ -287,54 +287,99 @@ namespace Punto_de_venta___Prácticas_profesionales
 
         private void CmbFiltro_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //string filtroSeleccionado = cmbFiltro.SelectedItem.ToString();
+            DateTime fechaInicio, fechaFin;
 
-            //// Al seleccionar "Ver todo", no aplicamos filtros de fechas
-            //if (filtroSeleccionado == "Ver todo")
-            //{
-            //    cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
-            //    CargarDatos();  // Cargar todos los datos
-            //}
-            //// Al seleccionar "Últimos 7 días", mostramos solo esos registros
-            //else if (filtroSeleccionado == "Últimos 7 días")
-            //{
-            //    cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
-            //    CargarDatos(DateTime.Now.AddDays(-7), DateTime.Now);  // Cargar los datos de los últimos 7 días
-            //}
-            //// Al seleccionar "Últimos 30 días", mostramos solo esos registros
-            //else if (filtroSeleccionado == "Últimos 30 días")
-            //{
-            //    cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
-            //    CargarDatos(DateTime.Now.AddDays(-30), DateTime.Now);  // Cargar los datos de los últimos 30 días
-            //}
-            //// Si selecciona "Seleccionar mes específico", habilitamos el ComboBox de meses
-            //else if (filtroSeleccionado == "Seleccionar mes específico")
-            //{
-            //    cmbMes.Enabled = true;  // Habilitar el ComboBox de meses
-            //                            // También debemos actualizar los datos para reflejar el cambio
-            //    CargarDatos();  // Cargar todos los datos por defecto cuando seleccionan "mes específico"
-            //}
+            switch (cmbFiltro.SelectedIndex)
+            {
+                case 0: // Ver todo
+                    CargarDatos();
+                    cmbMes.Enabled = false;
+                    break;
+
+                case 1: // Últimos 7 días
+                    fechaFin = DateTime.Now;
+                    fechaInicio = fechaFin.AddDays(-7);
+                    CargarDatos(fechaInicio, fechaFin);
+                    cmbMes.Enabled = false;
+                    break;
+
+                case 2: // Últimos 30 días
+                    fechaFin = DateTime.Now;
+                    fechaInicio = fechaFin.AddDays(-30);
+                    CargarDatos(fechaInicio, fechaFin);
+                    cmbMes.Enabled = false;
+                    break;
+
+                case 3: // Seleccionar mes específico
+                    cmbMes.Enabled = true;
+                    break;
+            }
         }
 
         private void CmbMes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Solo se actualiza si hay una selección válida en el ComboBox de meses
             if (cmbMes.SelectedIndex >= 0)
             {
-                string filtroSeleccionado = cmbFiltro.SelectedItem?.ToString();  // Obtenemos el filtro actual
+                int añoActual = DateTime.Now.Year;
+                int mesSeleccionado = cmbMes.SelectedIndex + 1;
 
-                // Si el filtro está en "Seleccionar mes específico", cargamos los datos de ese mes
-                if (filtroSeleccionado == "Seleccionar mes específico")
-                {
-                    int mesSeleccionado = cmbMes.SelectedIndex + 1;
-                    DateTime fechaInicio = new DateTime(DateTime.Now.Year, mesSeleccionado, 1);
-                    DateTime fechaFin = fechaInicio.AddMonths(1).AddDays(-1);
+                DateTime fechaInicio = new DateTime(añoActual, mesSeleccionado, 1);
+                DateTime fechaFin = fechaInicio.AddMonths(1).AddDays(-1);
 
-                    // Actualizamos la grilla con los datos del mes seleccionado
-                    CargarDatos(fechaInicio, fechaFin);
-                }
+                CargarDatos(fechaInicio, fechaFin);
             }
         }
+
+        //private void CmbFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    //string filtroSeleccionado = cmbFiltro.SelectedItem.ToString();
+
+        //    //// Al seleccionar "Ver todo", no aplicamos filtros de fechas
+        //    //if (filtroSeleccionado == "Ver todo")
+        //    //{
+        //    //    cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
+        //    //    CargarDatos();  // Cargar todos los datos
+        //    //}
+        //    //// Al seleccionar "Últimos 7 días", mostramos solo esos registros
+        //    //else if (filtroSeleccionado == "Últimos 7 días")
+        //    //{
+        //    //    cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
+        //    //    CargarDatos(DateTime.Now.AddDays(-7), DateTime.Now);  // Cargar los datos de los últimos 7 días
+        //    //}
+        //    //// Al seleccionar "Últimos 30 días", mostramos solo esos registros
+        //    //else if (filtroSeleccionado == "Últimos 30 días")
+        //    //{
+        //    //    cmbMes.Enabled = false;  // Deshabilitar el ComboBox de meses
+        //    //    CargarDatos(DateTime.Now.AddDays(-30), DateTime.Now);  // Cargar los datos de los últimos 30 días
+        //    //}
+        //    //// Si selecciona "Seleccionar mes específico", habilitamos el ComboBox de meses
+        //    //else if (filtroSeleccionado == "Seleccionar mes específico")
+        //    //{
+        //    //    cmbMes.Enabled = true;  // Habilitar el ComboBox de meses
+        //    //                            // También debemos actualizar los datos para reflejar el cambio
+        //    //    CargarDatos();  // Cargar todos los datos por defecto cuando seleccionan "mes específico"
+        //    //}
+        //}
+
+        //private void CmbMes_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    // Solo se actualiza si hay una selección válida en el ComboBox de meses
+        //    if (cmbMes.SelectedIndex >= 0)
+        //    {
+        //        string filtroSeleccionado = cmbFiltro.SelectedItem?.ToString();  // Obtenemos el filtro actual
+
+        //        // Si el filtro está en "Seleccionar mes específico", cargamos los datos de ese mes
+        //        if (filtroSeleccionado == "Seleccionar mes específico")
+        //        {
+        //            int mesSeleccionado = cmbMes.SelectedIndex + 1;
+        //            DateTime fechaInicio = new DateTime(DateTime.Now.Year, mesSeleccionado, 1);
+        //            DateTime fechaFin = fechaInicio.AddMonths(1).AddDays(-1);
+
+        //            // Actualizamos la grilla con los datos del mes seleccionado
+        //            CargarDatos(fechaInicio, fechaFin);
+        //        }
+        //    }
+        //}
 
          private void cajaToolStripMenuItem_Click(object sender, EventArgs e)
         {   
@@ -342,6 +387,8 @@ namespace Punto_de_venta___Prácticas_profesionales
             pnArticulos.Visible = false;
             pnVentas.Visible = false;
             pnCaja.Visible = true;
+            pnDetalleCaja.Visible = false;
+            dataGridView1.Visible = false;
               
            
             CargarDatos();

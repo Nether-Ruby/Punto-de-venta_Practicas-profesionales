@@ -12,18 +12,19 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
     internal class reportesLogica
     {
 
-        
-            private readonly reportesDatos datos = new reportesDatos();
 
-            public DataTable ObtenerTodosLosDatosCaja()
-            {
-                return datos.ObtenerTodosLosDatosCaja();
-            }
+        private readonly reportesDatos datos = new reportesDatos();
 
-            public DataTable ObtenerDatosCajaPorRango(DateTime fechaInicio, DateTime fechaFin)
-            {
-                return datos.ObtenerDatosCajaPorRango(fechaInicio, fechaFin);
-            }
+        public DataTable ObtenerTodosLosDatosCaja()
+        {
+            return datos.ObtenerTodosLosDatosCaja();
+        }
+
+        public DataTable ObtenerDatosCajaPorRango(DateTime fechaInicio, DateTime fechaFin)
+        {
+            return datos.ObtenerDatosCajaPorRango(fechaInicio, fechaFin);
+        }
+
 
         // Obtener todas las ventas
         public DataTable ObtenerTodasLasVentas()
