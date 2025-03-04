@@ -11,8 +11,8 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
 {
     internal class reportesDatos
     {
-        //private readonly string connectionString = $"Data Source={AppDomain.CurrentDomain.BaseDirectory}database.db; Version=3;";
-        private readonly string connectionString = @"Data Source=C:\Users\Acer\Desktop\nuevoProyecto\Punto-de-venta_Practicas-profesionales\Punto de venta - Prácticas profesionales\database.db; Version=3;";
+        private readonly string connectionString = $"Data Source={AppDomain.CurrentDomain.BaseDirectory}database.db; Version=3;";
+        //private readonly string connectionString = @"Data Source=C:\Users\Acer\Desktop\nuevoProyecto\Punto-de-venta_Practicas-profesionales\Punto de venta - Prácticas profesionales\database.db; Version=3;";
 
         // Obtener todos los datos de Caja
         public DataTable ObtenerTodosLosDatosCaja()

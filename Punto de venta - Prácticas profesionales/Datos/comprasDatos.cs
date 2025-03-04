@@ -86,7 +86,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Datos
             {
                 conn.Open();
                 using var cmd = conn.CreateCommand();
-                string query = "SELECT codigo, nombre, precio_unitario FROM Articulos WHERE activo = 1";
+                string query = "SELECT codigo, nombre, precio_lista FROM Articulos WHERE activo = 1";
                 cmd.CommandText = query;
                 using SQLiteDataReader reader = cmd.ExecuteReader();
                 tabla.Load(reader);
