@@ -73,8 +73,8 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
                 if (indiceSeleccionado >= 0 && indiceSeleccionado < articulosTable.Rows.Count)
                 {
-                    double precioUnitario = Convert.ToDouble(articulosTable.Rows[indiceSeleccionado]["precio_unitario"]);
-                    double total = precioUnitario * cantidad;
+                    double precio_lista = Convert.ToDouble(articulosTable.Rows[indiceSeleccionado]["precio_lista"]);
+                    double total = precio_lista * cantidad;
 
                     // Mostrar el total en textboxTotal
                     textboxTotal.Text = total.ToString("F2");
@@ -111,8 +111,8 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
                 if (selectedRow != null)
                 {
-                    double precioUnitario = Convert.ToDouble(selectedRow["precio_unitario"]);
-                    double total = precioUnitario * cantidad;
+                    double precio_lista = Convert.ToDouble(selectedRow["precio_lista"]);
+                    double total = precio_lista * cantidad;
 
                     textboxTotal.Text = total.ToString("F2");
                     button.Enabled = true; // Habilitar el botón si todos los controles tienen valores válidos
@@ -159,8 +159,8 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
                     if (selectedRow != null)
                     {
-                        double precioUnitario = Convert.ToDouble(selectedRow["precio_unitario"]);
-                        double total = precioUnitario * cantidad;
+                        double precio_lista = Convert.ToDouble(selectedRow["precio_lista"]);
+                        double total = precio_lista * cantidad;
 
                         textboxTotal.Text = total.ToString("F2"); // Actualizar el textboxTotal con el nuevo total
                         button.Enabled = true; // Habilitar el botón si todos los controles tienen valores válidos
@@ -189,11 +189,10 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
                 if (selectedRow != null)
                 {
-                    double precioUnitario = Convert.ToDouble(selectedRow["precio_unitario"]);
-                    double total = precioUnitario * cantidad;
+                    double precio_lista = Convert.ToDouble(selectedRow["precio_lista"]);
+                    double total = precio_lista * cantidad;
 
                     textboxTotal.Text = total.ToString("F2");
-                    MessageBox.Show($"Índice seleccionado: {indiceSeleccionado}");
                 }
                 else
                 {
@@ -201,10 +200,6 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 }
             }
         }
-
-
-
-
 
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -294,22 +289,46 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             DataGridViewRow closestRow = null;
             double minDifference = double.MaxValue;
 
+            // Ensure the DataGridView has at least 1 column (adjust if needed)
+            if (dataGridView1.Columns.Count == 0)
+            {
+                MessageBox.Show("The DataGridView has no columns.");
+                return;
+            }
+
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                // Asume que la columna de la fecha es la primera columna (index 0)
-                DateTime rowDate = Convert.ToDateTime(row.Cells[6].Value);
+                // Check if the cell value is not null
+                if (row.Cells[5].Value == null) // Use index 5 for the 6th column
+                {
+                    continue; // Skip this row if the cell value is null
+                }
+
+                // Safely convert the cell value to DateTime
+                DateTime rowDate;
+                try
+                {
+                    rowDate = Convert.ToDateTime(row.Cells[5].Value); // Use index 5 for the 6th column
+                }
+                catch (Exception ex)
+                {
+                    // Handle invalid date format
+                    MessageBox.Show($"Invalid date format in row {row.Index}: {ex.Message}");
+                    continue;
+                }
+
                 double difference = Math.Abs((rowDate - selectedDate).TotalDays);
 
                 if (difference == 0)
                 {
-                    // Si hay una coincidencia exacta, selecciona y desplázate a esa fila
+                    // If there's an exact match, select and scroll to that row
                     row.Selected = true;
                     dataGridView1.FirstDisplayedScrollingRowIndex = row.Index;
                     return;
                 }
                 else if (difference < minDifference)
                 {
-                    // Encuentra la fila con la menor diferencia de días
+                    // Find the row with the smallest day difference
                     minDifference = difference;
                     closestRow = row;
                 }
@@ -317,7 +336,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
             if (closestRow != null)
             {
-                // Selecciona y desplázate a la fila más cercana
+                // Select and scroll to the closest row
                 closestRow.Selected = true;
                 dataGridView1.FirstDisplayedScrollingRowIndex = closestRow.Index;
             }
