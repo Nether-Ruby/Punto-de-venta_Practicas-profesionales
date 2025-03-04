@@ -75,9 +75,9 @@
             btnAgregar.IconColor = Color.White;
             btnAgregar.IconPadding = 4;
             btnAgregar.IconSize = 24;
-            btnAgregar.Location = new Point(88, 391);
+            btnAgregar.Location = new Point(114, 380);
             btnAgregar.Name = "btnAgregar";
-            btnAgregar.Size = new Size(140, 40);
+            btnAgregar.Size = new Size(110, 38);
             btnAgregar.TabIndex = 55;
             btnAgregar.Text = "Agregar";
             btnAgregar.TextColor = Color.White;
@@ -118,6 +118,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.ForeColor = SystemColors.Control;
             label3.Location = new Point(71, 98);
             label3.Name = "label3";
             label3.Size = new Size(60, 17);
@@ -126,13 +127,14 @@
             // 
             // btnHabilitar
             // 
+            btnHabilitar.BackColor = Color.AliceBlue;
             btnHabilitar.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnHabilitar.Location = new Point(458, 414);
             btnHabilitar.Name = "btnHabilitar";
             btnHabilitar.Size = new Size(126, 25);
             btnHabilitar.TabIndex = 33;
             btnHabilitar.Text = "Activar";
-            btnHabilitar.UseVisualStyleBackColor = true;
+            btnHabilitar.UseVisualStyleBackColor = false;
             btnHabilitar.Visible = false;
             btnHabilitar.Click += btnHabilitar_Click;
             // 
@@ -230,13 +232,14 @@
             // 
             // btnDeshabilitar
             // 
+            btnDeshabilitar.BackColor = Color.AliceBlue;
             btnDeshabilitar.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnDeshabilitar.Location = new Point(110, 414);
             btnDeshabilitar.Name = "btnDeshabilitar";
             btnDeshabilitar.Size = new Size(126, 25);
             btnDeshabilitar.TabIndex = 8;
             btnDeshabilitar.Text = "Desactivar";
-            btnDeshabilitar.UseVisualStyleBackColor = true;
+            btnDeshabilitar.UseVisualStyleBackColor = false;
             btnDeshabilitar.Click += btnDeshabilitar_Click;
             // 
             // dataGridViewInactivos
@@ -252,7 +255,7 @@
             // 
             cmbCriterio.FormattingEnabled = true;
             cmbCriterio.Items.AddRange(new object[] { "Codigo", "Nombre", "Marca", "Rubro" });
-            cmbCriterio.Location = new Point(78, 34);
+            cmbCriterio.Location = new Point(78, 58);
             cmbCriterio.Name = "cmbCriterio";
             cmbCriterio.Size = new Size(121, 23);
             cmbCriterio.TabIndex = 48;
@@ -273,7 +276,7 @@
             btnBuscar.IconColor = Color.Blue;
             btnBuscar.IconPadding = 5;
             btnBuscar.IconSize = 30;
-            btnBuscar.Location = new Point(219, -4);
+            btnBuscar.Location = new Point(219, 12);
             btnBuscar.Name = "btnBuscar";
             btnBuscar.Size = new Size(44, 32);
             btnBuscar.TabIndex = 47;
@@ -380,12 +383,12 @@
             txtBuscar.Cursor = Cursors.IBeam;
             txtBuscar.Font = new Font("Segoe UI", 9.5F);
             txtBuscar.ForeColor = Color.DimGray;
-            txtBuscar.Location = new Point(78, -4);
+            txtBuscar.Location = new Point(78, 12);
             txtBuscar.Name = "txtBuscar";
             txtBuscar.Padding = new Padding(7);
             txtBuscar.Size = new Size(135, 32);
             txtBuscar.TabIndex = 46;
-            txtBuscar.Texts = "Buscar...";
+            txtBuscar.Texts = "";
             txtBuscar.UnderlinedStyle1 = false;
             // 
             // txtPrecioLista
@@ -418,6 +421,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(974, 518);
             Controls.Add(label2);
             Controls.Add(txtPrecioLista);

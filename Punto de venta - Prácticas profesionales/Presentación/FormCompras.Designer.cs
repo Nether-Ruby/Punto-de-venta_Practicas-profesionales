@@ -162,26 +162,26 @@
             // button
             // 
             button.Anchor = AnchorStyles.None;
-            button.BackColor = Color.MediumSlateBlue;
-            button.BackgroundColor = Color.MediumSlateBlue;
+            button.BackColor = Color.FromArgb(128, 128, 255);
+            button.BackgroundColor = Color.FromArgb(128, 128, 255);
             button.BorderColor = Color.PaleVioletRed;
             button.BorderRadius = 40;
             button.BorderSize = 0;
             button.FlatAppearance.BorderSize = 0;
             button.FlatStyle = FlatStyle.Flat;
-            button.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button.ForeColor = Color.White;
-            button.IconAlignment = ContentAlignment.MiddleLeft;
-            button.IconChar = FontAwesome.Sharp.IconChar.None;
-            button.IconColor = Color.White;
-            button.IconPadding = 5;
-            button.IconSize = 24;
+            button.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button.ForeColor = Color.Black;
+            button.IconAlignment = ContentAlignment.MiddleRight;
+            button.IconChar = FontAwesome.Sharp.IconChar.UserPen;
+            button.IconColor = Color.Navy;
+            button.IconPadding = 1;
+            button.IconSize = 26;
             button.Location = new Point(406, 106);
             button.Name = "button";
-            button.Size = new Size(166, 50);
+            button.Size = new Size(183, 50);
             button.TabIndex = 3;
             button.Text = "Registrar compra";
-            button.TextColor = Color.White;
+            button.TextColor = Color.Black;
             button.UseVisualStyleBackColor = false;
             button.Click += button_Click;
             // 

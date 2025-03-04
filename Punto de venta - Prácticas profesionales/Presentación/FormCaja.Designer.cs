@@ -65,6 +65,7 @@
             abrirBtn.BorderSize = 0;
             abrirBtn.FlatAppearance.BorderSize = 0;
             abrirBtn.FlatStyle = FlatStyle.Flat;
+            abrirBtn.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             abrirBtn.ForeColor = Color.White;
             abrirBtn.IconAlignment = ContentAlignment.MiddleLeft;
             abrirBtn.IconChar = FontAwesome.Sharp.IconChar.None;
@@ -89,6 +90,7 @@
             cerrarBtn.BorderSize = 0;
             cerrarBtn.FlatAppearance.BorderSize = 0;
             cerrarBtn.FlatStyle = FlatStyle.Flat;
+            cerrarBtn.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             cerrarBtn.ForeColor = Color.White;
             cerrarBtn.IconAlignment = ContentAlignment.MiddleLeft;
             cerrarBtn.IconChar = FontAwesome.Sharp.IconChar.None;
@@ -107,18 +109,20 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(24, 17);
             label1.Name = "label1";
-            label1.Size = new Size(54, 15);
+            label1.Size = new Size(57, 15);
             label1.TabIndex = 5;
             label1.Text = "Ingresos:";
             // 
             // label2
             // 
             label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.Location = new Point(190, 17);
             label2.Name = "label2";
-            label2.Size = new Size(50, 15);
+            label2.Size = new Size(52, 15);
             label2.TabIndex = 6;
             label2.Text = "Egresos:";
             // 
@@ -202,6 +206,7 @@
             ingresoBtn.BorderSize = 0;
             ingresoBtn.FlatAppearance.BorderSize = 0;
             ingresoBtn.FlatStyle = FlatStyle.Flat;
+            ingresoBtn.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             ingresoBtn.ForeColor = Color.White;
             ingresoBtn.IconAlignment = ContentAlignment.MiddleLeft;
             ingresoBtn.IconChar = FontAwesome.Sharp.IconChar.None;
@@ -226,6 +231,7 @@
             egresosBtn.BorderSize = 0;
             egresosBtn.FlatAppearance.BorderSize = 0;
             egresosBtn.FlatStyle = FlatStyle.Flat;
+            egresosBtn.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             egresosBtn.ForeColor = Color.White;
             egresosBtn.IconAlignment = ContentAlignment.MiddleLeft;
             egresosBtn.IconChar = FontAwesome.Sharp.IconChar.None;

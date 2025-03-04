@@ -37,9 +37,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 33);
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(12, 30);
             label1.Name = "label1";
-            label1.Size = new Size(94, 15);
+            label1.Size = new Size(112, 17);
             label1.TabIndex = 0;
             label1.Text = "Monto a extraer:";
             // 
@@ -53,22 +54,26 @@
             // 
             // button1
             // 
+            button1.BackColor = Color.LightSteelBlue;
+            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.Location = new Point(12, 99);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 2;
             button1.Text = "Aceptar";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
             // button2
             // 
+            button2.BackColor = SystemColors.ActiveCaption;
+            button2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.Location = new Point(113, 99);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 3;
             button2.Text = "Cancelar";
-            button2.UseVisualStyleBackColor = true;
+            button2.UseVisualStyleBackColor = false;
             button2.Click += button2_Click;
             // 
             // FormCajaEgresos

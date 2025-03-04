@@ -62,6 +62,7 @@
             classBtnPersonalizado32 = new ClassBtnPersonalizado();
             classBtnPersonalizado33 = new ClassBtnPersonalizado();
             classBtnPersonalizado34 = new ClassBtnPersonalizado();
+            classBtnPersonalizado35 = new ClassBtnPersonalizado();
             SuspendLayout();
             // 
             // classBtnPersonalizado1
@@ -881,12 +882,37 @@
             classBtnPersonalizado34.TextColor = Color.Black;
             classBtnPersonalizado34.UseVisualStyleBackColor = false;
             // 
+            // classBtnPersonalizado35
+            // 
+            classBtnPersonalizado35.BackColor = Color.White;
+            classBtnPersonalizado35.BackgroundColor = Color.White;
+            classBtnPersonalizado35.BorderColor = Color.PaleVioletRed;
+            classBtnPersonalizado35.BorderRadius = 25;
+            classBtnPersonalizado35.BorderSize = 0;
+            classBtnPersonalizado35.FlatAppearance.BorderSize = 0;
+            classBtnPersonalizado35.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado35.Font = new Font("Arial", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            classBtnPersonalizado35.ForeColor = Color.Black;
+            classBtnPersonalizado35.IconAlignment = ContentAlignment.MiddleRight;
+            classBtnPersonalizado35.IconChar = FontAwesome.Sharp.IconChar.Close;
+            classBtnPersonalizado35.IconColor = Color.Firebrick;
+            classBtnPersonalizado35.IconPadding = 4;
+            classBtnPersonalizado35.IconSize = 24;
+            classBtnPersonalizado35.Location = new Point(218, 343);
+            classBtnPersonalizado35.Name = "classBtnPersonalizado35";
+            classBtnPersonalizado35.Size = new Size(101, 40);
+            classBtnPersonalizado35.TabIndex = 43;
+            classBtnPersonalizado35.Text = "Cerrar";
+            classBtnPersonalizado35.TextColor = Color.Black;
+            classBtnPersonalizado35.UseVisualStyleBackColor = false;
+            // 
             // Botones
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Gainsboro;
             ClientSize = new Size(800, 450);
+            Controls.Add(classBtnPersonalizado35);
             Controls.Add(classBtnPersonalizado34);
             Controls.Add(classBtnPersonalizado33);
             Controls.Add(classBtnPersonalizado32);
@@ -964,5 +990,6 @@
         private ClassBtnPersonalizado classBtnPersonalizado32;
         private ClassBtnPersonalizado classBtnPersonalizado33;
         private ClassBtnPersonalizado classBtnPersonalizado34;
+        private ClassBtnPersonalizado classBtnPersonalizado35;
     }
 }

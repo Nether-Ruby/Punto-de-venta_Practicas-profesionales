@@ -52,15 +52,16 @@
             // txtCuil
             // 
             txtCuil.BackColor = Color.FromArgb(0, 0, 64);
-            txtCuil.BorderColor = Color.MediumBlue;
+            txtCuil.BorderColor = Color.Silver;
             txtCuil.BorderFocusColor = Color.DarkGray;
-            txtCuil.BorderSize = 2;
+            txtCuil.BorderSize = 1;
             txtCuil.Font = new Font("Segoe UI", 9.5F);
             txtCuil.ForeColor = Color.DimGray;
-            txtCuil.Location = new Point(59, 52);
+            txtCuil.Location = new Point(52, 39);
+            txtCuil.Margin = new Padding(3, 2, 3, 2);
             txtCuil.Name = "txtCuil";
-            txtCuil.Padding = new Padding(7);
-            txtCuil.Size = new Size(285, 36);
+            txtCuil.Padding = new Padding(6, 5, 6, 5);
+            txtCuil.Size = new Size(249, 28);
             txtCuil.TabIndex = 3;
             txtCuil.Texts = "";
             txtCuil.UnderlinedStyle1 = false;
@@ -68,7 +69,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.Navy;
+            panel1.BackColor = Color.FromArgb(0, 0, 60);
             panel1.Controls.Add(classBtnPersonalizado1);
             panel1.Controls.Add(btGuardar);
             panel1.Controls.Add(label2);
@@ -84,9 +85,10 @@
             panel1.Controls.Add(txtNombre);
             panel1.Controls.Add(txtCuil);
             panel1.ForeColor = SystemColors.ActiveCaptionText;
-            panel1.Location = new Point(345, 47);
+            panel1.Location = new Point(302, 35);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(429, 588);
+            panel1.Size = new Size(375, 441);
             panel1.TabIndex = 4;
             panel1.Paint += panel1_Paint;
             // 
@@ -99,15 +101,17 @@
             classBtnPersonalizado1.BorderSize = 0;
             classBtnPersonalizado1.FlatAppearance.BorderSize = 0;
             classBtnPersonalizado1.FlatStyle = FlatStyle.Flat;
+            classBtnPersonalizado1.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             classBtnPersonalizado1.ForeColor = Color.White;
             classBtnPersonalizado1.IconAlignment = ContentAlignment.MiddleLeft;
             classBtnPersonalizado1.IconChar = FontAwesome.Sharp.IconChar.None;
             classBtnPersonalizado1.IconColor = Color.White;
             classBtnPersonalizado1.IconPadding = 5;
             classBtnPersonalizado1.IconSize = 24;
-            classBtnPersonalizado1.Location = new Point(44, 502);
+            classBtnPersonalizado1.Location = new Point(38, 376);
+            classBtnPersonalizado1.Margin = new Padding(3, 2, 3, 2);
             classBtnPersonalizado1.Name = "classBtnPersonalizado1";
-            classBtnPersonalizado1.Size = new Size(151, 50);
+            classBtnPersonalizado1.Size = new Size(132, 38);
             classBtnPersonalizado1.TabIndex = 16;
             classBtnPersonalizado1.Text = "Cancelar";
             classBtnPersonalizado1.TextColor = Color.White;
@@ -123,15 +127,17 @@
             btGuardar.BorderSize = 0;
             btGuardar.FlatAppearance.BorderSize = 0;
             btGuardar.FlatStyle = FlatStyle.Flat;
+            btGuardar.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btGuardar.ForeColor = Color.White;
             btGuardar.IconAlignment = ContentAlignment.MiddleLeft;
             btGuardar.IconChar = FontAwesome.Sharp.IconChar.None;
             btGuardar.IconColor = Color.White;
             btGuardar.IconPadding = 5;
             btGuardar.IconSize = 24;
-            btGuardar.Location = new Point(245, 502);
+            btGuardar.Location = new Point(214, 376);
+            btGuardar.Margin = new Padding(3, 2, 3, 2);
             btGuardar.Name = "btGuardar";
-            btGuardar.Size = new Size(151, 50);
+            btGuardar.Size = new Size(132, 38);
             btGuardar.TabIndex = 15;
             btGuardar.Text = "Agregar";
             btGuardar.TextColor = Color.White;
@@ -141,81 +147,82 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.BackColor = SystemColors.ActiveCaptionText;
+            label2.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label2.ForeColor = SystemColors.ButtonFace;
-            label2.Location = new Point(59, 29);
+            label2.Location = new Point(52, 22);
             label2.Name = "label2";
-            label2.Size = new Size(46, 20);
+            label2.Size = new Size(41, 15);
             label2.TabIndex = 6;
             label2.Text = "CUIL :";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.BackColor = SystemColors.ActiveCaptionText;
+            label3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = SystemColors.ButtonFace;
-            label3.Location = new Point(59, 108);
+            label3.Location = new Point(52, 81);
             label3.Name = "label3";
-            label3.Size = new Size(71, 20);
+            label3.Size = new Size(59, 15);
             label3.TabIndex = 7;
             label3.Text = "Nombre :";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.BackColor = SystemColors.ActiveCaptionText;
+            label4.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.ForeColor = SystemColors.ButtonFace;
-            label4.Location = new Point(59, 180);
+            label4.Location = new Point(52, 135);
             label4.Name = "label4";
-            label4.Size = new Size(73, 20);
+            label4.Size = new Size(58, 15);
             label4.TabIndex = 8;
             label4.Text = "Apellido :";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.BackColor = SystemColors.ActiveCaptionText;
+            label5.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = SystemColors.ButtonFace;
-            label5.Location = new Point(59, 253);
+            label5.Location = new Point(52, 190);
             label5.Name = "label5";
-            label5.Size = new Size(74, 20);
+            label5.Size = new Size(62, 15);
             label5.TabIndex = 9;
             label5.Text = "Telefono :";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.BackColor = SystemColors.ActiveCaptionText;
+            label6.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label6.ForeColor = SystemColors.ButtonFace;
-            label6.Location = new Point(59, 325);
+            label6.Location = new Point(52, 244);
             label6.Name = "label6";
-            label6.Size = new Size(81, 20);
+            label6.Size = new Size(65, 15);
             label6.TabIndex = 10;
             label6.Text = "Domicilio :";
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.BackColor = SystemColors.ActiveCaptionText;
+            label7.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label7.ForeColor = SystemColors.ButtonFace;
-            label7.Location = new Point(59, 405);
+            label7.Location = new Point(52, 304);
             label7.Name = "label7";
-            label7.Size = new Size(53, 20);
+            label7.Size = new Size(42, 15);
             label7.TabIndex = 11;
             label7.Text = "Email :";
             // 
             // txtEmail
             // 
             txtEmail.BackColor = Color.FromArgb(0, 0, 64);
-            txtEmail.BorderColor = Color.MediumBlue;
+            txtEmail.BorderColor = Color.Silver;
             txtEmail.BorderFocusColor = Color.DarkGray;
-            txtEmail.BorderSize = 2;
+            txtEmail.BorderSize = 1;
             txtEmail.Font = new Font("Segoe UI", 9.5F);
             txtEmail.ForeColor = Color.DimGray;
-            txtEmail.Location = new Point(59, 428);
+            txtEmail.Location = new Point(52, 321);
+            txtEmail.Margin = new Padding(3, 2, 3, 2);
             txtEmail.Name = "txtEmail";
-            txtEmail.Padding = new Padding(7);
-            txtEmail.Size = new Size(285, 36);
+            txtEmail.Padding = new Padding(6, 5, 6, 5);
+            txtEmail.Size = new Size(249, 28);
             txtEmail.TabIndex = 10;
             txtEmail.Texts = "";
             txtEmail.UnderlinedStyle1 = false;
@@ -223,15 +230,16 @@
             // txtDomicilio
             // 
             txtDomicilio.BackColor = Color.FromArgb(0, 0, 64);
-            txtDomicilio.BorderColor = Color.MediumBlue;
+            txtDomicilio.BorderColor = Color.Silver;
             txtDomicilio.BorderFocusColor = Color.DarkGray;
-            txtDomicilio.BorderSize = 2;
+            txtDomicilio.BorderSize = 1;
             txtDomicilio.Font = new Font("Segoe UI", 9.5F);
             txtDomicilio.ForeColor = Color.DimGray;
-            txtDomicilio.Location = new Point(59, 352);
+            txtDomicilio.Location = new Point(52, 264);
+            txtDomicilio.Margin = new Padding(3, 2, 3, 2);
             txtDomicilio.Name = "txtDomicilio";
-            txtDomicilio.Padding = new Padding(7);
-            txtDomicilio.Size = new Size(285, 36);
+            txtDomicilio.Padding = new Padding(6, 5, 6, 5);
+            txtDomicilio.Size = new Size(249, 28);
             txtDomicilio.TabIndex = 9;
             txtDomicilio.Texts = "";
             txtDomicilio.UnderlinedStyle1 = false;
@@ -239,15 +247,17 @@
             // txtTelefono
             // 
             txtTelefono.BackColor = Color.FromArgb(0, 0, 64);
-            txtTelefono.BorderColor = Color.MediumBlue;
+            txtTelefono.BorderColor = Color.Silver;
             txtTelefono.BorderFocusColor = Color.DarkGray;
-            txtTelefono.BorderSize = 2;
+            txtTelefono.BorderSize = 1;
             txtTelefono.Font = new Font("Segoe UI", 9.5F);
             txtTelefono.ForeColor = Color.DimGray;
-            txtTelefono.Location = new Point(59, 276);
+            txtTelefono.ImeMode = ImeMode.Off;
+            txtTelefono.Location = new Point(52, 207);
+            txtTelefono.Margin = new Padding(3, 2, 3, 2);
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Padding = new Padding(7);
-            txtTelefono.Size = new Size(285, 36);
+            txtTelefono.Padding = new Padding(6, 5, 6, 5);
+            txtTelefono.Size = new Size(249, 28);
             txtTelefono.TabIndex = 8;
             txtTelefono.Texts = "";
             txtTelefono.UnderlinedStyle1 = false;
@@ -255,15 +265,16 @@
             // txtApellido
             // 
             txtApellido.BackColor = Color.FromArgb(0, 0, 64);
-            txtApellido.BorderColor = Color.MediumBlue;
+            txtApellido.BorderColor = Color.Silver;
             txtApellido.BorderFocusColor = Color.DarkGray;
-            txtApellido.BorderSize = 2;
+            txtApellido.BorderSize = 1;
             txtApellido.Font = new Font("Segoe UI", 9.5F);
             txtApellido.ForeColor = Color.DimGray;
-            txtApellido.Location = new Point(59, 203);
+            txtApellido.Location = new Point(52, 152);
+            txtApellido.Margin = new Padding(3, 2, 3, 2);
             txtApellido.Name = "txtApellido";
-            txtApellido.Padding = new Padding(7);
-            txtApellido.Size = new Size(285, 36);
+            txtApellido.Padding = new Padding(6, 5, 6, 5);
+            txtApellido.Size = new Size(249, 28);
             txtApellido.TabIndex = 7;
             txtApellido.Texts = "";
             txtApellido.UnderlinedStyle1 = false;
@@ -271,15 +282,16 @@
             // txtNombre
             // 
             txtNombre.BackColor = Color.FromArgb(0, 0, 64);
-            txtNombre.BorderColor = Color.MediumBlue;
+            txtNombre.BorderColor = Color.Silver;
             txtNombre.BorderFocusColor = Color.DarkGray;
-            txtNombre.BorderSize = 2;
+            txtNombre.BorderSize = 1;
             txtNombre.Font = new Font("Segoe UI", 9.5F);
             txtNombre.ForeColor = Color.DimGray;
-            txtNombre.Location = new Point(59, 131);
+            txtNombre.Location = new Point(52, 98);
+            txtNombre.Margin = new Padding(3, 2, 3, 2);
             txtNombre.Name = "txtNombre";
-            txtNombre.Padding = new Padding(7);
-            txtNombre.Size = new Size(285, 36);
+            txtNombre.Padding = new Padding(6, 5, 6, 5);
+            txtNombre.Size = new Size(249, 28);
             txtNombre.TabIndex = 6;
             txtNombre.Texts = "";
             txtNombre.UnderlinedStyle1 = false;
@@ -289,10 +301,11 @@
             dgvClientes.BackgroundColor = Color.FromArgb(0, 0, 55);
             dgvClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvClientes.GridColor = Color.Goldenrod;
-            dgvClientes.Location = new Point(27, 118);
+            dgvClientes.Location = new Point(24, 88);
+            dgvClientes.Margin = new Padding(3, 2, 3, 2);
             dgvClientes.Name = "dgvClientes";
             dgvClientes.RowHeadersWidth = 51;
-            dgvClientes.Size = new Size(1024, 335);
+            dgvClientes.Size = new Size(896, 251);
             dgvClientes.TabIndex = 16;
             dgvClientes.CellContentClick += dgvClientes_CellContentClick;
             // 
@@ -301,19 +314,21 @@
             btNuevoCliente.BackColor = Color.RoyalBlue;
             btNuevoCliente.BackgroundColor = Color.RoyalBlue;
             btNuevoCliente.BorderColor = Color.PaleVioletRed;
-            btNuevoCliente.BorderRadius = 40;
+            btNuevoCliente.BorderRadius = 25;
             btNuevoCliente.BorderSize = 0;
             btNuevoCliente.FlatAppearance.BorderSize = 0;
             btNuevoCliente.FlatStyle = FlatStyle.Flat;
+            btNuevoCliente.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btNuevoCliente.ForeColor = Color.White;
-            btNuevoCliente.IconAlignment = ContentAlignment.MiddleCenter;
-            btNuevoCliente.IconChar = FontAwesome.Sharp.IconChar.None;
+            btNuevoCliente.IconAlignment = ContentAlignment.MiddleRight;
+            btNuevoCliente.IconChar = FontAwesome.Sharp.IconChar.Vcard;
             btNuevoCliente.IconColor = Color.White;
             btNuevoCliente.IconPadding = 5;
-            btNuevoCliente.IconSize = 24;
-            btNuevoCliente.Location = new Point(881, 12);
+            btNuevoCliente.IconSize = 25;
+            btNuevoCliente.Location = new Point(797, 9);
+            btNuevoCliente.Margin = new Padding(3, 2, 3, 2);
             btNuevoCliente.Name = "btNuevoCliente";
-            btNuevoCliente.Size = new Size(172, 48);
+            btNuevoCliente.Size = new Size(124, 36);
             btNuevoCliente.TabIndex = 16;
             btNuevoCliente.Text = "Registrar";
             btNuevoCliente.TextColor = Color.White;
@@ -322,14 +337,13 @@
             // 
             // FormClientes
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(0, 0, 45);
-            ClientSize = new Size(1077, 775);
+            BackColor = SystemColors.Control;
+            ClientSize = new Size(942, 562);
             Controls.Add(panel1);
             Controls.Add(dgvClientes);
             Controls.Add(btNuevoCliente);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "FormClientes";
             Text = "FormClientes";
             Load += FormClientes_Load;
