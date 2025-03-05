@@ -15,38 +15,77 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
     {
         private Form1 formpadre;
         private cajaLogica cl = new cajaLogica();
+        private int idTurnoAbierto = -1;
+
 
         public FormCaja(Form1 padre)
         {
-
             InitializeComponent();
             formpadre = padre;
-            InicializarEventos();
+
+
         }
+
         public void InicializarEventos()
         {
             ingresostxt.ReadOnly = true;
             egresostxt.ReadOnly = true;
-            if (formpadre.IsOpen == true)
+
+            // Verificar si hay un turno abierto
+            idTurnoAbierto = cl.ObtenerIdTurnoAbierto();
+            if (idTurnoAbierto != -1)
             {
+                // Si hay un turno abierto, habilitar los botones de cierre, ingresos y egresos
                 abrirBtn.Enabled = false;
                 cerrarBtn.Enabled = true;
                 ingresoBtn.Enabled = true;
                 egresosBtn.Enabled = true;
+
+
+                // Mostrar los ingresos y egresos actuales
                 ingresostxt.Text = formpadre.Ingreso.ToString("C2");
                 egresostxt.Text = formpadre.Egreso.ToString("C2");
+
+                // Cargar las ventas del día y calcular los totales
                 dataGridView1.DataSource = cajaLogica.ventasHoy();
                 CalcularTotalEfectivo();
                 CalcularTotalTarjeta();
                 CalcularTotalCaja();
-
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             }
             else
             {
+                // Si no hay un turno abierto, deshabilitar los botones de cierre, ingresos y egresos
                 cerrarBtn.Enabled = false;
                 ingresoBtn.Enabled = false;
                 egresosBtn.Enabled = false;
                 abrirBtn.Enabled = true;
+
+                // Limpiar los campos de ingresos y egresos
+                ingresostxt.Text = "0.00";
+                egresostxt.Text = "0.00";
+                efectivolbl.Text = "0.00";
+                tarjetalbl.Text = "0.00";
+                totallbl.Text = "0.00";
+            }
+        }
+        
+        private void FormCaja_Resize(object sender, EventArgs e)
+        {
+
+            int baseWidth = 800; // Your base form width
+            int baseHeight = 600; // Your base form height
+
+            float widthRatio = (float)this.Width / baseWidth;
+            float heightRatio = (float)this.Height / baseHeight;
+
+            foreach (Control control in this.Controls)
+            {
+                control.Width = (int)(control.Width * widthRatio);
+                control.Height = (int)(control.Height * heightRatio);
+                control.Left = (int)(control.Left * widthRatio);
+                control.Top = (int)(control.Top * heightRatio);
             }
 
         }
@@ -147,11 +186,32 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
         private void abrirBtn_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = cajaLogica.ventasHoy();
-            formpadre.IsOpen = true;
-            InicializarEventos();
-        }
+            // Abrir un nuevo turno
+            bool exito = cl.AbrirTurno(DateTime.Now);
 
+            if (exito)
+            {
+                // Actualizar el estado de la caja
+                formpadre.IsOpen = true;
+                idTurnoAbierto = cl.ObtenerIdTurnoAbierto(); // Obtener el ID del turno abierto
+
+                // Habilitar los botones de cierre, ingresos y egresos
+                abrirBtn.Enabled = false;
+                cerrarBtn.Enabled = true;
+                ingresoBtn.Enabled = true;
+                egresosBtn.Enabled = true;
+
+                // Cargar las ventas del día y calcular los totales
+                dataGridView1.DataSource = cajaLogica.ventasHoy();
+                CalcularTotalEfectivo();
+                CalcularTotalTarjeta();
+                CalcularTotalCaja();
+            }
+            else
+            {
+                MessageBox.Show("Hubo un error al abrir el turno. Intente nuevamente.");
+            }
+        }
         private void cerrarBtn_Click(object sender, EventArgs e)
         {
             double totalEfectivo = Convert.ToDouble(efectivolbl.Text.Replace("€", "").Replace("$", "").Trim());
@@ -161,27 +221,36 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             double totalCaja = Convert.ToDouble(totallbl.Text.Replace("€", "").Replace("$", "").Trim());
             DateTime horaCierre = DateTime.Now;
 
-            bool exito = cl.CerrarCaja(totalEfectivo, totalTarjeta, totalCaja, totalIngresos, totalEgresos, horaCierre);
+            // Cerrar el turno actual
+            bool exito = cl.CerrarTurno(idTurnoAbierto, horaCierre, totalEfectivo, totalTarjeta, totalCaja, totalIngresos, totalEgresos);
+
             if (exito)
             {
-                dataGridView1.DataSource = null;
+                // Actualizar el estado de la caja
                 formpadre.IsOpen = false;
-                InicializarEventos();
-                MessageBox.Show("Caja cerrada con éxito y datos guardados.");
+                idTurnoAbierto = -1;
+
+                // Deshabilitar los botones de cierre, ingresos y egresos
+                abrirBtn.Enabled = true;
+                cerrarBtn.Enabled = false;
+                ingresoBtn.Enabled = false;
+                egresosBtn.Enabled = false;
+
+                // Limpiar los campos de ingresos y egresos
                 formpadre.Ingreso = 0;
                 formpadre.Egreso = 0;
-                double totalEfe = 0; // Total para efectivo y transferencia
-                double totalTar = 0; // Total para tarjeta
-                double totalC = 0;
-                efectivolbl.Text= totalEfe.ToString("C2");
-                tarjetalbl.Text = totalTar.ToString("C2");
-                totallbl.Text = totalC.ToString("C2");
-                ingresostxt.Text = formpadre.Ingreso.ToString("C2");
-                egresostxt.Text = formpadre.Egreso.ToString("C2");
+                efectivolbl.Text = "0.00";
+                tarjetalbl.Text = "0.00";
+                totallbl.Text = "0.00";
+                ingresostxt.Text = "0.00";
+                egresostxt.Text = "0.00";
+
+                // Limpiar el DataGridView
+                dataGridView1.DataSource = null;
             }
             else
             {
-                MessageBox.Show("Hubo un error al cerrar la caja. Intente nuevamente.");
+                MessageBox.Show("Hubo un error al cerrar el turno. Intente nuevamente.");
             }
         }
 
@@ -189,7 +258,8 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         {
             ingresostxt.ReadOnly = true;
             egresostxt.ReadOnly = true;
-            if (formpadre.IsOpen == true)
+            idTurnoAbierto = cl.ObtenerIdTurnoAbierto();
+            if (idTurnoAbierto != -1)
             {
                 abrirBtn.Enabled = false;
                 cerrarBtn.Enabled = true;
@@ -199,7 +269,6 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 CalcularTotalEfectivo();
                 CalcularTotalTarjeta();
                 CalcularTotalCaja();
-
             }
             else
             {
@@ -244,6 +313,21 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 // Si el usuario presiona "Volver" o cancela, no hacemos nada
                 MessageBox.Show("No se realizó ningún egreso.");
             }
+        }
+
+        private void splitContainer3_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void splitContainer3_Panel2_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

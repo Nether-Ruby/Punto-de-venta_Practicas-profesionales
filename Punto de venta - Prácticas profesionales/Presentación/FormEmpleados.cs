@@ -23,6 +23,24 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
         }
+        private void FormEmpleados_Resize(object sender, EventArgs e)
+        {
+
+            int baseWidth = 800; // Your base form width
+            int baseHeight = 600; // Your base form height
+
+            float widthRatio = (float)this.Width / baseWidth;
+            float heightRatio = (float)this.Height / baseHeight;
+
+            foreach (Control control in this.Controls)
+            {
+                control.Width = (int)(control.Width * widthRatio);
+                control.Height = (int)(control.Height * heightRatio);
+                control.Left = (int)(control.Left * widthRatio);
+                control.Top = (int)(control.Top * heightRatio);
+            }
+
+        }
 
         private void classBtnPersonalizado2_Click(object sender, EventArgs e)
         {
@@ -102,6 +120,11 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                     dataGridView1.DataSource = cn.consultaVendedores(); // Recargar los datos para revertir cambios inválidos
                 }
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 

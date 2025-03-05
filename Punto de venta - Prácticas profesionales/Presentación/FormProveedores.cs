@@ -80,12 +80,6 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
 
             // Manejo de teléfono
             string telefono = textBox3.Text;
-            int? telefonoInt = null;
-            if (!string.IsNullOrWhiteSpace(telefono) && int.TryParse(telefono, out int parsedTelefono))
-            {
-                telefonoInt = parsedTelefono;
-            }
-
             // Manejo de deuda
             string deudaTexto = textBox5.Text;
             if (!double.TryParse(deudaTexto, out double deuda))
@@ -97,7 +91,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             proveedoresLogica NuevoProveedor = new proveedoresLogica
             {
                 Nombre = nombre,
-                Telefono = telefonoInt?.ToString(),
+                Telefono = telefono,
                 Email = email, // Asignar el email correctamente
                 Deuda = deuda
             };

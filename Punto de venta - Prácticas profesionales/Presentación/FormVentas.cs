@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Drawing.Text;
 using System.Linq;
 using System.Text;
@@ -53,6 +54,8 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             dt.Columns.Add("Precio Total");
 
             dataGridView1.DataSource = dt;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
 
         }
@@ -72,7 +75,24 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             label9.Text = total.ToString("C2");
             dataGridView1.ReadOnly = true;
         }
+        private void FormVentas_Resize(object sender, EventArgs e)
+        {
 
+            int baseWidth = 800; // Your base form width
+            int baseHeight = 600; // Your base form height
+
+            float widthRatio = (float)this.Width / baseWidth;
+            float heightRatio = (float)this.Height / baseHeight;
+
+            foreach (Control control in this.Controls)
+            {
+                control.Width = (int)(control.Width * widthRatio);
+                control.Height = (int)(control.Height * heightRatio);
+                control.Left = (int)(control.Left * widthRatio);
+                control.Top = (int)(control.Top * heightRatio);
+            }
+
+        }
 
 
         private void classBtnPersonalizado1_Click(object sender, EventArgs e)
@@ -121,6 +141,8 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 label5.Text = subtotal.ToString("C2");
                 label9.Text = total.ToString("C2");
             }
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
         }
 
@@ -290,14 +312,14 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
         private void classBtnPersonalizado3_Click(object sender, EventArgs e)
         {
             string totalT = label9.Text.Replace("€", "").Replace("$", "").Trim(); // Limpiar símbolos monetarios
-            // Validar y capturar datos
+                                                                                  // Validar y capturar datos
             if (!double.TryParse(totalT, out double total))
             {
                 MessageBox.Show("Por favor, ingresa un total válido.");
                 return;
             }
 
-            if (comboBox3.SelectedItem == null || /*comboBox2.SelectedItem == null || */comboBox4.SelectedItem == null)
+            if (comboBox3.SelectedItem == null || comboBox4.SelectedItem == null)
             {
                 MessageBox.Show("Por favor, completa todos los campos.");
                 return;
@@ -329,7 +351,19 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 detalles_venta.cantidad = row["Cantidad"].ToString();
 
                 list_detalles.Add(detalles_venta);
+            }
 
+            List<Tuple<string, string, string>> detalles_imp = new List<Tuple<string, string, string>>();
+
+            foreach (DataRow row in dt.Rows)
+            {
+                // Obtener los valores de cada fila
+                string nroFact = textBox1.Text.ToString();
+                string nombre = row["Nombre"].ToString();
+                string cantidad = row["Cantidad"].ToString();
+
+                // Crear una nueva tupla y agregarla a la lista
+                detalles_imp.Add(new Tuple<string, string, string>(nroFact, nombre, cantidad));
             }
 
             // Llamar a la capa de datos
@@ -339,6 +373,16 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 datos.RegistrarTransaccion(transaccion);
                 ventaslogica.RegistrarDetallesVenta(list_detalles);
                 textBox1.Text = ventaslogica.ObtenerNroFact().ToString();
+
+                // Imprimir el ticket
+                try
+                {
+                    ImprimirTicket(transaccion.Cliente, transaccion.Vendedor, transaccion.MetodoPago, transaccion.Total, detalles_imp);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error al imprimir el ticket: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 MessageBox.Show("Transacción registrada exitosamente.");
                 total = 0.00;
@@ -354,6 +398,7 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
                 MessageBox.Show($"Error al registrar la transacción: {ex.Message}");
             }
         }
+
 
         private void classBtnPersonalizado2_Click(object sender, EventArgs e)
         {
@@ -389,6 +434,31 @@ namespace Punto_de_venta___Prácticas_profesionales.Presentación
             {
                 e.Handled = true; // Rechazar el carácter
             }
+        }
+
+        private void ImprimirTicket(string cliente, string vendedor, string metodoPago, double total, List<Tuple<string, string, string>> detalles_imp)
+        {
+            // Crear el documento de impresión
+            TicketPrintDocument printDocument = new TicketPrintDocument(cliente, vendedor, metodoPago, total, detalles_imp);
+
+            // Mostrar el diálogo de impresión
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.Document = printDocument;
+
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                printDocument.Print(); // Imprimir el ticket
+            }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
