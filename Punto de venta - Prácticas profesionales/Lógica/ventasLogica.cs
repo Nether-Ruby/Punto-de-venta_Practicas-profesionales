@@ -1,6 +1,8 @@
 ﻿using Punto_de_venta___Prácticas_profesionales.Datos;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,7 +73,10 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
             public string codigo { get; set; }
 
             public string cantidad { get; set; }
+
+
         }
+        
 
         public void RegistrarDetallesVenta (List<detallesVenta> F)
         {
@@ -90,6 +95,74 @@ namespace Punto_de_venta___Prácticas_profesionales.Lógica
                 mensaje = "Articulo agregado con exito";
                 return true;
 
+            }
+        }
+        public class TicketPrintDocument : PrintDocument
+        {
+            private string _cliente;
+            private string _vendedor;
+            private string _metodoPago;
+            private double _total;
+            private List<Tuple<string, string, string>> _detallesImp;
+
+            public TicketPrintDocument(string cliente, string vendedor, string metodoPago, double total, List<Tuple<string, string, string>> detallesImp)
+            {
+                _cliente = cliente;
+                _vendedor = vendedor;
+                _metodoPago = metodoPago;
+                _total = total;
+                _detallesImp = detallesImp;
+            }
+
+            protected override void OnPrintPage(PrintPageEventArgs e)
+            {
+                base.OnPrintPage(e);
+
+                // Fuente y color para el texto
+                Font font = new Font("Arial", 12);
+                Brush brush = Brushes.Black;
+
+                // Margen izquierdo
+                float marginLeft = 50;
+                float y = 50; // Posición vertical inicial
+
+                // Dibujar el encabezado del ticket
+                e.Graphics.DrawString("TICKET DE VENTA", new Font("Arial", 20, FontStyle.Bold), brush, marginLeft, y);
+                y += 40;
+
+                // Dibujar los datos del cliente
+                e.Graphics.DrawString($"Cliente: {_cliente}", font, brush, marginLeft, y);
+                y += 30;
+
+                // Dibujar los datos del vendedor
+                e.Graphics.DrawString($"Vendedor: {_vendedor}", font, brush, marginLeft, y);
+                y += 30;
+
+                // Dibujar el método de pago
+                e.Graphics.DrawString($"Método de pago: {_metodoPago}", font, brush, marginLeft, y);
+                y += 30;
+
+                // Dibujar los detalles de la venta
+                e.Graphics.DrawString("Detalles de la venta:", font, brush, marginLeft, y);
+                y += 20;
+
+                foreach (var detalle in _detallesImp)
+                {
+                    string nroFact = detalle.Item1; // Número de factura
+                    string nombre = detalle.Item2; // Nombre del producto
+                    string cantidad = detalle.Item3; // Cantidad
+
+                    // Dibujar cada detalle en una nueva línea
+                    e.Graphics.DrawString($"{nroFact} - {nombre} x {cantidad}", font, brush, marginLeft, y);
+                    y += 20;
+                }
+
+                // Dibujar el total
+                e.Graphics.DrawString($"Total: {_total:C2}", font, brush, marginLeft, y);
+                y += 30;
+
+                // Dibujar un mensaje de agradecimiento
+                e.Graphics.DrawString("¡Gracias por su compra!", font, brush, marginLeft, y);
             }
         }
     }
